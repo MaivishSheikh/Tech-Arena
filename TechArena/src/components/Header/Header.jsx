@@ -5,7 +5,7 @@ export default function Header(props) {
   return (
     <>
       <header className="shadow-md">
-        <div className="mx-auto px-4 flex justify-center items-center py-3 bg-slate-800 text-white">
+        <div className="mx-auto px-4 flex justify-center items-center py-3 bg-slate-800 text-white" style={{background: "#072B3B"}}>
           <div className="flex justify-between items-center">
             <span className="text-3xl font-semibold">TechArena</span>
           </div>

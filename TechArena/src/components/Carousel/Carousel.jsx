@@ -7,9 +7,30 @@ import { NavLink } from "react-router-dom";
 export default function Carousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [slides] = useState([
-    { image: A, title: "Phones Built For Every Lifestyle", description: "Explore top-performing smartphones crafted for gaming, photography, and seamless everyday use.", btnTxt: "Explore Phones", link: "/phones" },
-    { image: B, title: "Tablets That Elevate Your Experience", description: "Seamlessly balance work and play with powerful tablets designed for multitasking, creativity, and entertainment on the go.", btnTxt: "Explore Tablets", link: "" },
-    { image: C, title: "Laptops Made For Every Journey", description: "Whether for gaming, productivity, or creativity, find laptops that deliver exceptional performance and style to suit your needs.", btnTxt: "Explore Laptops", link: "" },
+    {
+      image: A,
+      title: "Phones Built For Every Lifestyle",
+      description:
+        "Explore top-performing smartphones crafted for gaming, photography, and seamless everyday use.",
+      btnTxt: "Explore Phones",
+      link: "/phones",
+    },
+    {
+      image: B,
+      title: "Tablets That Elevate Your Experience",
+      description:
+        "Seamlessly balance work and play with powerful tablets designed for multitasking, creativity, and entertainment on the go.",
+      btnTxt: "Explore Tablets",
+      link: "",
+    },
+    {
+      image: C,
+      title: "Laptops Made For Every Journey",
+      description:
+        "Whether for gaming, productivity, or creativity, find laptops that deliver exceptional performance and style to suit your needs.",
+      btnTxt: "Explore Laptops",
+      link: "",
+    },
   ]);
 
   useEffect(() => {
@@ -28,10 +49,7 @@ export default function Carousel() {
       >
         <div
           className="absolute inset-0"
-          style={{
-            background: "#00000073",
-            zIndex: 1,
-          }}
+          style={{ background: "#00000073", zIndex: 1 }}
         />
         <img
           src={slides[activeIndex].image}
@@ -54,12 +72,21 @@ export default function Carousel() {
             >
               {slides[activeIndex].title}
             </h3>
-            <p className="text-md my-3 mb-8" style={{fontFamily: "Ubuntu", width: "400px"}}>{slides[activeIndex].description}</p>
-            <NavLink to={slides[activeIndex].link} className="bg-blue-900 hover:bg-blue-600 px-5 py-3 rounded-xl">{slides[activeIndex].btnTxt}</NavLink>
+            <p
+              className="text-md my-3 mb-8"
+              style={{ fontFamily: "Ubuntu", width: "400px" }}
+            >
+              {slides[activeIndex].description}
+            </p>
+            <NavLink
+              to={slides[activeIndex].link}
+              className="bg-blue-900 hover:bg-blue-600 px-5 py-3 rounded-xl"
+            >
+              {slides[activeIndex].btnTxt}
+            </NavLink>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
