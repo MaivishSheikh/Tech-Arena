@@ -16,14 +16,14 @@ import { NavLink } from 'react-router-dom';
 
 const DeviceCategories = () => {
   const phonePicksCards = [
-    { imgSrc: phoneCardA, title: "Content Creation", link: "https://google.com" },
-    { imgSrc: phoneCardB, title: "Gaming", link: "https://twitter.com" },
+    { imgSrc: phoneCardA, title: "Content Creation", link: "/phones" },
+    { imgSrc: phoneCardB, title: "Gaming", link: "/phones" },
     { imgSrc: phoneCardC, title: "Professional" },
     { imgSrc: phoneCardD },
   ];
 
   const touchscreenTroveCards = [
-    { imgSrc: cardA, title: "Graphic Designing" },
+    { imgSrc: cardA, title: "Graphic Designing", link: "/devices" },
     { imgSrc: cardB, title: "Content Creation" },
     { imgSrc: cardC },
     { imgSrc: cardD },

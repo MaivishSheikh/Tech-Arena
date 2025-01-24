@@ -12,7 +12,7 @@ export default function Header(props) {
           <nav className="mx-10 flex justify-between items-center">
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
-                <NavLink to="/home">Home</NavLink>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
                 <div className="relative group">
@@ -25,7 +25,7 @@ export default function Header(props) {
                       <ul className="flex flex-col">
                         <li>
                           <NavLink
-                            to="/"
+                            to="/phones"
                             className="flex items-center px-4 py-2 hover:bg-slate-500  hover:text-white"
                           >
                             <div>
@@ -38,7 +38,7 @@ export default function Header(props) {
                         </li>
                         <li>
                           <NavLink
-                            to="/"
+                            to="/phones"
                             className="flex items-center px-4 py-2 hover:bg-slate-500  hover:text-white"
                           >
                             <div>
@@ -121,7 +121,7 @@ export default function Header(props) {
                 </div>
               </li>
               <li>
-                <NavLink to="/slider">Reviews</NavLink>
+                <NavLink to="/phones">Reviews</NavLink>
               </li>
               <li>
                 <NavLink to="/slider">Contact</NavLink>
