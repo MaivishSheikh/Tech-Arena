@@ -1,17 +1,9 @@
 import React from "react";
-import phoneCard from "../../assets/phoneCard.png";
 import mobile from "../../assets/mobile.png";
-import phones from "../../assets/phones.png";
 import Devices from "../Devices/Devices";
-import laptop from '../../assets/laptop.png'
 import laptops from '../../assets/laptops.png'
-import tablet from '../../assets/tablet.png'
-import tabA from '../../assets/tabA.png'
 import tabD from '../../assets/tabD.png'
-import allinone from '../../assets/allinone.png'
-import tablets from '../../assets/tablets.png'
 import i from '../../assets/i.png'
-import { NavLink } from "react-router-dom";
 
 const NewCards = () => {
   return (
