@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import CardSection from "../CardSection/CardSection";
 import cardA from "../../assets/cardA.png";
 import cardB from "../../assets/cardB.jpg";
@@ -8,7 +9,6 @@ import laptopCardA from "../../assets/laptopCardA.jpg";
 import laptopCardB from "../../assets/laptopCardB.jpg";
 import laptopCardC from "../../assets/laptopCardC.jpg";
 import laptopCardD from "../../assets/laptopCardD.jpg";
-import phoneA from "../../assets/phoneA.png";
 import phoneCardB from "../../assets/phoneCardB.jpg";
 import phoneCardC from "../../assets/phoneCardC.jpg";
 import phoneCardD from "../../assets/phoneCardD.jpg";
@@ -16,13 +16,15 @@ import bgA from "../../assets/bgA.jpeg"
 import bgB from "../../assets/bgB.jpeg"
 import bgC from "../../assets/bgC.jpeg"
 import bgD from "../../assets/bgD.jpeg"
-import { NavLink } from "react-router-dom";
+import phoneA from "../../assets/phoneA.jpeg"
+import phoneB from "../../assets/phoneB.jpeg"
+import phoneC from "../../assets/phoneC.jpeg"
 
 const DeviceCategories = () => {
   const phonePicksCards = [
     { imgSrc: phoneA, title: "Content Creation", link: "/phones" },
-    { imgSrc: phoneCardB, title: "Gaming", link: "/phones" },
-    { imgSrc: phoneCardC, title: "Professional" },
+    { imgSrc: phoneB, title: "Gaming", link: "/phones" },
+    { imgSrc: phoneC, title: "Professional" },
     { imgSrc: phoneCardD },
   ];
 
@@ -44,7 +46,7 @@ const DeviceCategories = () => {
     <div
       className="flex justify-evenly gap-4 px-4 py-10"
       style={{
-        // background: `linear-gradient(to left, #073B3A, #0B6E4F)`,
+        // background: ``linear-gradient(to left, #073B3A, #0B6E4F)``,
         background: "#0B586E",
         backgroundSize: "cover",
         backgroundPosition: "bottom",
