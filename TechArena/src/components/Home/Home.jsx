@@ -3,12 +3,14 @@ import Carousel from "../Carousel/Carousel";
 import DeviceCategories from "../DeviceCategories/DeviceCategories";
 import LoginModel from "../LoginModel/LoginModel";
 import NewCards from "../NewCards/NewCards";
+import Cards from "../Cards/Cards";
 
 export default function Home(props) {
   return (
     <>
       <Carousel />
       <NewCards />
+      <Cards />
       {/* <LoginModel /> */}
       <div id="mega-menu-full-cta-dropdown" class="mt-1 bg-white border-gray-200 shadow-xs border-y dark:bg-gray-800 dark:border-gray-600">
         <div class="grid max-w-screen-xl px-4 py-5 mx-auto text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6">
