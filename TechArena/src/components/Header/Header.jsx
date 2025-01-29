@@ -124,7 +124,7 @@ export default function Header(props) {
                 <NavLink to="/phones">Reviews</NavLink>
               </li>
               <li>
-                <NavLink to="/slider">Contact</NavLink>
+                <NavLink to="/users">Contact</NavLink>
               </li>
               <li>
                 <NavLink to="/slider">Help</NavLink>
@@ -138,12 +138,7 @@ export default function Header(props) {
             >
               Login
             </a>
-            <a
-              href="#"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700"
-            >
-              Sign up
-            </a>
+            <NavLink to="/signin" className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700">Sign In</NavLink>
           </div>
         </div>
       </header>
