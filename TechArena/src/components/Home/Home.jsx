@@ -10,9 +10,9 @@ export default function Home(props) {
     <>
       <Carousel />
       <NewCards />
-      <Cards />
+      {/* <Cards /> */}
       {/* <LoginModel /> */}
-      <div id="mega-menu-full-cta-dropdown" class="mt-1 bg-white border-gray-200 shadow-xs border-y dark:bg-gray-800 dark:border-gray-600">
+      {/* <div id="mega-menu-full-cta-dropdown" class="mt-1 bg-white border-gray-200 shadow-xs border-y dark:bg-gray-800 dark:border-gray-600">
         <div class="grid max-w-screen-xl px-4 py-5 mx-auto text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6">
             <ul class="space-y-4 sm:mb-4 md:mb-0" aria-labelledby="mega-menu-full-cta-button">
                 <li>
@@ -70,7 +70,7 @@ export default function Home(props) {
                 </a>
             </div>
         </div>
-        </div>
+        </div> */}
 
     </>
   );

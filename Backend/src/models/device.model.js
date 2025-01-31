@@ -16,7 +16,7 @@ const deviceSchema = new Schema(
             type: String,
             required: true,
         },
-        brand: {
+        operatingSystem: {
             type: String,
             required: true,
         },
@@ -44,6 +44,10 @@ const deviceSchema = new Schema(
             required: true,
         },
         display: {
+            type: String,
+            required: true,
+        },
+        body: {
             type: String,
             required: true,
         },
