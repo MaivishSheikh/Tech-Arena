@@ -9,18 +9,64 @@ const deviceList = asyncHandler(async (req, res) => {
         category,
         subCategory,
         deviceName,
-        operatingSystem,
-        performance,
-        processor,
-        memory,
-        storage,
-        display,
-        body,
-        battery,
-        price,
-        frontCamera,
-        rearCamera,
-        additionalFeatures,
+        generalInfo: {
+            brandModel,
+            launchDate,
+            price,
+        },
+        buildDesign: {
+            dimensions,
+            weight,
+            colorAvailable,
+            otherFeatures
+        },
+        display: {
+            size,
+            type,
+            resolution
+        },
+        performance: {
+            processor,
+            gpu,
+            os,
+            memory,
+            storage
+        },
+        cameraSystem: {
+            rearCamera: {
+                noofCameraMP,
+                features
+            },
+            frontCamera: {
+                megaPixels,
+                videoRecording
+            }
+        },
+        batteryCharging: {
+            batteryCapacity,
+            chargingSpeed,
+            batteryType,
+            usbType,
+            chargingFeatures
+        },
+        connectivity: {
+            generation,
+            wifiVersion,
+            bluetoothVersion,
+            sim
+        },
+        audioMultimedia: {
+            speakers,
+            headphoneJack,
+            audioSupport,
+            mic
+        },
+        securitySensors: {
+            fingerprint,
+            faceUnlock,
+            otherSensors
+        },
+        additionalFeatures
     } = req.body;
 
     if (
@@ -28,21 +74,23 @@ const deviceList = asyncHandler(async (req, res) => {
             category,
             subCategory,
             deviceName,
-            operatingSystem,
-            performance,
+            brandModel,
+            launchDate,
+            price,
+            dimensions,
+            weight,
+            size,
             processor,
+            gpu,
+            os,
             memory,
             storage,
-            display,
-            body,
-            battery,
-            price,
-            frontCamera,
-            rearCamera,
-            additionalFeatures,
+            batteryCapacity,
+            chargingSpeed,
+            batteryType,
         ].some((field) => field?.trim() === "")
     ) {
-        throw new ApiError(400, "All fields are required");
+        throw new ApiError(400, "All required fields are required");
     }
 
     const existedDevice = await Device.findOne({
@@ -78,22 +126,69 @@ const deviceList = asyncHandler(async (req, res) => {
     const device = await Device.create({
         category,
         subCategory,
-        deviceName,
-        operatingSystem,
         deviceImage: deviceImage.url,
-        alternateImage: alternateImage.url || "",
-        performance,
-        processor,
-        memory,
-        storage,
-        display,
-        body,
-        battery,
-        price,
-        frontCamera,
-        rearCamera,
+        alternateImage: alternateImage?.url || "", 
+        generalInfo: {
+            brandModel,
+            launchDate,
+            price,
+        },
+        buildDesign: {
+            dimensions,
+            weight,
+            colorAvailable,
+            otherFeatures,
+        },
+        display: {
+            size,
+            type,
+            resolution,
+        },
+        performance: {
+            processor,
+            gpu,
+            os,
+            memory,
+            storage
+        },
+        cameraSystem: {
+            rearCamera: {
+                noofCameraMP,
+                videoRecording,
+                features,
+            },
+            frontCamera: {
+                megaPixels,
+                videoRecording,
+            },
+        },
+        batteryCharging: {
+            batteryCapacity,
+            chargingSpeed,
+            batteryType,
+            usbType,
+            chargingFeatures,
+        },
+        connectivity: {
+            generation,
+            wifiVersion,
+            bluetoothVersion,
+            sim,
+        },
+        audioMultimedia: {
+            speakers,
+            headphoneJack,
+            audioSupport,
+            mic,
+        },
+        securitySensors: {
+            fingerprint,
+            faceUnlock,
+            otherSensors,
+        },
         additionalFeatures,
     });
+    
 
     const listedDevice = await Device.findById(device._id);
 

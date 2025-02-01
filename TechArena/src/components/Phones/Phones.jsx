@@ -37,7 +37,7 @@ const Phones = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const subCategoryFilter = "Content Creation";
+  const subCategoryFilter = "Android";
 
   return (
     <div>
@@ -54,7 +54,7 @@ const Phones = () => {
                 <div className="flex items-center">
                   <img
                     src={imageStates[device._id]} // Use stored image state
-                    alt={device.deviceName}
+                    alt={device.generalInfo.brandModel}
                     onMouseEnter={() =>
                       setImageStates((prev) => ({
                         ...prev,
@@ -72,10 +72,8 @@ const Phones = () => {
                   />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold">{device.deviceName}</h2>
-                  <p className="text-sm text-gray-500">
-                    {device.memory} {device.storage}
-                  </p>
+                  <h2 className="text-lg font-bold">{device.generalInfo.brandModel}</h2>
+                  <p>{device.performance.memory}</p>
                   <div className="flex items-center mt-1">
                     <span className="text-teal-400 text-sm">&#9733; 4.5</span>
                     <span className="ml-2 text-sm text-gray-500">(3,176)</span>
@@ -84,7 +82,7 @@ const Phones = () => {
                 <div className="mt-4">
                   <div className="flex items-baseline">
                     <span className="text-xl font-bold text-black">
-                      ₹{device.price}
+                      ₹{device.generalInfo.price}
                     </span>
                   </div>
                 </div>

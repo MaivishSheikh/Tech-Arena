@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const deviceSchema = new Schema(
+const deviceListSchema = new Schema(
     {
         category: {
             type: String,
@@ -73,19 +73,14 @@ const deviceSchema = new Schema(
             os: {
                 type: String,
                 required: true
-            },
-            memory: {
-                type: String,
-                required: true
-            },
-            storage: {
-                type: String,
-                required: true
             }
         },
         cameraSystem: {
             rearCamera: {
                 noofCamerasMP: {
+                    type: String
+                },
+                videoRecording: {
                     type: String
                 },
                 features: {
@@ -107,7 +102,8 @@ const deviceSchema = new Schema(
                 required: true
             },
             chargingSpeed: {
-                type: String
+                type: String,
+                required: true
             },
             batteryType: {
                 type: String,
@@ -116,7 +112,7 @@ const deviceSchema = new Schema(
             usbType: {
                 type: String
             },
-            chargingFeatures: {
+            features: {
                 type: String
             }
         },
@@ -155,12 +151,20 @@ const deviceSchema = new Schema(
             faceUnlock: {
                 type: String
             },
+            irisScanner: {
+                type: String
+            },
             otherSensors: {
                 type: String
             }
         },
         additionalFeatures: {
-            type: String
+            gamingFeatures: {
+                type: String
+            },
+            aiFeatures: {
+                type: String
+            }
         }
     },
     {
