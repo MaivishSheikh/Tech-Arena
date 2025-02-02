@@ -80,7 +80,7 @@ export default function Carousel() {
             </p>
             <NavLink
               to={slides[activeIndex].link}
-              className="bg-blue-900 hover:bg-blue-600 px-5 py-3 rounded-xl"
+              className="bg-blue-900 hover:bg-blue-600 px-4 py-3 rounded-xl inline-block my-1"
             >
               {slides[activeIndex].btnTxt}
             </NavLink>

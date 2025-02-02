@@ -19,8 +19,6 @@ export default function Devices({imgSrc, title, subtitle, link}) {
         <p className="text-center text-sm font-medium mb-4">
           {subtitle}
         </p>
-
-        {/* Books Image */}
         <div className="relative flex items-center pb-2 justify-center">
           <img
             src={imgSrc}
