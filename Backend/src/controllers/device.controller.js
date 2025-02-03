@@ -26,7 +26,7 @@ const deviceList = asyncHandler(async (req, res) => {
             resolution
         },
         performance: {
-            processor,
+            cpu,
             gpu,
             os,
             memory,
@@ -80,7 +80,7 @@ const deviceList = asyncHandler(async (req, res) => {
             dimensions,
             weight,
             size,
-            processor,
+            cpu,
             gpu,
             os,
             memory,
@@ -145,7 +145,7 @@ const deviceList = asyncHandler(async (req, res) => {
             resolution,
         },
         performance: {
-            processor,
+            cpu,
             gpu,
             os,
             memory,
