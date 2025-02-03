@@ -1,12 +1,26 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [dropdown, setDropdown] = useState("");
+  const [dropdown, setDropdown] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      navigate(`/devices/${searchQuery}`);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
-    <nav className="bg-[#0a0e29] text-white p-4 shadow-lg">
+    <nav className="bg-[#0a0e29] text-white p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="text-2xl font-bold flex items-center">
           <NavLink to="/" className="ml-1">
@@ -14,44 +28,32 @@ export default function Navbar() {
           </NavLink>
         </div>
 
-        {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-6 items-center">
           <li className="hover:text-gray-400 cursor-pointer">Home</li>
           <li className="hover:text-gray-400 cursor-pointer">About Us</li>
+
           <li
             className="relative group"
-            onMouseEnter={() => setDropdown("services")}
+            onMouseEnter={() => setDropdown("devices")}
             onMouseLeave={() => setDropdown("")}
           >
             <span className="flex items-center cursor-pointer">
               Devices <i className="fa-solid fa-chevron-down ml-1"></i>
             </span>
-            {dropdown === "services" && (
-              <ul className="absolute left-0 mt-2 bg-white text-black shadow-lg py-2 w-40 rounded-md">
+            {dropdown === "devices" && (
+              <ul className="absolute left-0 top-full mt-1 bg-white text-black shadow-lg py-2 w-60 rounded-md z-50">
                 <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  <NavLink
-                    to="/phones"
-                    className="flex items-center px-4 py-2 hover:bg-slate-500  hover:text-white"
-                  >
+                  <NavLink to="/phones" className="flex items-center hover:text-white">
                     <div>
                       <h1>Phones</h1>
-                      <p className="text-sm font-light">
-                        Perfect phones, just for you
-                      </p>
+                      <p className="text-sm font-light">Perfect phones, just for you</p>
                     </div>
                   </NavLink>
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  Mobile Apps
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  UI/UX Design
                 </li>
               </ul>
             )}
           </li>
 
-          {/* Blog Dropdown */}
           <li
             className="relative group"
             onMouseEnter={() => setDropdown("blog")}
@@ -61,31 +63,34 @@ export default function Navbar() {
               Blog <i className="fa-solid fa-chevron-down ml-1"></i>
             </span>
             {dropdown === "blog" && (
-              <ul className="absolute left-0 mt-2 bg-white text-black shadow-lg py-2 w-40 rounded-md">
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  Tech News
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  Tutorials
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                  Industry Trends
-                </li>
+              <ul className="absolute left-0 top-full mt-1 bg-white text-black shadow-lg py-2 w-48 rounded-md z-50">
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Tech News</li>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Tutorials</li>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Industry Trends</li>
               </ul>
             )}
           </li>
 
           <li className="hover:text-gray-400 cursor-pointer">Contact</li>
 
-          {/* Search Bar */}
-          <input
-            type="text"
-            placeholder="Search here..."
-            className="px-3 py-1 rounded-md bg-gray-800 text-white outline-none"
-          />
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Search here..."
+              className="px-3 py-1 rounded-md bg-gray-800 text-white outline-none"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+            <button
+              onClick={handleSearch}
+              className="ml-2 px-4 py-1 rounded-md bg-blue-600 text-white"
+            >
+              Search
+            </button>
+          </div>
         </ul>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden focus:outline-none"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -98,7 +103,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <ul className="md:hidden bg-[#0a0e29] p-4 space-y-2">
           <li className="hover:text-gray-400 cursor-pointer">Home</li>
@@ -106,54 +110,50 @@ export default function Navbar() {
 
           <li
             className="cursor-pointer flex justify-between"
-            onClick={() =>
-              setDropdown(dropdown === "services" ? "" : "services")
-            }
+            onClick={() => setDropdown(dropdown === "devices" ? null : "devices")}
           >
-            Services <i className="fa-solid fa-chevron-down"></i>
+            Devices <i className="fa-solid fa-chevron-down"></i>
           </li>
-          {dropdown === "services" && (
+          {dropdown === "devices" && (
             <ul className="bg-white text-black py-2 rounded-md">
               <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                Web Development
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                Mobile Apps
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                UI/UX Design
+                <NavLink to="/phones" className="block">Phones</NavLink>
               </li>
             </ul>
           )}
 
           <li
             className="cursor-pointer flex justify-between"
-            onClick={() => setDropdown(dropdown === "blog" ? "" : "blog")}
+            onClick={() => setDropdown(dropdown === "blog" ? null : "blog")}
           >
             Blog <i className="fa-solid fa-chevron-down"></i>
           </li>
           {dropdown === "blog" && (
             <ul className="bg-white text-black py-2 rounded-md">
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                Tech News
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                Tutorials
-              </li>
-              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                Industry Trends
-              </li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Tech News</li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Tutorials</li>
+              <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Industry Trends</li>
             </ul>
           )}
 
           <li className="hover:text-gray-400 cursor-pointer">Contact</li>
-
-          {/* Search Bar */}
-          <input
-            type="text"
-            placeholder="Search here..."
-            className="w-full px-3 py-1 rounded-md bg-gray-800 text-white outline-none"
-          />
+          
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Search here..."
+              className="w-full px-3 py-1 rounded-md bg-gray-800 text-white outline-none"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
+            <button
+              onClick={handleSearch}
+              className="ml-2 px-4 py-1 rounded-md bg-blue-600 text-white"
+            >
+              Search
+            </button>
+          </div>
         </ul>
       )}
     </nav>

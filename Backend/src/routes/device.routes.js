@@ -1,9 +1,6 @@
 import { Router } from "express";
-import { deviceList, getDevice } from "../controllers/device.controller.js";
+import { deviceList, getDevice, getDeviceByName } from "../controllers/device.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
-
-console.log("Devices function:", deviceList); 
-console.log("GetDevice function:", getDevice);
 
 const router = Router();
 
@@ -22,5 +19,11 @@ router.route("/listDevices").post(
 );
 
 router.get("/", getDevice);
+
+router.get('/:brandModel', getDeviceByName);
+
+router.get('/day', (req, res) => {
+    res.send('GET request to homepage')
+  })
 
 export default router;

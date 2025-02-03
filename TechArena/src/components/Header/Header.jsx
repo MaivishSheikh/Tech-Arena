@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function Header(props) {
   return (
     <>
-      <header className="shadow-md">
+      <header>
         <div className="mx-auto px-4 flex justify-center items-center py-3 bg-slate-800 text-white" style={{background: "#072B3B"}}>
           <div className="flex justify-between items-center">
             <span className="text-3xl font-semibold">TechArena</span>
@@ -20,8 +20,8 @@ export default function Header(props) {
                     Devices
                     <i class="fa-solid fa-sort-down"></i>
                   </button>
-                  <div className="absolute hidden group-hover:block rounded-lg shadow-lg w-48 z-10 p-3">
-                    <div className="absolute left-0 bg-cyan-900 text-gray-300 shadow-lg rounded-lg mt-2 py-5 w-64 z-50">
+                  <div className="absolute hidden group-hover:block rounded-lg w-48 z-10 p-3">
+                    <div className="absolute left-0 bg-cyan-900 text-gray-300 rounded-lg mt-2 py-5 w-64 z-50">
                       <ul className="flex flex-col">
                         <li>
                           <NavLink
@@ -73,8 +73,8 @@ export default function Header(props) {
                     Services
                     <i class="fa-solid fa-sort-down"></i>
                   </button>
-                  <div className="absolute hidden group-hover:block rounded-lg shadow-lg w-48 z-10 p-3">
-                    <div className="absolute left-0 bg-cyan-900 text-gray-300 shadow-lg rounded-lg mt-2 py-5 w-64 z-50">
+                  <div className="absolute hidden group-hover:block rounded-lg w-48 z-10 p-3">
+                    <div className="absolute left-0 bg-cyan-900 text-gray-300 rounded-lg mt-2 py-5 w-64 z-50">
                       <ul className="flex flex-col">
                         <li>
                           <NavLink

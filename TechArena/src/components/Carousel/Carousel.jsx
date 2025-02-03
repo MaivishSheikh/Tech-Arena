@@ -45,7 +45,7 @@ export default function Carousel() {
     <div className="relative">
       <div
         className="w-full overflow-hidden duration-3000 ease-in"
-        style={{ height: "630px", position: "relative" }}
+        style={{ height: "500px", position: "relative" }}
       >
         <div
           className="absolute inset-0"

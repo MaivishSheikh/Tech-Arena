@@ -1,31 +1,87 @@
-import React from "react";
-import mobileBG from "../../assets/mobileBG.jpg";
-import { NavLink } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export default function Devices({imgSrc, title, subtitle, link}) {
+const Devices = () => {
+  const { deviceName } = useParams(); // Get device name from URL
+  const [device, setDevice] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [imageState, setImageState] = useState("");
+
+  useEffect(() => {
+    const fetchDeviceDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/v1/devices/${deviceName}`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+
+        if (result.success) {
+          setDevice(result.data);
+          setImageState(result.data.deviceImage); // Initialize image state
+        } else {
+          setError(result.message);
+        }
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError("Failed to fetch device details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (deviceName) {
+      fetchDeviceDetails();
+    } else {
+      setError("Device name is missing.");
+      setLoading(false);
+    }
+  }, [deviceName]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <>
-      <NavLink to={link}
-        className="relative text-white pt-9 rounded-2xl w-96"
-        style={{
-          background: `url(${mobileBG})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          width: "360px",
-        }}
+      <div className="border mx-5 my-3">
+        <h1
+          className="text-3xl text-center"
+          style={{ fontFamily: "Ubuntu", fontWeight: 800 }}
+        >
+          {device.generalInfo.brandModel}
+        </h1>
+      </div>
+      <div
+        className="flex justify-around p-2 border mx-auto items-center"
+        style={{ width: "1000px" }}
       >
-        <h2 className="text-3xl font-bold text-center mb-2">{title}</h2>
-        <p className="text-center text-sm font-medium mb-4">
-          {subtitle}
-        </p>
-        <div className="relative flex items-center pb-2 justify-center">
+        <div className="w-64 h-64 border p-2" style={{ width: "300px" }}>
           <img
-            src={imgSrc}
-            className="w-full h-auto object-contain"
+            src={imageState}
+            alt={device.generalInfo.brandModel}
+            onMouseEnter={() => setImageState(device.alternateImage)}
+            onMouseLeave={() => setImageState(device.deviceImage)}
+            className="transition-all duration-2000 ease-in-out transform w-full h-full"
           />
         </div>
-      </NavLink>
+        <div className="flex justify-between" style={{ width: "500px" }}>
+          <div>
+            <p>{device.generalInfo.launchDate}</p>
+            <p>{device.generalInfo.price}</p>
+            <p>{device.performance.memory} RAM</p>
+            <p>{device.performance.storage}</p>
+          </div>
+          <div>
+            <p>{device.performance.cpu}</p>
+            <p>{device.cameraSystem.frontCamera.megaPixels} MP</p>
+          </div>
+        </div>
+      </div>
     </>
   );
-}
+};
+
+export default Devices;

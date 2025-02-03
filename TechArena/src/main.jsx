@@ -13,7 +13,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" element={<Home />} />
-      <Route path="/devices" element={<Devices />} />
+      <Route path="/devices/:deviceName" element={<Devices />} />
       <Route path="/phones" element={<Phones />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/users" element={<User />} />

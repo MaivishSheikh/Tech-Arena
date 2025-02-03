@@ -48,8 +48,8 @@ const NewCards = () => {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <h2 className="text-3xl font-bold text-center xl:text-2xl lg:text-xl md:text-lg sm:text-lg mb-2">{device.title}</h2>
-          <p className="text-center text-sm font-medium lg:text-md md:text-md sm:text-sm mb-4">{device.subtitle}</p>
+          <h2 className="text-3xl font-bold text-center xl:text-2xl lg:text-xl md:text-lg sm:text-2xl mb-2">{device.title}</h2>
+          <p className="text-center text-sm font-medium lg:text-md md:text-md sm:text-md mb-4">{device.subtitle}</p>
           <div className="relative flex items-center pb-2 justify-center">
             <img src={device.imgSrc} className="w-full h-auto object-contain" alt={device.title} />
           </div>

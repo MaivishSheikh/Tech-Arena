@@ -62,7 +62,7 @@ const deviceSchema = new Schema(
             }
         },
         performance: {
-            processor: {
+            cpu: {
                 type: String,
                 required: true
             },
@@ -89,6 +89,9 @@ const deviceSchema = new Schema(
                     type: String
                 },
                 features: {
+                    type: String
+                },
+                video: {
                     type: String
                 }
             },

@@ -8,98 +8,76 @@ const deviceList = asyncHandler(async (req, res) => {
     const {
         category,
         subCategory,
-        deviceName,
-        generalInfo: {
-            brandModel,
-            launchDate,
-            price,
-        },
-        buildDesign: {
-            dimensions,
-            weight,
-            colorAvailable,
-            otherFeatures
-        },
-        display: {
-            size,
-            type,
-            resolution
-        },
-        performance: {
-            cpu,
-            gpu,
-            os,
-            memory,
-            storage
-        },
+        generalInfo: { brandModel, launchDate, price },
+        buildDesign: { dimensions, weight, colorAvailable, otherFeatures },
+        display: { size, type, resolution },
+        performance: { cpu, gpu, os, memory, storage },
         cameraSystem: {
-            rearCamera: {
-                noofCameraMP,
-                features
-            },
-            frontCamera: {
-                megaPixels,
-                videoRecording
-            }
+            rearCamera: { noofCamerasMP, features, video },
+            frontCamera: { megaPixels, videoRecording },
         },
         batteryCharging: {
             batteryCapacity,
             chargingSpeed,
             batteryType,
             usbType,
-            chargingFeatures
+            chargingFeatures,
         },
-        connectivity: {
-            generation,
-            wifiVersion,
-            bluetoothVersion,
-            sim
-        },
-        audioMultimedia: {
-            speakers,
-            headphoneJack,
-            audioSupport,
-            mic
-        },
-        securitySensors: {
-            fingerprint,
-            faceUnlock,
-            otherSensors
-        },
-        additionalFeatures
+        connectivity: { generation, wifiVersion, bluetoothVersion, sim },
+        audioMultimedia: { speakers, headphoneJack, audioSupport, mic },
+        securitySensors: { fingerprint, faceUnlock, otherSensors },
+        additionalFeatures,
     } = req.body;
 
     if (
         [
             category,
             subCategory,
-            deviceName,
             brandModel,
             launchDate,
             price,
             dimensions,
             weight,
+            colorAvailable,
+            otherFeatures,
             size,
+            type,
+            resolution,
             cpu,
             gpu,
             os,
             memory,
             storage,
+            noofCamerasMP,
+            features,
+            video,
+            megaPixels,
+            videoRecording,
             batteryCapacity,
             chargingSpeed,
             batteryType,
+            usbType,
+            chargingFeatures,
+            generation,
+            wifiVersion,
+            bluetoothVersion,
+            sim,
+            speakers,
+            headphoneJack,
+            audioSupport,
+            mic,
+            fingerprint,
+            faceUnlock,
+            otherSensors,
+            additionalFeatures,
         ].some((field) => field?.trim() === "")
     ) {
         throw new ApiError(400, "All required fields are required");
     }
 
     const existedDevice = await Device.findOne({
-        $or: [{ deviceName }],
+        "generalInfo.brandModel": brandModel, // Corrected this line
     });
-
-    if (existedDevice) {
-        throw new ApiError(409, "This Device already exists");
-    }
 
     const deviceImageLocalPath = req.files?.deviceImage[0]?.path;
 
@@ -127,7 +105,7 @@ const deviceList = asyncHandler(async (req, res) => {
         category,
         subCategory,
         deviceImage: deviceImage.url,
-        alternateImage: alternateImage?.url || "", 
+        alternateImage: alternateImage?.url || "",
         generalInfo: {
             brandModel,
             launchDate,
@@ -149,12 +127,12 @@ const deviceList = asyncHandler(async (req, res) => {
             gpu,
             os,
             memory,
-            storage
+            storage,
         },
         cameraSystem: {
             rearCamera: {
-                noofCameraMP,
-                videoRecording,
+                noofCamerasMP,
+                video,
                 features,
             },
             frontCamera: {
@@ -188,7 +166,6 @@ const deviceList = asyncHandler(async (req, res) => {
         },
         additionalFeatures,
     });
-    
 
     const listedDevice = await Device.findById(device._id);
 
@@ -217,4 +194,21 @@ const getDevice = asyncHandler(async (req, res) => {
     );
 });
 
-export { deviceList, getDevice }
+const getDeviceByName = asyncHandler(async (req, res) => {
+    const { brandModel } = req.params;
+    if (!brandModel) {
+        throw new ApiError(400, "Brand model is required");
+    }
+    const device = await Device.findOne({
+        "generalInfo.brandModel": brandModel,
+    });
+    if (!device) {
+        throw new ApiError(404, "Device not found");
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, device, "Device fetched successfully")
+    );
+});
+
+export { deviceList, getDevice, getDeviceByName };
