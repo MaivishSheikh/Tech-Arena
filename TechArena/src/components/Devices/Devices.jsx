@@ -21,7 +21,7 @@ const Devices = () => {
 
         if (result.success) {
           setDevice(result.data);
-          setImageState(result.data.deviceImage); // Initialize image state
+          setImageState(result.data.deviceImage);
         } else {
           setError(result.message);
         }

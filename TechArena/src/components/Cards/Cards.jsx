@@ -12,12 +12,12 @@ const CardSlider = ({ cardsToShow = 4 }) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+        const result = await response.json();
 
-        if (data.success && Array.isArray(data.data)) {
-          setDevices(data.data);
+        if (result.success) {
+          setDevices(result.data);
         } else {
-          console.error("Invalid data format from API:", data);
+          console.error("Invalid data format from API:", result);
           setDevices([{ deviceName: "No data available", deviceImage: "" }]);
         }
       } catch (error) {
