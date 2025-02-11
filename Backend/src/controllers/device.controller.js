@@ -64,7 +64,6 @@ const deviceList = asyncHandler(async (req, res) => {
             headphoneJack,
             audioSupport,
             mic,
-            features,
             fingerprint,
             faceUnlock,
             otherSensors,
@@ -155,8 +154,7 @@ const deviceList = asyncHandler(async (req, res) => {
             speakers,
             headphoneJack,
             audioSupport,
-            mic,
-            features,
+            mic
         },
         securitySensors: {
             fingerprint,

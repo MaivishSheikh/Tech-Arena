@@ -105,16 +105,12 @@ const deviceSchema = new Schema(
             }
         },
         batteryCharging: {
-            batteryCapacity: {
+            batteryTC: {
                 type: String,
                 required: true
             },
             chargingSpeed: {
                 type: String
-            },
-            batteryType: {
-                type: String,
-                required: true
             },
             usbType: {
                 type: String
@@ -124,7 +120,7 @@ const deviceSchema = new Schema(
             }
         },
         connectivity: {
-            generation: {
+            networkVersion: {
                 type: String
             },
             wifiVersion: {
@@ -148,6 +144,9 @@ const deviceSchema = new Schema(
                 type: String
             },
             mic: {
+                type: String
+            },
+            audioSupport: {
                 type: String
             }
         },

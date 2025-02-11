@@ -58,13 +58,14 @@ const Devices = () => {
         className="flex justify-around p-2 border mx-auto items-center"
         style={{ width: "1000px" }}
       >
-        <div className="w-64 h-64 border p-2" style={{ width: "300px" }}>
+        <div className="border flex items-center p-4" style={{ width: "300px", height: "300px" }}>
           <img
             src={imageState}
             alt={device.generalInfo.brandModel}
             onMouseEnter={() => setImageState(device.alternateImage)}
             onMouseLeave={() => setImageState(device.deviceImage)}
-            className="transition-all duration-2000 ease-in-out transform w-full h-full"
+            className="transition-all duration-2000 ease-in-out transform"
+            style={{width: "500px", height: "250px"}}
           />
         </div>
         <div className="flex justify-between" style={{ width: "500px" }}>

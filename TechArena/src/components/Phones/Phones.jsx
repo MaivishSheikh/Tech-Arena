@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import FilterBar from "../FilterBar/FilterBar";
 
 const Phones = () => {
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [imageStates, setImageStates] = useState({}); 
+  const [imageStates, setImageStates] = useState({});
+  const [filters, setFilters] = useState({
+    brands: [],
+    subCategory: [],
+    operatingSystem: [],
+  });
+
+  const location = useLocation();
+  const { subCategory: querySubCategory } = location.state || {};
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,70 +42,69 @@ const Phones = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (querySubCategory) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        subCategory: [querySubCategory],
+      }));
+    }
+  }, [querySubCategory]);
+
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const subCategoryFilter = "Android";
+  const filteredDevices = devices.filter((device) => {
+    const matchesBrand =
+      filters.brands.length === 0 || filters.brands.some((sub) => device.subCategory.split(", ").includes(sub));
+    const matchesCategory =
+      filters.subCategory.length === 0 || filters.subCategory.some((sub) => device.subCategory.split(", ").includes(sub));
+    const matchesOS =
+      filters.operatingSystem.length === 0 || filters.operatingSystem.some((sub) => device.subCategory.split(", ").includes(sub));
+
+    return matchesBrand && matchesCategory && matchesOS;
+  });
+
   return (
-    <div>
-      <h1>Devices</h1>
-      <ul className="grid grid-cols-3 p-5 gap-4">
-        {devices
-          .filter(
-            (device) =>
-              device.category === "Phone" &&
-              device.subCategory.split(", ").includes(subCategoryFilter) 
-          )
-          .map((device) => (
+    <div className="flex">
+      <FilterBar setFilters={handleFilterChange} />
+      <div>
+        <ul className="grid grid-cols-4 p-5 gap-4">
+          {filteredDevices.map((device) => (
             <li key={device._id}>
-              <div className="max-w-sm p-4 bg-white shadow-lg rounded-lg border">
-                <div className="flex items-center">
-                  <img
-                    src={imageStates[device._id]}
-                    alt={device.generalInfo.brandModel}
-                    onMouseEnter={() =>
-                      setImageStates((prev) => ({
-                        ...prev,
-                        [device._id]: device.alternateImage,
-                      }))
-                    }
-                    onMouseLeave={() =>
-                      setImageStates((prev) => ({
-                        ...prev,
-                        [device._id]: device.deviceImage,
-                      }))
-                    }
-                    className="p-4 transition-all duration-1000 ease-in"
-                    style={{ width: "500px", height: "350px" }}
-                  />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold">
-                    {device.generalInfo.brandModel}
-                  </h2>
-                  <p>{device.performance.memory}</p>
-                  <div className="flex items-center mt-1">
-                    <span className="text-teal-400 text-sm">&#9733; 4.5</span>
-                    <span className="ml-2 text-sm text-gray-500">(3,176)</span>
+              <NavLink to={`/devices/${device.generalInfo.brandModel}`}>
+                <div className="p-4 bg-white shadow-lg rounded-lg border" style={{ maxWidth: "300px" }}>
+                  <div className="flex items-center flex-col">
+                    <img
+                      src={imageStates[device._id]}
+                      alt={device.generalInfo.brandModel}
+                      onMouseEnter={() =>
+                        setImageStates((prev) => ({
+                          ...prev,
+                          [device._id]: device.alternateImage,
+                        }))
+                      }
+                      onMouseLeave={() =>
+                        setImageStates((prev) => ({
+                          ...prev,
+                          [device._id]: device.deviceImage,
+                        }))
+                      }
+                      className="p-2 transition-all duration-1000 ease-in"
+                      style={{ width: "300px", height: "250px" }}
+                    />
+                    <h2 className="text-lg font-bold">{device.generalInfo.brandModel}</h2>
                   </div>
                 </div>
-                <div className="my-3">
-                  <div className="flex items-baseline">
-                    <span className="text-xl font-bold text-black">
-                      {device.generalInfo.price}
-                    </span>
-                  </div>
-                </div>
-                <NavLink to={`/devices/${device.generalInfo.brandModel}`} className="mt-4 w-full bg-teal-500 hover:bg-cyan-600 text-white py-2 px-4 rounded">
-                  View Details
-                </NavLink>
-                <p className="text-sm text-blue-500 mt-2 cursor-pointer hover:underline">
-                  +2 other colors/patterns
-                </p>
-              </div>
+              </NavLink>
             </li>
           ))}
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 };
