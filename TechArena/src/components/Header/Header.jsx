@@ -26,7 +26,7 @@ export default function Header() {
         <div
           style={{ fontFamily: "Ubuntu", fontSize: "30px", fontWeight: 700 }}
         >
-          TechArena
+          <NavLink to="/">TechArena</NavLink>
         </div>
         <nav className="mx-10 flex justify-between items-center">
           <ul className="flex flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0">

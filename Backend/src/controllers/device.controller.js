@@ -74,7 +74,7 @@ const deviceList = asyncHandler(async (req, res) => {
     }
 
     const existedDevice = await Device.findOne({
-        "generalInfo.brandModel": brandModel, // Corrected this line
+        "generalInfo.brandModel": brandModel,
     });
 
     const deviceImageLocalPath = req.files?.deviceImage[0]?.path;

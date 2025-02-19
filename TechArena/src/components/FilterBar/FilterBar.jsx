@@ -48,11 +48,13 @@ export default function FilterBar({ setFilters }) {
       brands: [],
       subCategory: [],
       operatingSystem: [],
+      price: []
     });
     setFilters({
       brands: [],
       subCategory: [],
       operatingSystem: [],
+      price: []
     });
   };
 

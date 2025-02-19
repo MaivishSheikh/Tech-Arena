@@ -17,7 +17,9 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 import deviceRouter from "./routes/device.routes.js"
+import brandRouter from "./routes/brand.routes.js"
 
 app.use("/api/v1/devices", deviceRouter)
+app.use("/api/v1/brands", brandRouter)
 
 export { app };

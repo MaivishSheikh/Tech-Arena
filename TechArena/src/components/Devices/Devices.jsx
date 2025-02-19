@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const Devices = () => {
-  const { deviceName } = useParams(); // Get device name from URL
+  const { deviceName } = useParams();
   const [device, setDevice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,47 +41,227 @@ const Devices = () => {
     }
   }, [deviceName]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className="text-center text-lg">Loading...</p>;
+  if (error)
+    return <p className="text-center text-lg text-red-500">Error: {error}</p>;
+
+  const psz = "20px"
+  const ssz = "15px"
 
   return (
-    <>
-      <div className="border mx-5 my-3">
-        <h1
-          className="text-3xl text-center"
-          style={{ fontFamily: "Ubuntu", fontWeight: 800 }}
-        >
-          {device.generalInfo.brandModel}
-        </h1>
-      </div>
-      <div
-        className="flex justify-around p-2 border mx-auto items-center"
-        style={{ width: "1000px" }}
-      >
-        <div className="border flex items-center p-4" style={{ width: "300px", height: "300px" }}>
+    <div className="mx-auto p-5">
+      <h1 className="text-3xl font-bold text-center mb-5">
+        {device.generalInfo.brandModel}
+      </h1>
+      <div className="flex items-center justify-center bg-white shadow-md rounded-md mb-3 py-3">
+        <div className="w-1/3">
           <img
             src={imageState}
             alt={device.generalInfo.brandModel}
             onMouseEnter={() => setImageState(device.alternateImage)}
             onMouseLeave={() => setImageState(device.deviceImage)}
-            className="transition-all duration-2000 ease-in-out transform"
-            style={{width: "500px", height: "250px"}}
+            className="w-60 h-64 object-contain transition-all duration-300 ease-in-out"
           />
         </div>
-        <div className="flex justify-between" style={{ width: "500px" }}>
-          <div>
-            <p>{device.generalInfo.launchDate}</p>
-            <p>{device.generalInfo.price}</p>
-            <p>{device.performance.memory} RAM</p>
-            <p>{device.performance.storage}</p>
+        <div>
+          <p className="text-lg font-semibold">
+            Launch Date:{" "}
+            <span style={{ fontWeight: 400, fontSize: {ssz} }}>
+              {device.generalInfo.launchDate}
+            </span>
+          </p>
+
+          <p className="text-lg font-semibold">
+            Price:{" "}
+            <span style={{ fontWeight: 400, fontSize: {ssz} }}>
+              {device.generalInfo.price}
+            </span>
+          </p>
+          <p className="text-lg font-semibold">
+            Front Camera:{" "}
+            <span style={{ fontWeight: 400, fontSize: {ssz} }}>
+              {device.cameraSystem.frontCamera.megaPixels}
+            </span>
+          </p>
+          <p className="text-lg font-semibold">
+            Battery:{" "}
+            <span style={{ fontWeight: 400, fontSize: {ssz} }}>
+              {device.batteryCharging.batteryTC}
+            </span>
+          </p>
+        </div>
+      </div>
+      <div className="flex gap-5 border p-5 rounded-lg shadow-md bg-white">
+        <div className="w-max grid grid-cols-3 gap-3">
+          <div className="border p-3 rounded-lg shadow-sm bg-gray-100">
+            <h2
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: 600,
+                fontSize: "25px",
+              }}
+            >
+              Performance
+            </h2>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600, fontSize: {psz} }}>
+              CPU:{" "}
+              <span style={{ fontWeight: 400, fontSize: {ssz} }}>{device.performance.cpu}</span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              GPU:{" "}
+              <span style={{ fontWeight: 400 }}>{device.performance.gpu}</span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Memory:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.performance.memory} RAM
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Storage:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.performance.storage} ROM
+              </span>
+            </p>
           </div>
-          <div>
-            <p>{device.performance.cpu}</p>
-            <p>{device.cameraSystem.frontCamera.megaPixels} MP</p>
+          <div className="border p-3 rounded-lg shadow-sm bg-gray-100">
+            <h2
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: 600,
+                fontSize: "30px",
+              }}
+            >
+              Display
+            </h2>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Size:{" "}
+              <span style={{ fontWeight: 400 }}>{device.display.size}</span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Type:{" "}
+              <span style={{ fontWeight: 400 }}>{device.display.type}</span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Resolution:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.display.resolution}
+              </span>
+            </p>
+          </div>
+          <div className="border p-3 rounded-lg shadow-sm bg-gray-100" style={{fontSize: "15px"}}>
+            <h2
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: 600,
+                fontSize: "30px",
+              }}
+            >
+              Rear Camera
+            </h2>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Cameras:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.cameraSystem.rearCamera.noofCamerasMP}
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Features:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.cameraSystem.rearCamera.features}
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Video:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.cameraSystem.rearCamera.video}
+              </span>
+            </p>
+          </div>
+          <div className="border p-3 rounded-lg shadow-sm bg-gray-100" style={{fontSize: "15px"}}>
+            <h2
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: 600,
+                fontSize: "30px",
+              }}
+            >
+              Front Camera
+            </h2>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Cameras:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.cameraSystem.frontCamera.megaPixels}
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Video:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.cameraSystem.frontCamera.videoRecording}
+              </span>
+            </p>
+          </div>
+          <div className="border p-3 rounded-lg shadow-sm bg-gray-100">
+            <h2
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: 600,
+                fontSize: "30px",
+              }}
+            >
+              Battery
+            </h2>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Capacity:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.batteryCharging.batteryTC} mAh
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Charging Speed:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.batteryCharging.chargingSpeed}
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              USB Type:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.batteryCharging.usbType}
+              </span>
+            </p>
+          </div>
+          <div className="border p-3 rounded-lg shadow-sm bg-gray-100">
+            <h2
+              style={{
+                fontFamily: "Ubuntu",
+                fontWeight: 600,
+                fontSize: "30px",
+              }}
+            >
+              Build
+            </h2>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Dimensions:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.buildDesign.dimensions} 
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Weight:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.buildDesign.weight}
+              </span>
+            </p>
+            <p style={{ fontFamily: "Ubuntu", fontWeight: 600 }}>
+              Color Available:{" "}
+              <span style={{ fontWeight: 400 }}>
+                {device.buildDesign.colorAvailable}
+              </span>
+            </p>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
