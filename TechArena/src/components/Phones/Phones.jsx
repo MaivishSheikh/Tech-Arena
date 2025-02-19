@@ -77,7 +77,7 @@ const Phones = () => {
           {filteredDevices.map((device) => (
             <li key={device._id}>
               <NavLink to={`/devices/${device.generalInfo.brandModel}`}>
-                <div className="p-4 bg-white shadow-lg rounded-lg border" style={{ maxWidth: "300px" }}>
+                <div className="p-4 bg-white shadow-lg rounded-lg border" style={{ maxWidth: "300px", height: "350px" }}>
                   <div className="flex items-center flex-col">
                     <img
                       src={imageStates[device._id]}
