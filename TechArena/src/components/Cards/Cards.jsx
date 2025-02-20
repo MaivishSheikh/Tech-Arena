@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 const Cards = ({ cardsToShow = 6 }) => {
   const [devices, setDevices] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -19,9 +21,10 @@ const Cards = ({ cardsToShow = 6 }) => {
           console.error("Invalid data format from API:", result);
           setDevices([]);
         }
-      } catch (error) {
-        console.error("Error fetching devices:", error);
-        setDevices([]);
+      } catch (err) {
+        setError("Failed to fetch devices.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchDevices();
@@ -41,6 +44,14 @@ const Cards = ({ cardsToShow = 6 }) => {
   if (devices.length === 0) {
     return <div className="text-center text-lg mt-10">Loading...</div>;
   }
+
+  if (loading)
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <Spinner className="h-16 w-16 text-gray-900/50" />
+      </div>
+    );
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
@@ -135,7 +146,14 @@ const Cards = ({ cardsToShow = 6 }) => {
           </div>
         </div>
       </div>
-      <div style={{width: "1450px", margin: "auto", borderBottom: "1px solid black", padding: "10px 0"}} />
+      <div
+        style={{
+          width: "1450px",
+          margin: "auto",
+          borderBottom: "1px solid black",
+          padding: "10px 0",
+        }}
+      />
     </>
   );
 };

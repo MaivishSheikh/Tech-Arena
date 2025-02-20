@@ -18,8 +18,4 @@ router.get("/", getBrand);
 
 router.get('/:title', getBrandByName);
 
-router.get('/day', (req, res) => {
-    res.send('GET request to homepage')
-})
-
 export default router;

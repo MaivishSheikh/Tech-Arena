@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import FilterBar from "../FilterBar/FilterBar";
+import { Spinner } from "@material-tailwind/react";
 
 const Phones = () => {
   const [devices, setDevices] = useState([]);
@@ -55,9 +56,14 @@ const Phones = () => {
     setFilters(newFilters);
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <Spinner className="h-16 w-16 text-gray-900/50" />
+      </div>
+    );
   if (error) return <p>Error: {error}</p>;
-
+  
   const filteredDevices = devices.filter((device) => {
     const matchesBrand =
       filters.brands.length === 0 || filters.brands.some((sub) => device.subCategory.split(", ").includes(sub));
