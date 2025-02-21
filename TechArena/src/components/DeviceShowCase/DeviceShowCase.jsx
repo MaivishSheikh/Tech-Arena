@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import FilterBar from "../FilterBar/FilterBar";
 import { Spinner } from "@material-tailwind/react";
 
-const Phones = () => {
+const DeviceShowCase = () => {
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,11 +12,12 @@ const Phones = () => {
     brands: [],
     subCategory: [],
     operatingSystem: [],
+    category: "All",
   });
 
   const location = useLocation();
   const { subCategory: querySubCategory } = location.state || {};
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,6 +43,17 @@ const Phones = () => {
 
     fetchData();
   }, []);
+
+  const { category: queryCategory } = location.state || {};
+
+useEffect(() => {
+  if (queryCategory) {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      category: queryCategory,
+    }));
+  }
+}, [queryCategory]);
 
   useEffect(() => {
     if (querySubCategory) {
@@ -71,8 +83,10 @@ const Phones = () => {
       filters.subCategory.length === 0 || filters.subCategory.some((sub) => device.subCategory.split(", ").includes(sub));
     const matchesOS =
       filters.operatingSystem.length === 0 || filters.operatingSystem.some((sub) => device.subCategory.split(", ").includes(sub));
+    const matchesDeviceCategory =
+      filters.category === "All" || device.category === filters.category;
 
-    return matchesBrand && matchesCategory && matchesOS;
+    return matchesBrand && matchesCategory && matchesOS && matchesDeviceCategory;
   });
 
   return (
@@ -115,4 +129,4 @@ const Phones = () => {
   );
 };
 
-export default Phones;
+export default DeviceShowCase;

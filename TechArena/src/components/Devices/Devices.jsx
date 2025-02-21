@@ -123,60 +123,82 @@ const Devices = () => {
       value: device.display.size
     },
     {
-      icon: "",
+      icon: "fa-solid fa-code",
       value: device.performance.os
+    },
+    {
+      icon: "fa-solid fa-microchip",
+      value: device.performance.cpu?.split("(")[0],
+    },
+    {
+      icon: "bi bi-aspect-ratio-fill",
+      value: device.buildDesign.dimensions
+    },
+    {
+      icon: "bi bi-badge-hd-fill",
+      value: device.display.resolution
+    },
+    {
+      icon: "bi bi-floppy-fill",
+      value: device.performance.storage
     }
   ]
+  const mainCameraExists =
+  device.cameraSystem.rearCamera.noofCamerasMP &&
+  device.cameraSystem.rearCamera.features &&
+  device.cameraSystem.rearCamera.video;
 
-  const deviceDetails = {
-    Performance: {
-      CPU: device.performance.cpu,
-      GPU: device.performance.gpu,
-      OS: device.performance.os,
-      Memory: device.performance.memory,
-      Storage: device.performance.storage,
-    },
-    Display: {
-      Size: device.display.size,
-      Type: device.display.type,
-      Resolution: device.display.resolution,
-    },
-    Build: {
-      Dimensions: device.buildDesign.dimensions,
-      Weight: device.buildDesign.weight,
-      "Color Available": device.buildDesign.colorAvailable,
-    },
+const deviceDetails = {
+  Performance: {
+    CPU: device.performance.cpu,
+    GPU: device.performance.gpu,
+    OS: device.performance.os,
+    Memory: device.performance.memory,
+    Storage: device.performance.storage,
+  },
+  Display: {
+    Size: device.display.size,
+    Type: device.display.type,
+    Resolution: device.display.resolution,
+  },
+  Build: {
+    Dimensions: device.buildDesign.dimensions,
+    Weight: device.buildDesign.weight,
+    "Color Available": device.buildDesign.colorAvailable,
+  },
+  ...(mainCameraExists && {
     "Main Camera": {
       Cameras: device.cameraSystem.rearCamera.noofCamerasMP,
       Features: device.cameraSystem.rearCamera.features,
       "Video Recording": device.cameraSystem.rearCamera.video,
     },
-    "Front Camera": {
-      Camera: device.cameraSystem.frontCamera.megaPixels,
-      "Video Recording": device.cameraSystem.frontCamera.videoRecording,
-    },
-    Battery: {
-      "Battery Type": device.batteryCharging.batteryTC,
-      "Charging Speed": device.batteryCharging.chargingSpeed,
-      "USB Type": device.batteryCharging.usbType,
-    },
-    Connectivity: {
-      "Network Version": device.connectivity.networkVersion,
-      "WiFi Version": device.connectivity.wifiVersion,
-      "Bluetooth Version": device.connectivity.bluetoothVersion,
-      Sim: device.connectivity.sim,
-    },
-    Multimedia: {
-      Speakers: device.audioMultimedia.speakers,
-      "Headphone Jack": device.audioMultimedia.headphoneJack,
-      Mic: device.audioMultimedia.mic || "No",
-    },
-    "Security Sensors": {
-      "Fingerprint Sensor": device.securitySensors.fingerprint,
-      "Face Unlock": device.securitySensors.faceUnlock,
-      "Other Sensors": device.securitySensors.otherSensors,
-    },
-  };
+  }),
+  "Front Camera": {
+    Camera: device.cameraSystem.frontCamera.megaPixels,
+    "Video Recording": device.cameraSystem.frontCamera.videoRecording,
+  },
+  Battery: {
+    "Battery Type": device.batteryCharging.batteryTC,
+    "Charging Speed": device.batteryCharging.chargingSpeed,
+    "USB Type": device.batteryCharging.usbType,
+  },
+  Connectivity: {
+    "Network Version": device.connectivity.networkVersion || "Not Available",
+    "WiFi Version": device.connectivity.wifiVersion,
+    "Bluetooth Version": device.connectivity.bluetoothVersion,
+    Sim: device.connectivity.sim,
+  },
+  Multimedia: {
+    Speakers: device.audioMultimedia.speakers,
+    "Headphone Jack": device.audioMultimedia.headphoneJack,
+    Mic: device.audioMultimedia.mic || "No",
+  },
+  "Security Sensors": {
+    "Fingerprint Sensor": device.securitySensors.fingerprint,
+    "Face Unlock": device.securitySensors.faceUnlock,
+    "Other Sensors": device.securitySensors.otherSensors,
+  },
+};
 
   return (
     <div className="flex justify-evenly items-start p-5">
@@ -255,20 +277,20 @@ const Devices = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col justify-between" style={{height: "200px"}}>
-            <div className="" style={{width: "600px"}}>
+          <div className="flex flex-col justify-between items-center" style={{height: "200px"}}>
+            <div className="grid grid-cols-2" style={{width: "600px"}}>
               {sideBar.map((item, index) => (
                 <p
                   key={index}
-                  className="text-md font-semibold flex items-center gap-2"
+                  className="text-md font-semibold flex justify-start items-center gap-2"
                 >
-                  <i className={item.icon}></i>
+                  <i className={item.icon} style={{padding: "5px 0", textAlign: "center", width: "20px"}}></i>
                   {item.label && <span>{item.label}:</span>}
-                  <span className="font-normal">{item.value}</span>
+                  <span className="font-normal" style={{fontSize: "13px", fontFamily: "Ubuntu", fontWeight: 500}}>{item.value}</span>
                 </p>
               ))}
             </div>
-            <div className="flex justify-evenly items-center" style={{width: "600px"}}>
+            <div className="flex justify-evenly items-center" style={{width: "700px"}}>
               {generalInfo.map((item, index) => (
                 <p
                   key={index}

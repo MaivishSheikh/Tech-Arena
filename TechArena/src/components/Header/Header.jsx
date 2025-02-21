@@ -44,7 +44,8 @@ export default function Header() {
                     <ul className="flex flex-col">
                       <li>
                         <NavLink
-                          to="/phones"
+                          to="/deviceShowcase"
+                          state={{ category: "Phone" }}
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Phones
@@ -52,7 +53,8 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to="/tablets"
+                          to="/deviceShowcase"
+                          state={{ category: "Tablet" }}
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Tablets
@@ -60,10 +62,20 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to="/laptops"
+                          to="/deviceShowcase"
+                          state={{ category: "Laptop" }}
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Laptops
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/deviceShowcase"
+                          state={{ category: "All" }}
+                          className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
+                        >
+                          All Devices
                         </NavLink>
                       </li>
                     </ul>
@@ -82,7 +94,7 @@ export default function Header() {
                     <ul className="flex flex-col">
                       <li>
                         <NavLink
-                          to="/phones"
+                          to="/deviceShowcase"
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Find Your Device

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Cards = ({ cardsToShow = 6 }) => {
+const Cards = ({ cardsToShow = 7 }) => {
   const [devices, setDevices] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -63,7 +63,7 @@ const Cards = ({ cardsToShow = 6 }) => {
           <button
             onClick={prevSlide}
             disabled={currentIndex == minIndex}
-            className="transform rounded-full px-3 py-2 text-lg"
+            className="transform rounded-full px-4 py-2 text-lg"
             style={{
               color: currentIndex == minIndex ? "#343434" : "#B5D8CC",
               cursor: "pointer",
@@ -81,7 +81,7 @@ const Cards = ({ cardsToShow = 6 }) => {
           <button
             onClick={nextSlide}
             disabled={currentIndex >= maxIndex}
-            className="transform rounded-full px-3 py-2 text-lg"
+            className="transform rounded-full px-4 py-2 text-lg"
             style={{
               color: currentIndex >= maxIndex ? "#343434" : "#B5D8CC",
               cursor: "pointer",

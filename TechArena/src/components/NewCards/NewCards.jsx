@@ -11,25 +11,29 @@ const deviceData = [
     imgSrc: mobile,
     title: "TOP SMARTPHONES",
     subtitle: "Feature-Rich Smartphones at Great Prices",
-    link: "/phones",
+    link: "/deviceShowcase",
+    category: "Phone"
   },
   {
     imgSrc: tabD,
     title: "TOP TABLETS",
     subtitle: "Feature-Rich Tablets for Work & Play",
-    link: "/tablets",
+    link: "/deviceShowcase",
+    category: "Tablet"
   },
   {
     imgSrc: laptops,
     title: "TOP LAPTOPS",
     subtitle: "Powerful Laptops for Every Need",
-    link: "/phones",
+    link: "/deviceShowcase",
+    category: "Laptop"
   },
   {
     imgSrc: i,
     title: "FIND YOUR DEVICE",
     subtitle: "Explore & Find Your Perfect Match",
-    link: "/find-device",
+    link: "/deviceShowcase",
+    category: "All"
   },
 ];
 
@@ -41,6 +45,7 @@ const NewCards = () => {
           <NavLink
             key={index}
             to={device.link}
+            state={{ category: device.category }}
             className="relative text-white pt-9 rounded-2xl w-full max-w-sm mx-auto"
             style={{
               background: `url(${mobileBG})`,
