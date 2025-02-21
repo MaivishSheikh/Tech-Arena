@@ -115,7 +115,11 @@ const Devices = () => {
 
   const sideBar = [
     {
-      icon: "",
+      icon: device.category === "Laptop" 
+        ? "fa-solid fa-laptop"
+        : device.category === "Tablet" 
+        ? "fa-solid fa-tablet-screen-button" 
+        : "fa-solid fa-mobile-screen-button",
       value: device.display.size
     },
     {
@@ -280,7 +284,7 @@ const Devices = () => {
         </div>
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(deviceDetails).map(([section, details]) => (
-            <div key={section} className="p-4 bg-cyan-50 rounded-lg">
+            <div key={section} className="p-4 border-2 bg-cyan-50 rounded-lg">
               <h2 className="text-xl font-bold mb-3">{section}</h2>
               {Object.entries(details).map(([key, value]) => (
                 <p

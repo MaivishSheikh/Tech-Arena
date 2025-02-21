@@ -23,7 +23,7 @@ const deviceData = [
     imgSrc: laptops,
     title: "TOP LAPTOPS",
     subtitle: "Powerful Laptops for Every Need",
-    link: "/laptops",
+    link: "/phones",
   },
   {
     imgSrc: i,
