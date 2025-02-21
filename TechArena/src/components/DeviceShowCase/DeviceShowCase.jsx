@@ -11,8 +11,7 @@ const DeviceShowCase = () => {
   const [filters, setFilters] = useState({
     brands: [],
     subCategory: [],
-    operatingSystem: [],
-    category: "All",
+    operatingSystem: []
   });
 
   const location = useLocation();
@@ -80,13 +79,11 @@ useEffect(() => {
     const matchesBrand =
       filters.brands.length === 0 || filters.brands.some((sub) => device.subCategory.split(", ").includes(sub));
     const matchesCategory =
-      filters.subCategory.length === 0 || filters.subCategory.some((sub) => device.subCategory.split(", ").includes(sub));
+    filters.subCategory.length === 0 || filters.subCategory.some((sub) => device.subCategory.split(", ").includes(sub));
     const matchesOS =
       filters.operatingSystem.length === 0 || filters.operatingSystem.some((sub) => device.subCategory.split(", ").includes(sub));
-    const matchesDeviceCategory =
-      filters.category === "All" || device.category === filters.category;
 
-    return matchesBrand && matchesCategory && matchesOS && matchesDeviceCategory;
+    return matchesBrand && matchesCategory && matchesOS;
   });
 
   return (

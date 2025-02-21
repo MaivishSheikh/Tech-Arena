@@ -12,17 +12,17 @@ export default function FilterBar({ setFilters }) {
     {
       title: "Brands",
       key: "brands",
-      options: ["Samsung", "iPhone", "Vivo", "Oppo", "Xiaomi", "OnePlus"],
+      options: ["Samsung", "iPhone", "Vivo", "Oppo", "Xiaomi", "OnePlus", "HP"],
     },
     {
       title: "Sub Category",
       key: "subCategory",
-      options: ["Gaming", "Content Creation", "5G", "Photography", "Mid-Range", "Flagship"],
+      options: ["Gaming", "Content Creation", "5G", "Photography", "Mid-Range", "Flagship", "Student & Office Work"],
     },
     {
       title: "Operating System",
       key: "operatingSystem",
-      options: ["Android", "iOS"],
+      options: ["Android", "iOS", "Windows"],
     },
   ];
 
