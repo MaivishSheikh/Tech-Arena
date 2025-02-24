@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadUser = () => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    };
+  
+    loadUser();
+    window.addEventListener("storage", loadUser);
+  
+    return () => {
+      window.removeEventListener("storage", loadUser);
+    };
+  }, []);
 
   const handleSearch = () => {
     if (searchQuery.trim() !== "") {
@@ -139,15 +156,23 @@ export default function Header() {
               onClick={handleSearch}
               className="ml-2 px-2 py-1 rounded-md bg-blue-600 text-white"
             >
-              <i class="fa-solid fa-magnifying-glass"></i>
+              <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-          <NavLink
-            to="/signin"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700"
-          >
-            Sign In
-          </NavLink>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <button onClick={() => navigate(`/users/${user.username}`)}>
+                <i className="fa-solid fa-circle-user fa-2xl" style={{padding: "0 20px"}}></i>
+              </button>
+            </div>
+          ) : (
+            <NavLink
+              to="/login"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700"
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
     </header>

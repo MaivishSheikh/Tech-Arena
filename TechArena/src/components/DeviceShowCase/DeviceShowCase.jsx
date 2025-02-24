@@ -9,14 +9,19 @@ const DeviceShowCase = () => {
   const [error, setError] = useState(null);
   const [imageStates, setImageStates] = useState({});
   const [filters, setFilters] = useState({
+    devices: [],
     brands: [],
     subCategory: [],
-    operatingSystem: []
+    operatingSystem: [],
   });
 
   const location = useLocation();
   const { subCategory: querySubCategory } = location.state || {};
-  
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,7 +29,11 @@ const DeviceShowCase = () => {
         const result = await response.json();
 
         if (result.success) {
-          setDevices(result.data);
+          const sortedDevices = result.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+  
+          setDevices(sortedDevices);
           const initialImages = {};
           result.data.forEach((device) => {
             initialImages[device._id] = device.deviceImage;
@@ -45,14 +54,14 @@ const DeviceShowCase = () => {
 
   const { category: queryCategory } = location.state || {};
 
-useEffect(() => {
-  if (queryCategory) {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      category: queryCategory,
-    }));
-  }
-}, [queryCategory]);
+  useEffect(() => {
+    if (queryCategory) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        category: queryCategory,
+      }));
+    }
+  }, [queryCategory]);
 
   useEffect(() => {
     if (querySubCategory) {
@@ -74,16 +83,33 @@ useEffect(() => {
       </div>
     );
   if (error) return <p>Error: {error}</p>;
-  
-  const filteredDevices = devices.filter((device) => {
-    const matchesBrand =
-      filters.brands.length === 0 || filters.brands.some((sub) => device.subCategory.split(", ").includes(sub));
-    const matchesCategory =
-    filters.subCategory.length === 0 || filters.subCategory.some((sub) => device.subCategory.split(", ").includes(sub));
-    const matchesOS =
-      filters.operatingSystem.length === 0 || filters.operatingSystem.some((sub) => device.subCategory.split(", ").includes(sub));
 
-    return matchesBrand && matchesCategory && matchesOS;
+  const filteredDevices = devices.filter((device) => {
+    const matchesDevice =
+      filters.devices.length === 0 ||
+      filters.devices.some((sub) =>
+        device.category.split(", ").includes(sub)
+    );
+
+    const matchesBrand =
+      filters.brands.length === 0 ||
+      filters.brands.some((sub) =>
+        device.subCategory.split(", ").includes(sub)
+      );
+
+    const matchesSubCategory =
+      filters.subCategory.length === 0 ||
+      filters.subCategory.some((sub) =>
+        device.subCategory.split(", ").includes(sub)
+      );
+
+    const matchesOS =
+      filters.operatingSystem.length === 0 ||
+      filters.operatingSystem.some((sub) =>
+        device.subCategory.split(", ").includes(sub)
+      );
+
+    return matchesDevice && matchesBrand && matchesSubCategory && matchesOS;
   });
 
   return (
@@ -94,7 +120,10 @@ useEffect(() => {
           {filteredDevices.map((device) => (
             <li key={device._id}>
               <NavLink to={`/devices/${device.generalInfo.brandModel}`}>
-                <div className="p-4 bg-white shadow-lg rounded-lg border" style={{ maxWidth: "300px", height: "350px" }}>
+                <div
+                  className="p-4 bg-white shadow-lg rounded-lg border"
+                  style={{ maxWidth: "300px", height: "350px" }}
+                >
                   <div className="flex items-center flex-col">
                     <img
                       src={imageStates[device._id]}
@@ -114,7 +143,9 @@ useEffect(() => {
                       className="p-2 transition-all duration-1000 ease-in"
                       style={{ width: "300px", height: "250px" }}
                     />
-                    <h2 className="text-lg font-bold">{device.generalInfo.brandModel}</h2>
+                    <h2 className="text-lg font-bold">
+                      {device.generalInfo.brandModel}
+                    </h2>
                   </div>
                 </div>
               </NavLink>

@@ -77,6 +77,10 @@ const deviceList = asyncHandler(async (req, res) => {
         "generalInfo.brandModel": brandModel,
     });
 
+    if (existedDevice) {
+        throw new ApiError(400, "Device already exists");
+    }
+
     const deviceImageLocalPath = req.files?.deviceImage[0]?.path;
 
     let alternateImageLocalPath;

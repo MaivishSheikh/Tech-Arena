@@ -16,7 +16,11 @@ const Cards = ({ cardsToShow = 7 }) => {
         }
         const result = await response.json();
         if (result.success) {
-          setDevices(result.data);
+          const sortedDevices = result.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+
+          setDevices(sortedDevices);
         } else {
           console.error("Invalid data format from API:", result);
           setDevices([]);

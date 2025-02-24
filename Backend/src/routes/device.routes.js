@@ -22,8 +22,4 @@ router.get("/", getDevice);
 
 router.get('/:brandModel', getDeviceByName);
 
-router.get('/day', (req, res) => {
-    res.send('GET request to homepage')
-  })
-
 export default router;

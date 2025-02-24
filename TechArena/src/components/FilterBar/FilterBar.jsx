@@ -3,12 +3,18 @@ import { useState } from "react";
 export default function FilterBar({ setFilters }) {
   const [openCategory, setOpenCategory] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({
+    devices: [],
     brands: [],
     subCategory: [],
     operatingSystem: [],
   });
 
   const categories = [
+    {
+      title: "Devices",
+      key: "devices",
+      options: ["Phone", "Tablet", "Laptop", "All"]
+    },
     {
       title: "Brands",
       key: "brands",
@@ -45,12 +51,14 @@ export default function FilterBar({ setFilters }) {
 
   const clearFilters = () => {
     setSelectedFilters({
+      devices: [],
       brands: [],
       subCategory: [],
       operatingSystem: [],
       price: []
     });
     setFilters({
+      devices: [],
       brands: [],
       subCategory: [],
       operatingSystem: [],

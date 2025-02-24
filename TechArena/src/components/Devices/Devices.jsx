@@ -12,6 +12,10 @@ const Devices = () => {
   const [relatedDevices, setRelatedDevices] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchDeviceDetails = async () => {
       try {
         const response = await fetch(
@@ -116,30 +120,30 @@ const Devices = () => {
   const sideBar = [
     {
       icon: device.category === "Laptop" 
-        ? "fa-solid fa-laptop"
+        ? "fa-solid fa-laptop fa-lg"
         : device.category === "Tablet" 
-        ? "fa-solid fa-tablet-screen-button" 
-        : "fa-solid fa-mobile-screen-button",
+        ? "fa-solid fa-tablet-screen-button fa-lg" 
+        : "fa-solid fa-mobile-screen-button fa-lg",
       value: device.display.size
     },
     {
-      icon: "fa-solid fa-code",
+      icon: "fa-solid fa-code fa-lg",
       value: device.performance.os
     },
     {
-      icon: "fa-solid fa-microchip",
+      icon: "fa-solid fa-microchip fa-lg",
       value: device.performance.cpu?.split("(")[0],
     },
     {
-      icon: "bi bi-aspect-ratio-fill",
+      icon: "bi bi-aspect-ratio-fill bi-lg",
       value: device.buildDesign.dimensions
     },
     {
-      icon: "bi bi-badge-hd-fill",
+      icon: "bi bi-badge-hd-fill bi-lg",
       value: device.display.resolution
     },
     {
-      icon: "bi bi-floppy-fill",
+      icon: "bi bi-floppy-fill bi-lg",
       value: device.performance.storage
     }
   ]
@@ -286,7 +290,7 @@ const deviceDetails = {
                 >
                   <i className={item.icon} style={{padding: "5px 0", textAlign: "center", width: "20px"}}></i>
                   {item.label && <span>{item.label}:</span>}
-                  <span className="font-normal" style={{fontSize: "13px", fontFamily: "Ubuntu", fontWeight: 500}}>{item.value}</span>
+                  <span className="font-normal" style={{fontSize: "14px", fontFamily: "Ubuntu", fontWeight: 500}}>{item.value}</span>
                 </p>
               ))}
             </div>
