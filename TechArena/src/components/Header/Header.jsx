@@ -119,7 +119,7 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to="/tablets"
+                          to="/compareDevice"
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Compare

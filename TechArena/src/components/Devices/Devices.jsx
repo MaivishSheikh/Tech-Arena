@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
 
 const Devices = () => {
@@ -101,8 +101,14 @@ const Devices = () => {
     }
   };
 
+  const navigateToReview = () =>
+    navigate(`/reviewDevice/${device.generalInfo.brandModel}`);
+
   const generalInfo = [
-    { icon: "fa-solid fa-calendar-days fa-xl", value: device.generalInfo.launchDate },
+    {
+      icon: "fa-solid fa-calendar-days fa-xl",
+      value: device.generalInfo.launchDate,
+    },
     {
       icon: "fa-solid fa-tag fa-xl",
       value: device.generalInfo.price,
@@ -119,16 +125,17 @@ const Devices = () => {
 
   const sideBar = [
     {
-      icon: device.category === "Laptop" 
-        ? "fa-solid fa-laptop fa-lg"
-        : device.category === "Tablet" 
-        ? "fa-solid fa-tablet-screen-button fa-lg" 
-        : "fa-solid fa-mobile-screen-button fa-lg",
-      value: device.display.size
+      icon:
+        device.category === "Laptop"
+          ? "fa-solid fa-laptop fa-lg"
+          : device.category === "Tablet"
+          ? "fa-solid fa-tablet-screen-button fa-lg"
+          : "fa-solid fa-mobile-screen-button fa-lg",
+      value: device.display.size,
     },
     {
       icon: "fa-solid fa-code fa-lg",
-      value: device.performance.os
+      value: device.performance.os,
     },
     {
       icon: "fa-solid fa-microchip fa-lg",
@@ -136,73 +143,73 @@ const Devices = () => {
     },
     {
       icon: "bi bi-aspect-ratio-fill bi-lg",
-      value: device.buildDesign.dimensions
+      value: device.buildDesign.dimensions,
     },
     {
       icon: "bi bi-badge-hd-fill bi-lg",
-      value: device.display.resolution
+      value: device.display.resolution,
     },
     {
       icon: "bi bi-floppy-fill bi-lg",
-      value: device.performance.storage
-    }
-  ]
-  const mainCameraExists =
-  device.cameraSystem.rearCamera.noofCamerasMP &&
-  device.cameraSystem.rearCamera.features &&
-  device.cameraSystem.rearCamera.video;
-
-const deviceDetails = {
-  Performance: {
-    CPU: device.performance.cpu,
-    GPU: device.performance.gpu,
-    OS: device.performance.os,
-    Memory: device.performance.memory,
-    Storage: device.performance.storage,
-  },
-  Display: {
-    Size: device.display.size,
-    Type: device.display.type,
-    Resolution: device.display.resolution,
-  },
-  Build: {
-    Dimensions: device.buildDesign.dimensions,
-    Weight: device.buildDesign.weight,
-    "Color Available": device.buildDesign.colorAvailable,
-  },
-  ...(mainCameraExists && {
-    "Main Camera": {
-      Cameras: device.cameraSystem.rearCamera.noofCamerasMP,
-      Features: device.cameraSystem.rearCamera.features,
-      "Video Recording": device.cameraSystem.rearCamera.video,
+      value: device.performance.storage,
     },
-  }),
-  "Front Camera": {
-    Camera: device.cameraSystem.frontCamera.megaPixels,
-    "Video Recording": device.cameraSystem.frontCamera.videoRecording,
-  },
-  Battery: {
-    "Battery Type": device.batteryCharging.batteryTC,
-    "Charging Speed": device.batteryCharging.chargingSpeed,
-    "USB Type": device.batteryCharging.usbType,
-  },
-  Connectivity: {
-    "Network Version": device.connectivity.networkVersion || "Not Available",
-    "WiFi Version": device.connectivity.wifiVersion,
-    "Bluetooth Version": device.connectivity.bluetoothVersion,
-    Sim: device.connectivity.sim,
-  },
-  Multimedia: {
-    Speakers: device.audioMultimedia.speakers,
-    "Headphone Jack": device.audioMultimedia.headphoneJack,
-    Mic: device.audioMultimedia.mic || "No",
-  },
-  "Security Sensors": {
-    "Fingerprint Sensor": device.securitySensors.fingerprint,
-    "Face Unlock": device.securitySensors.faceUnlock,
-    "Other Sensors": device.securitySensors.otherSensors,
-  },
-};
+  ];
+  const mainCameraExists =
+    device.cameraSystem.rearCamera.noofCamerasMP &&
+    device.cameraSystem.rearCamera.features &&
+    device.cameraSystem.rearCamera.video;
+
+  const deviceDetails = {
+    Performance: {
+      CPU: device.performance.cpu,
+      GPU: device.performance.gpu,
+      OS: device.performance.os,
+      Memory: device.performance.memory,
+      Storage: device.performance.storage,
+    },
+    Display: {
+      Size: device.display.size,
+      Type: device.display.type,
+      Resolution: device.display.resolution,
+    },
+    Build: {
+      Dimensions: device.buildDesign.dimensions,
+      Weight: device.buildDesign.weight,
+      "Color Available": device.buildDesign.colorAvailable,
+    },
+    ...(mainCameraExists && {
+      "Main Camera": {
+        Cameras: device.cameraSystem.rearCamera.noofCamerasMP,
+        Features: device.cameraSystem.rearCamera.features,
+        "Video Recording": device.cameraSystem.rearCamera.video,
+      },
+    }),
+    "Front Camera": {
+      Camera: device.cameraSystem.frontCamera.megaPixels,
+      "Video Recording": device.cameraSystem.frontCamera.videoRecording,
+    },
+    Battery: {
+      "Battery Type": device.batteryCharging.batteryTC,
+      "Charging Speed": device.batteryCharging.chargingSpeed,
+      "USB Type": device.batteryCharging.usbType,
+    },
+    Connectivity: {
+      "Network Version": device.connectivity.networkVersion || "Not Available",
+      "WiFi Version": device.connectivity.wifiVersion,
+      "Bluetooth Version": device.connectivity.bluetoothVersion,
+      Sim: device.connectivity.sim,
+    },
+    Multimedia: {
+      Speakers: device.audioMultimedia.speakers,
+      "Headphone Jack": device.audioMultimedia.headphoneJack,
+      Mic: device.audioMultimedia.mic || "No",
+    },
+    "Security Sensors": {
+      "Fingerprint Sensor": device.securitySensors.fingerprint,
+      "Face Unlock": device.securitySensors.faceUnlock,
+      "Other Sensors": device.securitySensors.otherSensors,
+    },
+  };
 
   return (
     <div className="flex justify-evenly items-start p-5">
@@ -281,20 +288,42 @@ const deviceDetails = {
               </button>
             </div>
           </div>
-          <div className="flex flex-col justify-between items-center" style={{height: "200px"}}>
-            <div className="grid grid-cols-2" style={{width: "600px"}}>
+          <div
+            className="flex flex-col justify-between items-center pt-10"
+            style={{ height: "300px" }}
+          >
+            <div className="grid grid-cols-2" style={{ width: "600px" }}>
               {sideBar.map((item, index) => (
                 <p
                   key={index}
                   className="text-md font-semibold flex justify-start items-center gap-2"
                 >
-                  <i className={item.icon} style={{padding: "5px 0", textAlign: "center", width: "20px"}}></i>
+                  <i
+                    className={item.icon}
+                    style={{
+                      padding: "5px 0",
+                      textAlign: "center",
+                      width: "20px",
+                    }}
+                  ></i>
                   {item.label && <span>{item.label}:</span>}
-                  <span className="font-normal" style={{fontSize: "14px", fontFamily: "Ubuntu", fontWeight: 500}}>{item.value}</span>
+                  <span
+                    className="font-normal"
+                    style={{
+                      fontSize: "14px",
+                      fontFamily: "Ubuntu",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {item.value}
+                  </span>
                 </p>
               ))}
             </div>
-            <div className="flex justify-evenly items-center" style={{width: "700px"}}>
+            <div
+              className="flex justify-evenly items-center"
+              style={{ width: "700px" }}
+            >
               {generalInfo.map((item, index) => (
                 <p
                   key={index}
@@ -302,9 +331,29 @@ const deviceDetails = {
                 >
                   <i className={item.icon}></i>
                   {item.label && <span>{item.label}:</span>}
-                  <span className="font-normal" style={{fontSize: "16px", fontFamily: "Ubuntu"}}>{item.value}</span>
+                  <span
+                    className="font-normal"
+                    style={{ fontSize: "16px", fontFamily: "Ubuntu" }}
+                  >
+                    {item.value}
+                  </span>
                 </p>
               ))}
+            </div>
+            <div className="flex justify-center gap-4 mt-4">
+              <NavLink
+                to="/compareDevice"
+                state={{ device1: device.generalInfo.brandModel }}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center justify-center"
+              >
+                Compare
+              </NavLink>
+              <NavLink
+                to={`/reviewDevice/${device.generalInfo.brandModel}`}
+                className="bg-emerald-500 text-white px-4 py-2 rounded-md"
+              >
+                Review
+              </NavLink>
             </div>
           </div>
         </div>
