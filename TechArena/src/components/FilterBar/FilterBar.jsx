@@ -9,26 +9,47 @@ export default function FilterBar({ setFilters }) {
     operatingSystem: [],
   });
 
+  const brandOptions = {
+    Phone: ["Samsung", "iPhone", "Vivo", "Oppo", "Xiaomi", "OnePlus"],
+    Laptop: ["HP", "Dell", "Lenovo", "Asus", "Apple"],
+    Tablet: ["Samsung", "Apple", "Lenovo"],
+    All: ["Samsung", "iPhone", "Vivo", "Oppo", "Xiaomi", "OnePlus", "HP", "Dell", "Lenovo", "Asus", "Apple"],
+  };
+
+  const subCategoryOptions = {
+    Phone: ["Gaming", "Photography", "5G", "Flagship", "Mid-Range"],
+    Laptop: ["Gaming", "Content Creation", "Student & Office Work"],
+    Tablet: ["Entertainment", "Student & Office Work"],
+    All: ["Gaming", "Photography", "5G", "Flagship", "Mid-Range", "Content Creation", "Student & Office Work", "Entertainment"],
+  };
+
+  const osOptions = {
+    Phone: ["Android", "iOS"],
+    Laptop: ["Windows", "macOS", "Linux"],
+    Tablet: ["Android", "iOS", "Windows"],
+    All: ["Android", "iOS", "Windows", "macOS", "Linux"],
+  };
+
   const categories = [
     {
       title: "Devices",
       key: "devices",
-      options: ["Phone", "Tablet", "Laptop", "All"]
+      options: ["Phone", "Tablet", "Laptop", "All"],
     },
     {
       title: "Brands",
       key: "brands",
-      options: ["Samsung", "iPhone", "Vivo", "Oppo", "Xiaomi", "OnePlus", "HP"],
+      options: brandOptions[selectedFilters.devices[0]] || [],
     },
     {
       title: "Sub Category",
       key: "subCategory",
-      options: ["Gaming", "Content Creation", "5G", "Photography", "Mid-Range", "Flagship", "Student & Office Work"],
+      options: subCategoryOptions[selectedFilters.devices[0]] || [],
     },
     {
       title: "Operating System",
       key: "operatingSystem",
-      options: ["Android", "iOS", "Windows"],
+      options: osOptions[selectedFilters.devices[0]] || [],
     },
   ];
 
@@ -38,11 +59,21 @@ export default function FilterBar({ setFilters }) {
 
   const handleFilterChange = (category, option) => {
     setSelectedFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      if (updatedFilters[category].includes(option)) {
-        updatedFilters[category] = updatedFilters[category].filter((item) => item !== option);
+      let updatedFilters = { ...prevFilters };
+
+      if (category === "devices") {
+        updatedFilters = {
+          devices: [option],
+          brands: [],
+          subCategory: [],
+          operatingSystem: [],
+        };
       } else {
-        updatedFilters[category].push(option);
+        if (updatedFilters[category].includes(option)) {
+          updatedFilters[category] = updatedFilters[category].filter((item) => item !== option);
+        } else {
+          updatedFilters[category].push(option);
+        }
       }
       setFilters(updatedFilters);
       return updatedFilters;
@@ -50,20 +81,8 @@ export default function FilterBar({ setFilters }) {
   };
 
   const clearFilters = () => {
-    setSelectedFilters({
-      devices: [],
-      brands: [],
-      subCategory: [],
-      operatingSystem: [],
-      price: []
-    });
-    setFilters({
-      devices: [],
-      brands: [],
-      subCategory: [],
-      operatingSystem: [],
-      price: []
-    });
+    setSelectedFilters({ devices: [], brands: [], subCategory: [], operatingSystem: [] });
+    setFilters({ devices: [], brands: [], subCategory: [], operatingSystem: [] });
   };
 
   return (
@@ -89,7 +108,7 @@ export default function FilterBar({ setFilters }) {
                 <li key={idx} className="pl-6 p-2 cursor-pointer flex items-center">
                   <label className="flex items-center space-x-2 w-full cursor-pointer">
                     <input
-                      type="checkbox"
+                      type={category.key === "devices" ? "radio" : "checkbox"}
                       className="w-4 h-4"
                       checked={selectedFilters[category.key].includes(option)}
                       onChange={() => handleFilterChange(category.key, option)}
@@ -101,9 +120,6 @@ export default function FilterBar({ setFilters }) {
             </ul>
           </li>
         ))}
-        <li>
-          
-        </li>
       </ul>
       <button
         className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md w-full hover:bg-red-600"

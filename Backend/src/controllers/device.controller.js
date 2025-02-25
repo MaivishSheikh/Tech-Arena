@@ -212,4 +212,29 @@ const getDeviceByName = asyncHandler(async (req, res) => {
     );
 });
 
-export { deviceList, getDevice, getDeviceByName };
+const getDeviceByCategory = asyncHandler(async (req, res) => {
+    const { category } = req.params;
+    console.log("Category received:", category); 
+
+    if (!category) {
+        return res.status(400).json({ error: "Device Category is required" });
+    }
+
+    try {
+        const devices = await Device.find({ category: category });
+
+        console.log("Devices found:", devices);
+
+        if (!devices || devices.length === 0) {
+            return res.status(404).json({ error: "No devices found for this category" });
+        }
+
+        res.status(200).json({ success: true, data: devices });
+    } catch (error) {
+        console.error("Error fetching devices:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+export { deviceList, getDevice, getDeviceByName, getDeviceByCategory };

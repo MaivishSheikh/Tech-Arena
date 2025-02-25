@@ -75,7 +75,7 @@ export default function CompareDevice() {
         value: device.display.size,
       },
       {
-        icon: "fa-solid fa-code fa-lg",
+        icon: "fa-solid fa-code",
         value: device.performance.os,
       },
       {
@@ -155,30 +155,31 @@ export default function CompareDevice() {
     };
 
     return (
-      <div className="bg-white shadow-md rounded-lg p-4 w-full">
+      <div className="bg-white shadow-md rounded-lg p-4 w-full text-white"  style={{background: "#043247"}}>
         <h1 className="text-2xl font-bold mb-4 text-center border-b pb-2">
           {device.generalInfo.brandModel}
         </h1>
+        <div className="flex items-center">
         <div className="flex flex-col items-center">
           <img
             src={device.deviceImage}
             alt={device.generalInfo.brandModel}
-            className="w-48 h-48 object-contain mb-4"
+            className="w-56 h-48 object-contain"
           />
         </div>
-        <div className="grid grid-cols-2" style={{ width: "600px" }}>
+        <div className="grid grid-cols-2 gap-2">
           {sideBar.map((item, index) => (
             <p
               key={index}
-              className="text-md font-semibold flex justify-start items-center gap-2"
+              className="text-md font-semibold"
             >
               <i
                 className={item.icon}
-                style={{ padding: "5px 0", textAlign: "center", width: "20px" }}
+                style={{ textAlign: "center"}}
               ></i>
               {item.label && <span>{item.label}:</span>}
               <span
-                className="font-normal"
+                className="mx-4"
                 style={{
                   fontSize: "14px",
                   fontFamily: "Ubuntu",
@@ -190,6 +191,8 @@ export default function CompareDevice() {
             </p>
           ))}
         </div>
+        </div>
+        
         <div className="flex justify-evenly items-center">
           {generalInfo.map((item, index) => (
             <p
@@ -203,8 +206,8 @@ export default function CompareDevice() {
         </div>
         <div className="grid grid-cols-2 mt-4 gap-4">
           {Object.entries(deviceDetails).map(([section, details]) => (
-            <div key={section} className="p-4 border-2 bg-cyan-50 rounded-lg">
-              <h2 className="text-xl font-bold mb-3">{section}</h2>
+            <div key={section} className="p-4 border-2 text-black rounded-lg" style={{background: "#fff", boxShadow: "4px 4px 5px #000"}}>
+              <h2 className="text-xl font-bold mb-3" style={{fontSize: "25px"}}>{section}</h2>
               {Object.entries(details).map(([key, value]) => (
                 <p
                   key={key}
@@ -217,7 +220,6 @@ export default function CompareDevice() {
                 >
                   {key}:{" "}
                   <span
-                    className="font-normal"
                     style={{ fontWeight: 400, fontSize: "15px" }}
                   >
                     {value}
@@ -251,7 +253,7 @@ export default function CompareDevice() {
             onClick={() => handleSearch(searchQuery1, setDevice1)}
             className="ml-2 px-3 py-2 rounded-md bg-blue-600 text-white"
           >
-            🔍
+            <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
         {loading && <Spinner className="h-10 w-10 text-gray-900/50 mt-4" />}
@@ -277,7 +279,7 @@ export default function CompareDevice() {
             onClick={() => handleSearch(searchQuery2, setDevice2)}
             className="ml-2 px-3 py-2 rounded-md bg-blue-600 text-white"
           >
-            🔍
+            <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
         {loading && <Spinner className="h-10 w-10 text-gray-900/50 mt-4" />}

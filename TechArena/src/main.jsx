@@ -17,7 +17,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="/" element={<Home />} />
       <Route path="/devices/:deviceName" element={<Devices />} />
-      <Route path="/deviceShowcase" element={<DeviceShowCase />} />
+      <Route path="/deviceShowcase/:category" element={<DeviceShowCase />} />
       <Route path="/users" element={<Signin />} />
       <Route path="/login" element={<Login />} />
       <Route path="/users/:username" element={<UserPage />} />

@@ -10,7 +10,7 @@ export default function Brands() {
 
   const handleNavigation = (event, brandTitle) => {
     event.preventDefault();
-    navigate("/deviceShowcase", { state: { subCategory: brandTitle } });
+    navigate("/deviceShowcase/Phone", { state: { subCategory: brandTitle } });
   };
 
   useEffect(() => {

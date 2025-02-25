@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useParams, useLocation } from "react-router-dom";
 import FilterBar from "../FilterBar/FilterBar";
 import { Spinner } from "@material-tailwind/react";
 
 const DeviceShowCase = () => {
+  const { category } = useParams();
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,60 +18,45 @@ const DeviceShowCase = () => {
 
   const location = useLocation();
   const { subCategory: querySubCategory } = location.state || {};
+  const { category: queryCategory } = location.state || {};
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/v1/devices/");
-        const result = await response.json();
+    setFilters({ devices: [], brands: [], subCategory: [], operatingSystem: [] }); // Clear filters when category changes
+    if (category) {
+      fetchDevices(`http://localhost:8000/api/v1/devices/category/${category}`);
+    } else {
+      fetchDevices("http://localhost:8000/api/v1/devices");
+    }
+  }, [category]);
 
-        if (result.success) {
-          const sortedDevices = result.data.sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          );
-  
-          setDevices(sortedDevices);
-          const initialImages = {};
-          result.data.forEach((device) => {
-            initialImages[device._id] = device.deviceImage;
-          });
-          setImageStates(initialImages);
-        } else {
-          setError(result.message);
-        }
-      } catch (err) {
-        setError("Failed to fetch devices.");
-      } finally {
-        setLoading(false);
+  const fetchDevices = async (url) => {
+    try {
+      setLoading(true);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
-
-    fetchData();
-  }, []);
-
-  const { category: queryCategory } = location.state || {};
-
-  useEffect(() => {
-    if (queryCategory) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        category: queryCategory,
-      }));
+      const result = await response.json();
+      if (result.success) {
+        setDevices(result.data);
+        const initialImages = {};
+        result.data.forEach((device) => {
+          initialImages[device._id] = device.deviceImage;
+        });
+        setImageStates(initialImages);
+      } else {
+        setError(result.message);
+      }
+    } catch (err) {
+      setError("Failed to fetch devices.");
+    } finally {
+      setLoading(false);
     }
-  }, [queryCategory]);
-
-  useEffect(() => {
-    if (querySubCategory) {
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        subCategory: [querySubCategory],
-      }));
-    }
-  }, [querySubCategory]);
+  };
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
@@ -82,7 +68,8 @@ const DeviceShowCase = () => {
         <Spinner className="h-16 w-16 text-gray-900/50" />
       </div>
     );
-  if (error) return <p>Error: {error}</p>;
+
+  if (error) return <p className="text-red-500 text-center">Error: {error}</p>;
 
   const filteredDevices = devices.filter((device) => {
     const matchesDevice =
@@ -143,9 +130,7 @@ const DeviceShowCase = () => {
                       className="p-2 transition-all duration-1000 ease-in"
                       style={{ width: "300px", height: "250px" }}
                     />
-                    <h2 className="text-lg font-bold">
-                      {device.generalInfo.brandModel}
-                    </h2>
+                    <h2 className="text-lg font-bold">{device.generalInfo.brandModel}</h2>
                   </div>
                 </div>
               </NavLink>

@@ -244,7 +244,7 @@ const Devices = () => {
       </div>
 
       {/* Device Details Section */}
-      <div className="max-w-screen-lg bg-white shadow-md rounded-md p-4">
+      <div className="max-w-screen-lg bg-white shadow-md rounded-md p-4 text-white"  style={{background: "#043247"}}>
         <h1 className="text-3xl font-bold mb-5 border-b border-gray-300 pb-3">
           {device.generalInfo.brandModel}
         </h1>
@@ -359,7 +359,7 @@ const Devices = () => {
         </div>
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(deviceDetails).map(([section, details]) => (
-            <div key={section} className="p-4 border-2 bg-cyan-50 rounded-lg">
+            <div key={section} className="p-4 border-2 text-black rounded-lg" style={{background: "#fff", boxShadow: "4px 4px 5px #000"}}>
               <h2 className="text-xl font-bold mb-3">{section}</h2>
               {Object.entries(details).map(([key, value]) => (
                 <p

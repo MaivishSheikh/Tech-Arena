@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deviceList, getDevice, getDeviceByName } from "../controllers/device.controller.js";
+import { deviceList, getDevice, getDeviceByCategory, getDeviceByName } from "../controllers/device.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -21,5 +21,7 @@ router.route("/listDevices").post(
 router.get("/", getDevice);
 
 router.get('/:brandModel', getDeviceByName);
+
+router.get("/category/:category", getDeviceByCategory)
 
 export default router;

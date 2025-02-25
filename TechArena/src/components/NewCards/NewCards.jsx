@@ -11,21 +11,21 @@ const deviceData = [
     imgSrc: mobile,
     title: "TOP SMARTPHONES",
     subtitle: "Feature-Rich Smartphones at Great Prices",
-    link: "/deviceShowcase",
+    link: "/deviceShowcase/Phone",
     category: "Phone"
   },
   {
     imgSrc: tabD,
     title: "TOP TABLETS",
     subtitle: "Feature-Rich Tablets for Work & Play",
-    link: "/deviceShowcase",
+    link: "/deviceShowcase/Tablet",
     category: "Tablet"
   },
   {
     imgSrc: laptops,
     title: "TOP LAPTOPS",
     subtitle: "Powerful Laptops for Every Need",
-    link: "/deviceShowcase",
+    link: "/deviceShowcase/Laptop",
     category: "Laptop"
   },
   {
