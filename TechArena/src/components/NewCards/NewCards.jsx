@@ -18,7 +18,7 @@ const deviceData = [
     imgSrc: tabD,
     title: "TOP TABLETS",
     subtitle: "Feature-Rich Tablets for Work & Play",
-    link: "/deviceShowcase/Tablet",
+    link: "/deviceShowcase/All",
     category: "Tablet"
   },
   {
@@ -32,7 +32,7 @@ const deviceData = [
     imgSrc: i,
     title: "FIND YOUR DEVICE",
     subtitle: "Explore & Find Your Perfect Match",
-    link: "/deviceShowcase",
+    link: "/deviceShowcase/All",
     category: "All"
   },
 ];

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
 
 const UserPage = () => {
@@ -101,6 +101,17 @@ const UserPage = () => {
               <span className="text-lg text-gray-800">{user.email}</span>
             </div>
           </div>
+          <div className="flex justify-evenly items-center">
+          {user.username === "m__sheikh07" ? (
+            <div className="flex justify-center mt-6">
+              <NavLink
+                to="/dashboard"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-all"
+              >
+                Go to Dashboard
+              </NavLink>
+            </div>
+          ) : null}
           <div className="flex justify-center mt-8">
             <button
               onClick={handleLogout}
@@ -109,6 +120,8 @@ const UserPage = () => {
               Logout
             </button>
           </div>
+          </div>
+          
         </div>
       </div>
     </>

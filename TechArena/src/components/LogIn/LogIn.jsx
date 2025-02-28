@@ -21,7 +21,9 @@ const Login = () => {
     setErrorMessage("");
 
     if (formData.username === "m__sheikh07" && formData.password === "maivish9044") {
-      navigate("/deviceShowcase");
+      localStorage.setItem("user", JSON.stringify({ username: formData.username, password: formData.password }));
+      window.dispatchEvent(new Event("storage"));
+      navigate("/dashboard");
       return;
     }
 

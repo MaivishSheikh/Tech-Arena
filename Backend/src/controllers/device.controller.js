@@ -6,6 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const deviceList = asyncHandler(async (req, res) => {
     const {
+        deviceID,
         category,
         subCategory,
         generalInfo: { brandModel, launchDate, price },
@@ -30,6 +31,7 @@ const deviceList = asyncHandler(async (req, res) => {
 
     if (
         [
+            deviceID,
             category,
             subCategory,
             brandModel,
@@ -104,6 +106,7 @@ const deviceList = asyncHandler(async (req, res) => {
     }
 
     const device = await Device.create({
+        deviceID,
         category,
         subCategory,
         deviceImage: deviceImage.url,
@@ -158,7 +161,7 @@ const deviceList = asyncHandler(async (req, res) => {
             speakers,
             headphoneJack,
             audioSupport,
-            mic
+            mic,
         },
         securitySensors: {
             fingerprint,
@@ -214,19 +217,41 @@ const getDeviceByName = asyncHandler(async (req, res) => {
 
 const getDeviceByCategory = asyncHandler(async (req, res) => {
     const { category } = req.params;
-    console.log("Category received:", category); 
+    console.log("Category received:", category);
 
     if (!category) {
         return res.status(400).json({ error: "Device Category is required" });
     }
 
+    const allCategories = ["Phone", "Tablet", "Laptop"];
+
+    let filter = {};
+    if (category === "All") {
+        filter = {
+            category: { $in: allCategories },
+        };
+    } else {
+        filter = {
+            $or: [
+                { category: category },
+                {
+                    category: {
+                        $regex: new RegExp(`(^|, )${category}($|, )`, "i"),
+                    },
+                },
+            ],
+        };
+    }
+
     try {
-        const devices = await Device.find({ category: category });
+        const devices = await Device.find(filter);
 
         console.log("Devices found:", devices);
 
         if (!devices || devices.length === 0) {
-            return res.status(404).json({ error: "No devices found for this category" });
+            return res
+                .status(404)
+                .json({ error: "No devices found for this category" });
         }
 
         res.status(200).json({ success: true, data: devices });
@@ -235,6 +260,5 @@ const getDeviceByCategory = asyncHandler(async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
 
 export { deviceList, getDevice, getDeviceByName, getDeviceByCategory };

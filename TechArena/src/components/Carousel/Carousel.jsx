@@ -13,7 +13,7 @@ export default function Carousel() {
       description:
         "Explore top-performing smartphones crafted for gaming, photography, and seamless everyday use.",
       btnTxt: "Explore Phones",
-      link: "/phones",
+      link: "/deviceShowcase/Phone",
     },
     {
       image: B,
@@ -21,7 +21,7 @@ export default function Carousel() {
       description:
         "Seamlessly balance work and play with powerful tablets designed for multitasking, creativity, and entertainment on the go.",
       btnTxt: "Explore Tablets",
-      link: "",
+      link: "/deviceShowcase/All",
     },
     {
       image: C,
@@ -29,7 +29,7 @@ export default function Carousel() {
       description:
         "Whether for gaming, productivity, or creativity, find laptops that deliver exceptional performance and style to suit your needs.",
       btnTxt: "Explore Laptops",
-      link: "",
+      link: "/deviceShowcase/Laptop",
     },
   ]);
 

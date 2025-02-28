@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const deviceSchema = new Schema(
     {
+        deviceID: {
+            type: String,
+            required: true
+        },
         category: {
             type: String,
             required: true,

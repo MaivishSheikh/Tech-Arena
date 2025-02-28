@@ -25,7 +25,7 @@ const DeviceShowCase = () => {
   }, []);
 
   useEffect(() => {
-    setFilters({ devices: [], brands: [], subCategory: [], operatingSystem: [] }); // Clear filters when category changes
+    setFilters({ devices: [], brands: [], subCategory: [], operatingSystem: [] });
     if (category) {
       fetchDevices(`http://localhost:8000/api/v1/devices/category/${category}`);
     } else {

@@ -61,7 +61,7 @@ export default function Header() {
                     <ul className="flex flex-col">
                       <li>
                         <NavLink
-                          to={`/deviceShowcase/Phone`}
+                          to="/deviceShowcase/Phone"
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Phones
@@ -69,7 +69,7 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to={`/deviceShowcase/Tablet`}
+                          to={`/deviceShowcase/All`}
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Tablets
@@ -77,7 +77,7 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to={`/deviceShowcase/Laptop`}
+                          to="/deviceShowcase/Laptop"
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Laptops
@@ -85,8 +85,7 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to="/deviceShowcase"
-                          state={{ category: "All" }}
+                          to={`/deviceShowcase/All`}
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           All Devices
