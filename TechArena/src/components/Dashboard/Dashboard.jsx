@@ -37,7 +37,9 @@ export default function Dashboard(props) {
   return (
     <>
       <div className="p-10">
-        <h1 className="mb-5" style={{fontFamily: "Ubuntu", fontSize: "20px"}}>Overview</h1>
+        <h1 className="mb-5" style={{ fontFamily: "Ubuntu", fontSize: "20px" }}>
+          Overview
+        </h1>
         <div className="flex justify-between items-center gap-5">
           <CardSection
             title="Users"
@@ -53,7 +55,7 @@ export default function Dashboard(props) {
             percentage="83.4"
             iconClass="fa-solid fa-laptop fa-lg"
             iconColor="#FF667D"
-            addLink="/deviceShowcase/Phone"
+            addLink="/addDevices"
             upLink="/deviceShowcase/All"
           />
           <CardSection

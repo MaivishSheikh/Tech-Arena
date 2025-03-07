@@ -12,6 +12,7 @@ import Login from './components/LogIn/LogIn.jsx'
 import CompareDevice from './components/CompareDevice/CompareDevice.jsx'
 import ReviewDevice from './components/ReviewDevice/ReviewDevice.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
+import AddDevices from './components/AddDevices/AddDevices.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path="/users/:username" element={<UserPage />} />
       <Route path="/compareDevice" element={<CompareDevice /> } />
       <Route path="/reviewDevice/:deviceName" element={<ReviewDevice /> } />
+      <Route path="/addDevices" element={<AddDevices /> } />
     </Route>
   )
 )

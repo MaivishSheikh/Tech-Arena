@@ -244,7 +244,10 @@ const Devices = () => {
       </div>
 
       {/* Device Details Section */}
-      <div className="max-w-screen-lg bg-white shadow-md rounded-md p-4 text-white"  style={{background: "#043247"}}>
+      <div
+        className="max-w-screen-lg bg-white shadow-md rounded-md p-4 text-white"
+        style={{ background: "#043247" }}
+      >
         <h1 className="text-3xl font-bold mb-5 border-b border-gray-300 pb-3">
           {device.generalInfo.brandModel}
         </h1>
@@ -260,7 +263,7 @@ const Devices = () => {
             <div className="flex justify-between items-center w-48">
               <button
                 onClick={prevImage}
-                className="p-2 border border-cyan-200 rounded-lg hover:bg-gray-100"
+                className="p-2 border border-cyan-200 rounded-lg hover:bg-cyan-200 hover:text-black"
               >
                 <i className="fa-solid fa-chevron-left"></i>
               </button>
@@ -282,7 +285,7 @@ const Devices = () => {
               </div>
               <button
                 onClick={nextImage}
-                className="p-2 border border-cyan-200 rounded-lg hover:bg-gray-100"
+                className="p-2 border border-cyan-200 rounded-lg hover:bg-cyan-200 hover:text-black"
               >
                 <i className="fa-solid fa-chevron-right"></i>
               </button>
@@ -342,6 +345,12 @@ const Devices = () => {
             </div>
             <div className="flex justify-center gap-4 mt-4">
               <NavLink
+                to={``}
+                className="bg-cyan-500 text-white px-4 py-2 rounded-md"
+              >
+                <i className="fa-solid fa-heart"></i>
+              </NavLink>
+              <NavLink
                 to="/compareDevice"
                 state={{ device1: device.generalInfo.brandModel }}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center justify-center"
@@ -354,12 +363,37 @@ const Devices = () => {
               >
                 Review
               </NavLink>
+              <NavLink
+                to={``}
+                className="bg-red-500 text-white px-4 py-2 rounded-md"
+              >
+                Buy Now
+              </NavLink>
+              <NavLink
+                to={``}
+                className="bg-cyan-500 text-white px-4 py-2 rounded-md"
+              >
+                <div
+                  className="flex items-center justify-around"
+                  style={{ width: "100px" }}
+                >
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  <p style={{ fontSize: "14px", fontWeight: 600}}>
+                    Add to Cart
+                  </p>
+                  {/* Add to Cart */}
+                </div>
+              </NavLink>
             </div>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(deviceDetails).map(([section, details]) => (
-            <div key={section} className="p-4 border-2 text-black rounded-lg" style={{background: "#fff", boxShadow: "4px 4px 5px #000"}}>
+            <div
+              key={section}
+              className="p-4 border-2 text-black rounded-lg"
+              style={{ background: "#fff", boxShadow: "4px 4px 5px #000" }}
+            >
               <h2 className="text-xl font-bold mb-3">{section}</h2>
               {Object.entries(details).map(([key, value]) => (
                 <p

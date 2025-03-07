@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
-const CardSlider = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const CardSlider = ({ cardsToShow = 5 }) => {
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -15,7 +20,10 @@ const CardSlider = () => {
         }
         const result = await response.json();
         if (result.success) {
-          setDevices(result.data);
+          const sortedDevices = result.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setDevices(sortedDevices);
         } else {
           console.error("Invalid data format from API:", result);
           setDevices([]);
@@ -26,93 +34,86 @@ const CardSlider = () => {
         setLoading(false);
       }
     };
-
     fetchDevices();
   }, []);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 1 <= Math.ceil(devices.length / 5) - 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex - 1 >= 0 ? prevIndex - 1 : Math.ceil(devices.length / 5) - 1
-    );
-  };
-
-  if (loading) {
+  if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-gray-700">Loading...</p>
+      <div className="h-screen flex justify-center items-center">
+        <p className="text-lg">Loading...</p>
       </div>
     );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-red-500">Error: {error}</p>
-      </div>
-    );
-  }
-
-  if (devices.length === 0) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-gray-700">No devices found.</p>
-      </div>
-    );
-  }
+  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="relative max-w-7xl w-full overflow-hidden px-10">
-        {/* Navigation Buttons */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full text-gray-700 hover:bg-opacity-100 transition-all z-10 shadow-lg"
-        >
-          &lt;
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 p-3 rounded-full text-gray-700 hover:bg-opacity-100 transition-all z-10 shadow-lg"
-        >
-          &gt;
-        </button>
-
-        {/* Cards Container */}
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{
-            transform: `translateX(-${currentIndex * (100 / 5)}%)`,
-            width: `${devices.length * 20}%`, // Each card takes 20% of the container width
-          }}
-        >
-          {devices.map((device, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 w-1/5 p-4" // Each card takes 20% of the container width
+    <>
+      <div className="bg-emerald-200" style={{ background: "#C0DFFF" }}>
+        <div className="w-full mx-auto pb-10" style={{ maxWidth: "1350px", padding: "20px 0 60px" }}>
+          <div className="relative">
+            <h1
+              className="text-center text-3xl font-extrabold py-10"
+              style={{ fontFamily: "Ubuntu" }}
             >
-              <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all">
-                {device.deviceImage && (
-                  <img
-                    src={device.deviceImage}
-                    alt={device.generalInfo.brandModel}
-                    className="w-48 h-48 object-contain mb-6"
-                  />
-                )}
-                <h2 className="text-xl font-semibold text-gray-800 text-center">
-                  {device.generalInfo?.brandModel}
-                </h2>
-              </div>
-            </div>
-          ))}
+              Popular Devices
+            </h1>
+            <button
+              onClick={() => swiperRef.current?.slidePrev()}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white py-2.5 px-4 rounded-full z-10"
+              style={{ padding: "10px 18px" }}
+            >
+              <i className="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+              onClick={() => swiperRef.current?.slideNext()}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white py-2.5 px-4 rounded-full z-10"
+              style={{ padding: "10px 18px" }}
+            >
+              <i className="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div>
+            <Swiper
+              slidesPerView={cardsToShow}
+              spaceBetween={20}
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              modules={[Navigation]}
+              className="mySwiper px-10"
+            >
+              {devices.map((device, index) => (
+                <SwiperSlide
+                  key={index}
+                  className="flex justify-center items-center"
+                >
+                  <Link to={`/devices/${device.generalInfo.brandModel}`}>
+                    <div className="border border-blue-700 grid rounded-md bg-white transition-all duration-300">
+                      {device.deviceImage && (
+                        <img
+                          src={device.deviceImage}
+                          alt={device.generalInfo.brandModel}
+                          className="w-full h-64 object-contain p-3 transition-all duration-300 ease-in-out"
+                          // style={{height: "300px"}}
+                          onMouseEnter={(e) => {
+                            if (device.alternateImage) {
+                              e.target.src = device.alternateImage;
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.src = device.deviceImage;
+                          }}
+                        />
+                      )}
+                      <h3 className="text-lg font-semibold text-center p-3">
+                        {device.generalInfo?.brandModel}
+                      </h3>
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
