@@ -73,7 +73,8 @@ const SignIn = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            placeholder="username"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none"
             required
           />
           {errors.username && <p className="text-red-600 text-sm">{errors.username}</p>}
@@ -86,7 +87,8 @@ const SignIn = () => {
             name="fullname"
             value={formData.fullname}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            placeholder="full name"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none"
             required
           />
         </div>
@@ -98,7 +100,8 @@ const SignIn = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            placeholder="email"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none"
             required
           />
           {errors.email && <p className="text-red-600 text-sm">{errors.email}</p>}
@@ -112,12 +115,13 @@ const SignIn = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg pr-10"
+              placeholder="password"
+              className="w-full p-2 border border-gray-300 rounded-lg pr-10 outline-none"
               required
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-2 flex items-center text-gray-500"
+              className="absolute inset-y-0 right-0 rounded-e-lg px-3 bg-blue-200 flex items-center text-gray-500 outline-none"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}

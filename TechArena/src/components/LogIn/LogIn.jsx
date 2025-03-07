@@ -49,7 +49,7 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-lg p-6 w-96"
+        className="bg-white shadow-lg rounded-lg p-6 w-96 outline-none"
       >
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
 
@@ -60,7 +60,7 @@ const Login = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            className="w-full p-2 border border-gray-300 rounded-lg outline-none"
             required
           />
         </div>
@@ -73,12 +73,12 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg pr-10"
+              className="w-full p-2 border border-gray-300 rounded-lg pr-10 outline-none"
               required
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-2 flex items-center text-gray-500"
+              className="absolute inset-y-0 right-0 rounded-e-lg px-3 bg-blue-200 flex items-center text-gray-500 outline-none"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}
