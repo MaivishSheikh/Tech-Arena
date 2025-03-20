@@ -80,4 +80,26 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, { user }, "Login successful"));
 });
 
-export { userList, getUser, getUserByName, loginUser };
+const deleteUser = asyncHandler(async (req, res) => {
+    const { username } = req.params;
+
+    if (!username) {
+        throw new ApiError(400, "User name is required");
+    }
+
+    const deletedUser = await User.findOneAndDelete({
+        "username": username,
+    });
+
+    if (!deletedUser) {
+        throw new ApiError(404, "User not found");
+    }
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, deletedUser, "User deleted successfully")
+        );
+});
+
+export { userList, getUser, getUserByName, loginUser, deleteUser };

@@ -4,7 +4,7 @@ const deviceSchema = new Schema(
     {
         deviceID: {
             type: String,
-            required: true
+            required: true,
         },
         category: {
             type: String,

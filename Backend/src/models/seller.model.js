@@ -2,14 +2,15 @@ import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const userSchema = new Schema(
+const sellerSchema = new Schema(
     {
-        username: {
+        sellerID: {
             type: String,
             required: true,
-            unique: true,
-            trim: true,
-            index: true,
+        },
+        name: {
+            type: String,
+            required: true,
         },
         email: {
             type: String,
@@ -18,16 +19,28 @@ const userSchema = new Schema(
             lowercase: true,
             trim: true,
         },
-        fullname: {
+        password: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        phone: {
             type: String,
             required: true,
             trim: true,
             index: true,
         },
-        password: {
+        busiName: {
             type: String,
             required: true,
-            trim: true,
+        },
+        busiAddress: {
+            type: String,
+            required: true,
+        },
+        gstNo: {
+            type: String,
+            required: true,
         },
         refreshToken: {
             type: String,
@@ -38,15 +51,15 @@ const userSchema = new Schema(
     }
 );
 
-userSchema.pre("save", async function (next) {
+sellerSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
 
     this.password = await bcrypt.hash(this.password, 10);
     next();
 });
 
-userSchema.methods.isPasswordCorrect = async function (password) {
+sellerSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
-export const User = mongoose.model("User", userSchema);
+export const Seller = mongoose.model("Seller", sellerSchema);

@@ -49,7 +49,7 @@ export default function Header() {
   return (
     <header>
       <div
-        className="mx-auto px-10 flex justify-between py-4 items-center bg-slate-800 text-white"
+        className="mx-auto px-10 flex justify-between py-3 items-center bg-slate-800 text-white"
         style={{ background: "#072B3B" }}
       >
         <div
@@ -142,9 +142,6 @@ export default function Header() {
               </div>
             </li>
             <li>
-              <NavLink to="/reviews">Reviews</NavLink>
-            </li>
-            <li>
               <NavLink to="/contact">Contact</NavLink>
             </li>
             <li>
@@ -152,8 +149,7 @@ export default function Header() {
             </li>
           </ul>
         </nav>
-
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-4">
           <div className="flex items-center">
             <input
               type="text"
@@ -170,12 +166,24 @@ export default function Header() {
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
+        <div className="px-2">
+            <NavLink
+              to="/sellerPage"
+              className="py-2.5 px-5 rounded-3xl text-white"
+              style={{
+                background: "linear-gradient(120deg, #FF0A6C, #2D27FF",
+                fontWeight: 500,
+                fontSize: "17px"
+              }}
+            >
+              Become a Seller
+            </NavLink>
+          </div>
           {user ? (
             <div className="relative group">
               <button onClick={() => navigate(`/users/${user.username}`)}>
                 <i
                   className="fa-solid fa-circle-user fa-2xl"
-                  style={{ padding: "0 20px" }}
                 ></i>
               </button>
               <div className="absolute right-0 hidden group-hover:block rounded-lg mt-2 w-32 z-10 p-3">
@@ -186,7 +194,14 @@ export default function Header() {
                         to={`/users/${user.username}`}
                         className="flex items-center justify-between rounded-md px-4 py-2 w-full bg-slate-700 text-white hover:bg-slate-500 hover:text-white"
                       >
-                        <span>{user.username}</span> <i class="fa-solid fa-arrow-right fa-sm px-1.5 py-3" style={{border: "2px solid white", borderRadius: "50px"}}></i>
+                        <span>{user.username}</span>{" "}
+                        <i
+                          class="fa-solid fa-arrow-right fa-sm px-1.5 py-3"
+                          style={{
+                            border: "2px solid white",
+                            borderRadius: "50px",
+                          }}
+                        ></i>
                       </NavLink>
                     </li>
                     <li>

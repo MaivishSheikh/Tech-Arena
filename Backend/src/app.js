@@ -19,9 +19,11 @@ app.use(cookieParser());
 import deviceRouter from "./routes/device.routes.js"
 import brandRouter from "./routes/brand.routes.js"
 import userRouter from "./routes/user.routes.js"
+import sellerRouter from "./routes/seller.routes.js"
 
 app.use("/api/v1/devices", deviceRouter)
 app.use("/api/v1/brands", brandRouter)
 app.use("/api/v1/users", userRouter)
+app.use("/api/v1/sellers", sellerRouter)
 
 export { app };

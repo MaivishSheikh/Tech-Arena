@@ -2,13 +2,13 @@ import React from "react";
 import CardSection from "../CardSection/CardSection";
 import { useState, useEffect } from "react";
 
-export default function Dashboard(props) {
+export default function SDashboard(props) {
   const [userCount, setUserCount] = useState(null);
   const [deviceCount, setDeviceCount] = useState(null);
   const [sellerCount, setSellerCount] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/users/")
+    fetch("http://localhost:8000/api/v1/sellers/")
       .then((response) => response.json())
       .then((data) => {
         console.log("API Response:", data);

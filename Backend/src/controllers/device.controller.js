@@ -6,7 +6,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const deviceList = asyncHandler(async (req, res) => {
     const {
-        deviceID,
         category,
         subCategory,
         generalInfo: { brandModel, launchDate, price },
@@ -31,7 +30,6 @@ const deviceList = asyncHandler(async (req, res) => {
 
     if (
         [
-            deviceID,
             category,
             subCategory,
             brandModel,
@@ -83,6 +81,14 @@ const deviceList = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Device already exists");
     }
 
+    const lastDevice = await Device.findOne().sort({ _id: -1 }); 
+    let newDeviceID = "D100"; 
+
+    if (lastDevice && lastDevice.deviceID) {
+        const lastIDNumber = parseInt(lastDevice.deviceID.slice(1), 10); 
+        newDeviceID = `D${lastIDNumber + 1}`; 
+    }
+
     const deviceImageLocalPath = req.files?.deviceImage[0]?.path;
 
     let alternateImageLocalPath;
@@ -106,7 +112,7 @@ const deviceList = asyncHandler(async (req, res) => {
     }
 
     const device = await Device.create({
-        deviceID,
+        deviceID: newDeviceID, 
         category,
         subCategory,
         deviceImage: deviceImage.url,
@@ -261,4 +267,26 @@ const getDeviceByCategory = asyncHandler(async (req, res) => {
     }
 });
 
-export { deviceList, getDevice, getDeviceByName, getDeviceByCategory };
+const deleteDeviceByName = asyncHandler(async (req, res) => {
+    const { brandModel } = req.params;
+
+    if (!brandModel) {
+        throw new ApiError(400, "Brand model is required");
+    }
+
+    const deletedDevice = await Device.findOneAndDelete({
+        "generalInfo.brandModel": brandModel,
+    });
+
+    if (!deletedDevice) {
+        throw new ApiError(404, "Device not found");
+    }
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, deletedDevice, "Device deleted successfully")
+        );
+});
+
+export { deviceList, getDevice, getDeviceByName, getDeviceByCategory, deleteDeviceByName };

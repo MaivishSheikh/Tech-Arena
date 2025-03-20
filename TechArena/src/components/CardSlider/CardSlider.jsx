@@ -91,7 +91,6 @@ const CardSlider = ({ cardsToShow = 5 }) => {
                           src={device.deviceImage}
                           alt={device.generalInfo.brandModel}
                           className="w-full h-64 object-contain p-3 transition-all duration-300 ease-in-out"
-                          // style={{height: "300px"}}
                           onMouseEnter={(e) => {
                             if (device.alternateImage) {
                               e.target.src = device.alternateImage;

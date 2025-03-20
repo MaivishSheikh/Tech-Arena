@@ -18,8 +18,6 @@ const DeviceShowCase = () => {
   });
 
   const location = useLocation();
-  const { subCategory: querySubCategory } = location.state || {};
-  const { category: queryCategory } = location.state || {};
 
   useEffect(() => {
     window.scrollTo(0, 0);
