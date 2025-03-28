@@ -5,6 +5,7 @@ import sellingOnline from "../../assets/sellingOnline.png";
 
 const SSignin = () => {
   const [step, setStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,10 +24,6 @@ const SSignin = () => {
     if (!formData.email.trim()) newErrors.email = "Email is required.";
     else if (!/^.+@.+\..+$/.test(formData.email))
       newErrors.email = "Email must be valid.";
-    if (!formData.password.trim()) newErrors.password = "Password is required.";
-    else if (!/(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,15}$/.test(formData.password))
-      newErrors.password =
-        "Password must be 8-15 characters long, with at least one number and one special character.";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required.";
     else if (!/^\d{10}$/.test(formData.phone))
       newErrors.phone = "Phone number must be 10 digits.";
@@ -71,7 +68,7 @@ const SSignin = () => {
       );
       if (response.data.data) {
         localStorage.setItem("seller", JSON.stringify(response.data.data));
-        navigate("/dashboard");
+        navigate("/sellerDashboard");
       }
     } catch (error) {
       setErrors({ form: "Failed to register seller." });
@@ -195,18 +192,29 @@ const SSignin = () => {
                     <p className="text-red-500 text-sm mt-1">{errors.email}</p>
                   )}
                 </div>
-                <div>
+                <div className="relative">
                   <label className="block text-gray-700 text-sm font-medium mb-2">
                     Password *
                   </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Enter Password"
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
                   />
+                  <button
+                    type="button"
+                    className="absolute translate-y-1.5 inset-y-0 right-0 px-3 flex items-center outline-none text-gray-500"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <i className="fa-solid fa-eye-slash"></i>
+                    ) : (
+                      <i className="fa-solid fa-eye"></i>
+                    )}
+                  </button>
                   {errors.password && (
                     <p className="text-red-500 text-sm mt-1">
                       {errors.password}

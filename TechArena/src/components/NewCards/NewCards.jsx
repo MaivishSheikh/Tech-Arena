@@ -18,7 +18,7 @@ const deviceData = [
     imgSrc: tabD,
     title: "TOP TABLETS",
     subtitle: "Feature-Rich Tablets for Work & Play",
-    link: "/deviceShowcase/All",
+    link: "/deviceShowcase/Tablet",
     category: "Tablet"
   },
   {

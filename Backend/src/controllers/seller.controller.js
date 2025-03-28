@@ -84,22 +84,23 @@ const getSellerByName = asyncHandler(async (req, res) => {
 });
 
 const loginSeller = asyncHandler(async (req, res) => {
-    const { busiName, email, password } = req.body;
+    const { busiName, email } = req.body;
 
-    if ([busiName, email, password].some((field) => field?.trim() === "")) {
+    if ([busiName, email].some((field) => field?.trim() === "")) {
         throw new ApiError(400, "All fields are required");
     }
 
-    const seller = await Seller.findOne({ busiName, email });
+    const seller = await Seller.findOne({ busiName });
 
     if (!seller) {
         throw new ApiError(404, "Seller not found");
     }
+    console.log(seller)
 
-    const isMatch = await bcrypt.compare(password, seller.password);
-    if (!isMatch) {
-        throw new ApiError(400, "Invalid credentials");
-    }
+    // const isMatch = await bcrypt.compare(password, seller.password);
+    // if (!isMatch) {
+    //     throw new ApiError(400, "Invalid credentials");
+    // }
 
     res.status(200).json(new ApiResponse(200, { seller }, "Login successful"));
 });

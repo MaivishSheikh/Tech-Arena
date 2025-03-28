@@ -52,17 +52,30 @@ export default function Dashboard(props) {
   return (
     <>
       <div className="p-10">
-        <h1 className="mb-5" style={{ fontFamily: "Ubuntu", fontSize: "20px" }}>
+        <h1
+          className="mb-5"
+          style={{ fontFamily: "Roboto", fontSize: "30px", fontWeight: 700 }}
+        >
           Overview
         </h1>
-        <div className="flex justify-between items-center gap-5">
+        <div className="flex justify-evenly items-center my-3">
           <CardSection
             title="Users"
-            value={userCount !== null ? userCount : (
-              <span style={{ fontSize: '14px', fontStyle: 'italic', color: 'gray' }}>
-                Loading
-              </span>
-            )}
+            value={
+              userCount !== null ? (
+                userCount
+              ) : (
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontStyle: "italic",
+                    color: "gray",
+                  }}
+                >
+                  Loading
+                </span>
+              )
+            }
             percentage="83.4"
             iconClass="fa-solid fa-users fa-lg"
             iconColor="#E8C547"
@@ -70,11 +83,21 @@ export default function Dashboard(props) {
           />
           <CardSection
             title="Devices"
-            value={deviceCount !== null ? deviceCount : (
-              <span style={{ fontSize: '14px', fontStyle: 'italic', color: 'gray' }}>
-                Loading
-              </span>
-            )}
+            value={
+              deviceCount !== null ? (
+                deviceCount
+              ) : (
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontStyle: "italic",
+                    color: "gray",
+                  }}
+                >
+                  Loading
+                </span>
+              )
+            }
             percentage="83.4"
             iconClass="fa-solid fa-laptop fa-lg"
             iconColor="#FF667D"
@@ -84,22 +107,50 @@ export default function Dashboard(props) {
           />
           <CardSection
             title="Seller"
-            value={sellerCount !== null ? sellerCount : (
-              <span style={{ fontSize: '14px', fontStyle: 'italic', color: 'gray' }}>
-                Loading
-              </span>
-            )}
+            value={
+              sellerCount !== null ? (
+                sellerCount
+              ) : (
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontStyle: "italic",
+                    color: "gray",
+                  }}
+                >
+                  Loading
+                </span>
+              )
+            }
             percentage="83.4"
             iconClass="fa-solid fa-shop fa-lg"
             iconColor="#5BDA83"
             viewLink="/viewSellers"
           />
+        </div>
+        <div className="flex justify-evenly items-center my-12 mb-3">
           <CardSection
-            title="Devices"
+            title="Stock"
             value="18"
             percentage="83.4"
             iconClass="fa-solid fa-message fa-lg"
             iconColor="#25A18E"
+          />
+          <CardSection
+            title="Payment"
+            value="18"
+            percentage="83.4"
+            iconClass="fa-solid fa-message fa-lg"
+            iconColor="#25A18E"
+          />
+          <CardSection
+            title="Device Variants"
+            value="18"
+            percentage="83.4"
+            iconClass="fa-solid fa-file fa-lg"
+            iconColor="#25A18E"
+            addLink="/deviceVariants"
+            viewLink="/viewDV"
           />
         </div>
       </div>

@@ -1,25 +1,39 @@
-import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router-dom'
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import Devices from './components/Devices/Devices.jsx'
-import Home from './components/Home/Home.jsx'
-import Signin from './components/UserPage/SignIn.jsx'
-import DeviceShowCase from './components/DeviceShowCase/DeviceShowCase.jsx'
-import UserPage from './components/UserPage/UserPage.jsx'
-import CompareDevice from './components/CompareDevice/CompareDevice.jsx'
-import ReviewDevice from './components/ReviewDevice/ReviewDevice.jsx'
-import Dashboard from './components/Dashboard/Dashboard.jsx'
-import AddDevices from './components/AddDevices/AddDevices.jsx'
-import ViewDevices from './components/ViewDevices/ViewDevices.jsx'
-import ViewUsers from './components/UserPage/ViewUser.jsx'
-import Login from './components/UserPage/LogIn.jsx'
-import SSignIn from './components/SellerPage/SSignIn.jsx'
-import ViewSellers from './components/SellerPage/viewSeller.jsx'
-import SellerPage from './components/SellerPage/SellerPage.jsx'
-import SLogin from './components/SellerPage/SLogin.jsx'
-import SDashboard from './components/SellerPage/SDashborad.jsx'
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import Devices from "./components/Devices/Devices.jsx";
+import Home from "./components/Home/Home.jsx";
+import Signin from "./components/UserPage/SignIn.jsx";
+import DeviceShowCase from "./components/DeviceShowCase/DeviceShowCase.jsx";
+import UserPage from "./components/UserPage/UserPage.jsx";
+import CompareDevice from "./components/CompareDevice/CompareDevice.jsx";
+import ReviewDevice from "./components/ReviewDevice/ReviewDevice.jsx";
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
+import AddDevices from "./components/AddDevices/AddDevices.jsx";
+import ViewDevices from "./components/ViewDevices/ViewDevices.jsx";
+import ViewUsers from "./components/UserPage/ViewUser.jsx";
+import Login from "./components/UserPage/LogIn.jsx";
+import SSignIn from "./components/SellerPage/SSignIn.jsx";
+import ViewSellers from "./components/SellerPage/viewSeller.jsx";
+import SellerPage from "./components/SellerPage/SellerPage.jsx";
+import SLogin from "./components/SellerPage/SLogin.jsx";
+import SDashboard from "./components/SellerPage/SDashborad.jsx";
+import QRCodeExample from "./components/QRCode/QRCodeExample.jsx";
+import DeviceVariants from "./components/SellerPage/DeviceVariants.jsx";
+import ViewDV from "./components/SellerPage/ViewDV.jsx";
+import DVariants from "./components/Devices/DVariants.jsx";
+import CustomerDetailsForm from "./components/CustomerDetailsForm/CustomerDetailsForm.jsx";
+import BillGeneration from "./components/BillGeneration/BillGeneration.jsx";
+import PaymentPage from "./components/PaymentPage/PaymentPage.jsx";
+import Cart from "./components/Cart/Cart.jsx";
+import CartPage from "./components/CartPage/CartPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,24 +44,32 @@ const router = createBrowserRouter(
       <Route path="/users" element={<Signin />} />
       <Route path="/login" element={<Login />} />
       <Route path="/sellerLogin" element={<SSignIn />} />
-      <Route path="/seller" element={<SLogin /> } />
-      <Route path="/sellerPage" element={<SellerPage /> } />
-      <Route path="/dashboard" element={<Dashboard /> } />
-      <Route path="/sellerDashboard" element={<SDashboard /> } />
+      <Route path="/seller" element={<SLogin />} />
+      <Route path="/sellerPage" element={<SellerPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/sellerDashboard" element={<SDashboard />} />
       <Route path="/users/:username" element={<UserPage />} />
-      <Route path="/compareDevice" element={<CompareDevice /> } />
-      <Route path="/reviewDevice/:deviceName" element={<ReviewDevice /> } />
-      <Route path="/addDevices" element={<AddDevices /> } />
-      <Route path="/viewDevices" element={<ViewDevices /> } />
+      <Route path="/compareDevice" element={<CompareDevice />} />
+      <Route path="/reviewDevice/:deviceName" element={<ReviewDevice />} />
+      <Route path="/addDevices" element={<AddDevices />} />
+      <Route path="/viewDevices" element={<ViewDevices />} />
       <Route path="/viewUsers" element={<ViewUsers />} />
       <Route path="/viewSellers" element={<ViewSellers />} />
-    
+      <Route path="/deviceVariants" element={<DeviceVariants />} />
+      <Route path="/viewDV" element={<ViewDV />} />
+      <Route path="/dVariants/:deviceName" element={<DVariants />} />
+      <Route path="/qrCode" element={<QRCodeExample />} />
+      <Route path="/customer-details" element={<CustomerDetailsForm />} />
+      <Route path="/bill" element={<BillGeneration />} />
+      <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/cartPage" element={<CartPage />} />
     </Route>
   )
-)
+);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+  </StrictMode>
+);

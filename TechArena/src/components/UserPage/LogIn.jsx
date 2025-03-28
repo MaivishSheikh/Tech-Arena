@@ -56,7 +56,7 @@ const Login = () => {
   };
 
   return (
-    <div className="my-8 bg-gray-100 flex items-center justify-center">
+    <div className="py-8 bg-gray-100 flex items-center justify-center">
       <div className="flex items-center justify-center p-8 mr-20">
         <img
           src="https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg"
@@ -126,9 +126,9 @@ const Login = () => {
                 type="button"
               >
                 <div className="bg-white py-1 px-1.5 rounded-full">
-                  <i className="fa-brands fa-instagram fa-lg"></i>
+                  <i className="fa-brands fa-facebook fa-lg"></i>
                 </div>
-                <span className="ml-4">Login with Instagram</span>
+                <span className="ml-4">Login with Facebook</span>
               </button>
             </div>
             <button

@@ -1,11 +1,22 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
 
 export default function AddDevices(props) {
   const [image, setImage] = useState(null);
   const [altImage, setAltImage] = useState(null);
-  const fileInputRef = useRef(null); 
-  const altFileInputRef = useRef(null); 
+  const fileInputRef = useRef(null);
+  const altFileInputRef = useRef(null);
+  const navigate = useNavigate();
+
+  const [open, setOpen] = React.useState(false);
 
   const [inputValues, setInputValues] = useState({
     brandModel: "",
@@ -207,6 +218,7 @@ export default function AddDevices(props) {
 
       if (response.data) {
         alert("Device added successfully!");
+        setOpen(true);
         handleReset();
       } else {
         alert("Failed to add device. Please try again.");
@@ -881,12 +893,37 @@ export default function AddDevices(props) {
           </div>
           <div className="flex justify-center gap-6 pt-6 items-center">
             <button
+            onClick={() => {setOpen(true)}}
+              variant="gradient"
               type="submit"
               className="bg-cyan-500 text-white rounded-md py-2 px-6 hover:bg-cyan-600 transition-colors"
               style={{ fontSize: "16px", fontWeight: 500 }}
             >
               Submit
             </button>
+            {open && (
+              <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                <div className="bg-white w-96 p-6 rounded-lg shadow-2xl text-center">
+                  <h1 className="text-xl font-semibold text-gray-800 mb-4">
+                    Does this device have Variants?
+                  </h1>
+                  <div className="flex justify-center gap-4 mt-4">
+                    <NavLink
+                      to="/deviceVariants"
+                      className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+                    >
+                      Yes
+                    </NavLink>
+                    <NavLink
+                      to="/dashboard"
+                      className="px-5 py-2 bg-gray-500 text-white font-medium rounded-lg hover:bg-gray-600 transition"
+                    >
+                      No
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            )}
             <button
               type="button"
               className="bg-rose-500 text-white rounded-md py-2 px-6 hover:bg-rose-600 transition-colors"

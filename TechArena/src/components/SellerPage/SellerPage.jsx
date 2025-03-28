@@ -8,13 +8,13 @@ import globalMarket from "../../assets/globalMarket.png";
 import { NavLink } from "react-router-dom";
 import SLogin from "./SLogin";
 
-const SellerPage = () => {
+const ManufacturerPage = () => {
   const [activeContent, setActiveContent] = useState("special1");
 
   const specials = [
     {
       id: "special1",
-      title: "Register as a Verified Seller",
+      title: "Register as a Verified Manufacturer",
       image: createAccount,
       heading:
         "Your journey to selling tech starts with a single step - creating an account.",
@@ -84,7 +84,7 @@ const SellerPage = () => {
     },
     {
       icon: "fas fa-headset text-2xl text-purple-500",
-      title: "Dedicated Seller Support",
+      title: "Dedicated Manufacturer Support",
       description:
         "Get 24/7 assistance to help you grow your device-selling business.",
     },
@@ -167,7 +167,7 @@ const SellerPage = () => {
 
   const resources = [
     {
-      title: "Seller Guide",
+      title: "Manufacturer Guide",
       description: "Learn how to maximize your sales on Tech Arena.",
       link: "#",
     },
@@ -198,7 +198,7 @@ const SellerPage = () => {
           <h1
             style={{ fontFamily: "Iceberg", fontSize: "30px", fontWeight: 700 }}
           >
-            Seller Page
+            Manufacturer Page
           </h1>
         </div>
         <div
@@ -262,7 +262,7 @@ const SellerPage = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <h2 className="text-2xl font-bold">Become a Seller</h2>
+          <h2 className="text-2xl font-bold">Become a Manufacturer</h2>
           <p className="text-gray-600">
             Sell your products online to reach a global market.
           </p>
@@ -335,9 +335,9 @@ const SellerPage = () => {
           </div>
         </div>
 
-        {/* Seller Fees Breakdown Table */}
+        {/* Manufacturer Fees Breakdown Table */}
         <div className="mt-8 text-center">
-          <h2 className="text-2xl font-bold">Seller Fees Breakdown</h2>
+          <h2 className="text-2xl font-bold">Manufacturer Fees Breakdown</h2>
           <div className="mt-6 bg-white p-6 rounded-lg shadow-md px-10">
             <table className="w-full text-left">
               <thead>
@@ -443,9 +443,9 @@ const SellerPage = () => {
           </div>
         </div>
 
-        {/* Seller Resources */}
+        {/* Manufacturer Resources */}
         <div className="mt-8 text-center">
-          <h2 className="text-2xl font-bold">Seller Resources</h2>
+          <h2 className="text-2xl font-bold">Manufacturer Resources</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             {resources.map((resource, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
@@ -476,4 +476,4 @@ const SellerPage = () => {
   );
 };
 
-export default SellerPage;
+export default ManufacturerPage;

@@ -84,7 +84,7 @@ export default function Header() {
                       </li>
                       <li>
                         <NavLink
-                          to={`/deviceShowcase/All`}
+                          to="/deviceShowcase/Tablet"
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Tablets
@@ -122,7 +122,7 @@ export default function Header() {
                     <ul className="flex flex-col">
                       <li>
                         <NavLink
-                          to="/deviceShowcase"
+                          to={`/deviceShowcase/All`}
                           className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                         >
                           Find Your Device
@@ -166,25 +166,23 @@ export default function Header() {
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-        <div className="px-2">
+          {/* <div className="px-2">
             <NavLink
               to="/sellerPage"
               className="py-2.5 px-5 rounded-3xl text-white"
               style={{
                 background: "linear-gradient(120deg, #FF0A6C, #2D27FF",
                 fontWeight: 500,
-                fontSize: "17px"
+                fontSize: "17px",
               }}
             >
-              Become a Seller
+              Company Login
             </NavLink>
-          </div>
+          </div> */}
           {user ? (
             <div className="relative group">
               <button onClick={() => navigate(`/users/${user.username}`)}>
-                <i
-                  className="fa-solid fa-circle-user fa-2xl"
-                ></i>
+                <i className="fa-solid fa-circle-user fa-2xl"></i>
               </button>
               <div className="absolute right-0 hidden group-hover:block rounded-lg mt-2 w-32 z-10 p-3">
                 <div className="absolute right-0 bg-cyan-900 text-gray-300 rounded-lg py-2 -mt-2 w-52 z-50">
@@ -206,7 +204,7 @@ export default function Header() {
                     </li>
                     <li>
                       <NavLink
-                        to="/dashboard"
+                        to={`/users/${user.username}`}
                         className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                       >
                         Dashboard
@@ -214,7 +212,7 @@ export default function Header() {
                     </li>
                     <li className="mb-2">
                       <NavLink
-                        to="/"
+                        to="/cartPage"
                         className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                       >
                         Cart
