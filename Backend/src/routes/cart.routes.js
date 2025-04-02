@@ -1,31 +1,40 @@
+// import { Router } from "express";
+// import {
+//     getCart,
+//     addToCart,
+//     updateCartItem,
+//     removeFromCart,
+//     clearCart,
+// } from "../controllers/cart.controller.js";
+
+// const router = Router();
+
+// router.get("/", getCart);
+// router.post("/addItems", addToCart);
+// router.put("/updateCart/:deviceId", updateCartItem);
+// router.delete("/deleteItems/:deviceId", removeFromCart);
+// router.delete("/clear", clearCart);
+
+// export default router;
+
 import { Router } from "express";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
     getCart,
-    removeFromCart,
-    clearCart,
     addToCart,
     updateCartItem,
+    removeFromCart,
+    clearCart,
 } from "../controllers/cart.controller.js";
 
 const router = Router();
 
-router.use((req, res, next) => {
-    // TEMPORARY: Mock authenticated user for testing
-    req.user = { 
-      _id: "507f1f77bcf86cd799439011" // Any mock ObjectId
-    };
-    next();
-  });
+router.use(verifyJWT);
 
 router.get("/", getCart);
-
-router.post("/addItem", addToCart);
-
-router.route('/updateItem/:deviceId')
-  .post(updateCartItem)
-
-router.delete("/removeItem/:deviceId", removeFromCart);
-
-router.delete("/clear", clearCart);
+router.post("/addItems", addToCart);
+router.patch("/updateCart/:deviceId", updateCartItem);
+router.delete("/deleteItems/:deviceId", removeFromCart);
+router.delete("/clearCart", clearCart);
 
 export default router;

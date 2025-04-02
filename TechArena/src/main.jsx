@@ -34,6 +34,9 @@ import BillGeneration from "./components/BillGeneration/BillGeneration.jsx";
 import PaymentPage from "./components/PaymentPage/PaymentPage.jsx";
 import Cart from "./components/Cart/Cart.jsx";
 import CartPage from "./components/CartPage/CartPage.jsx";
+import TermsAndConditions from "./components/UserPage/TermsAndConditions.jsx";
+import Contact from "./components/Contact/Contact.jsx";
+import PurchasePreview from "./components/PurchasePreview/PurchasePreview.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,11 +62,14 @@ const router = createBrowserRouter(
       <Route path="/viewDV" element={<ViewDV />} />
       <Route path="/dVariants/:deviceName" element={<DVariants />} />
       <Route path="/qrCode" element={<QRCodeExample />} />
-      <Route path="/customer-details" element={<CustomerDetailsForm />} />
+      <Route path="/customerDetails" element={<CustomerDetailsForm />} />
       <Route path="/bill" element={<BillGeneration />} />
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/cartPage" element={<CartPage />} />
+      <Route path="/T&C" element={<TermsAndConditions />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/purchasePreview" element={<PurchasePreview />} />
     </Route>
   )
 );

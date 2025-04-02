@@ -11,64 +11,48 @@ const Devices = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [relatedDevices, setRelatedDevices] = useState([]);
   const navigate = useNavigate();
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleAddToCart = async () => {
-    setIsAddingToCart(true);
+    const addToCart = async () => {
     try {
-      // First check if we have a token (user might be logged in)
       const token = localStorage.getItem("accessToken");
-
-      if (!token) {
-        // If no token, redirect to login with return URL
-        const returnUrl = `/devices/${deviceName}`;
-        navigate(`/login?redirect=${encodeURIComponent(returnUrl)}`);
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log(user)
+      
+      if (!token || !user) {
+        navigate("/login", { 
+          state: { from: `/devices/${device?.generalInfo?.brandModel}` } 
+        });
         return;
       }
 
-      // Verify the token is still valid by making a simple auth check
-      const authCheck = await fetch(
-        "http://localhost:8000/api/v1/users/check-auth",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!authCheck.ok) {
-        // Token is invalid, clear it and redirect to login
-        localStorage.removeItem("accessToken");
-        const returnUrl = `/devices/${deviceName}`;
-        navigate(`/login?redirect=${encodeURIComponent(returnUrl)}`);
-        return;
-      }
-
-      // Token is valid, proceed with adding to cart
-      const response = await fetch("http://localhost:8000/api/v1/cart", {
+      const response = await fetch("http://localhost:8000/api/v1/carts/addItems", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           deviceId: device._id,
-          quantity: 1,
+          quantity: 1
         }),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.message || "Failed to add to cart");
+        const errorData = await response.json();
+        throw new Error("Failed to add to cart" || errorData.message);
       }
 
-      alert("Item added to cart successfully!");
+      alert("Added to cart successfully!");
     } catch (error) {
       console.error("Add to cart error:", error);
-      alert(error.message || "Failed to add to cart");
-    } finally {
-      setIsAddingToCart(false);
+      if (error.message.includes("Unauthorized")) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
+        navigate("/login");
+      } else {
+        alert("Failed to add to cart" || error.message);
+      }
     }
   };
 
@@ -425,34 +409,26 @@ const Devices = () => {
                 Review
               </NavLink>
               <NavLink
-                to={`/dVariants/${device.generalInfo.brandModel}`}
+                to="/dVariants"
                 className="bg-red-500 text-white px-4 py-2 rounded-md"
               >
                 Buy Now
               </NavLink>
-              <button
-                onClick={handleAddToCart}
-                disabled={isAddingToCart}
-                className={`bg-cyan-500 text-white px-4 py-2 rounded-md ${
-                  isAddingToCart ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              <NavLink
+                to="#"
+                className="bg-cyan-500 text-white px-4 py-2 rounded-md"
+                onClick={addToCart}
               >
                 <div
                   className="flex items-center justify-around"
                   style={{ width: "100px" }}
                 >
-                  {isAddingToCart ? (
-                    <span>Adding...</span>
-                  ) : (
-                    <>
-                      <i className="fa-solid fa-cart-shopping"></i>
-                      <p style={{ fontSize: "14px", fontWeight: 600 }}>
-                        Add to Cart
-                      </p>
-                    </>
-                  )}
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  <p style={{ fontSize: "14px", fontWeight: 600 }}>
+                    Add to Cart
+                  </p>
                 </div>
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>

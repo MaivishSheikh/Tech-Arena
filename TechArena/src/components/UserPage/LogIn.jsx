@@ -18,42 +18,36 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMessage("");
+  e.preventDefault();
+  setErrorMessage("");
 
-    if (
-      formData.username === "m__sheikh07" &&
-      formData.password === "maivish9044"
-    ) {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          username: formData.username,
-          password: formData.password,
-        })
-      );
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/api/v1/users/login",
+      formData
+    );
+
+    if (response.data.data && response.data.data.user) {
+      // Store both tokens properly
+      localStorage.setItem("accessToken", response.data.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.data.refreshToken);
+      localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      
+      // Set default axios headers
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.accessToken}`;
+      
       window.dispatchEvent(new Event("storage"));
-      navigate("/dashboard");
-      return;
+      navigate("/");
+    } else {
+      setErrorMessage("Login failed. Please try again.");
     }
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/users/login",
-        formData
-      );
-
-      if (response.data.data.user) {
-        localStorage.setItem("user", JSON.stringify(response.data.data.user));
-        window.dispatchEvent(new Event("storage"));
-        navigate("/");
-      } else {
-        setErrorMessage("No User Found. Re-check your credentials");
-      }
-    } catch (error) {
-      setErrorMessage("No User Found. Re-check your credentials.");
-    }
-  };
+  } catch (error) {
+    setErrorMessage(
+      error.response?.data?.message || 
+      "Invalid credentials. Please try again."
+    );
+  }
+};
 
   return (
     <div className="py-8 bg-gray-100 flex items-center justify-center">
@@ -66,7 +60,8 @@ const Login = () => {
       </div>
       <div className="bg-white shadow-lg rounded-lg" style={{ width: "500px" }}>
         <div className="w-full py-4">
-          <div className="py-4 pb-10"
+          <div
+            className="py-4 pb-10"
             style={{ fontFamily: "Iceberg", fontSize: "25px", fontWeight: 700 }}
           >
             <div className="flex justify-center items-center">

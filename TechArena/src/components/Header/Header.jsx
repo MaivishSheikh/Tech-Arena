@@ -145,7 +145,7 @@ export default function Header() {
               <NavLink to="/contact">Contact</NavLink>
             </li>
             <li>
-              <NavLink to="/help">Help</NavLink>
+              <NavLink to="/T&C">Help</NavLink>
             </li>
           </ul>
         </nav>
@@ -166,7 +166,7 @@ export default function Header() {
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-          {/* <div className="px-2">
+          <div className="px-2">
             <NavLink
               to="/sellerPage"
               className="py-2.5 px-5 rounded-3xl text-white"
@@ -178,7 +178,7 @@ export default function Header() {
             >
               Company Login
             </NavLink>
-          </div> */}
+          </div>
           {user ? (
             <div className="relative group">
               <button onClick={() => navigate(`/users/${user.username}`)}>
@@ -207,12 +207,12 @@ export default function Header() {
                         to={`/users/${user.username}`}
                         className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                       >
-                        Dashboard
+                        Profile Page
                       </NavLink>
                     </li>
                     <li className="mb-2">
                       <NavLink
-                        to="/cartPage"
+                        to="/cart"
                         className="flex items-center px-4 py-2 hover:bg-slate-500 hover:text-white"
                       >
                         Cart

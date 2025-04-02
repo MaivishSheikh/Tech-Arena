@@ -9,57 +9,71 @@ export default function CardSection({
   viewLink,
   addLink,
   upLink,
+  loading = false,
+  percentage
 }) {
   return (
-    <>
-      <div
-        className="p-4 rounded-2xl shadow-md bg-white"
-        style={{ width: "320px" }}
-      >
-        <div className="flex justify-between items-center">
-          <h3
-            className="text-gray-500"
-            style={{ fontFamily: "Ubuntu", fontSize: "17px" }}
-          >
-            {title}
-          </h3>
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="p-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <p className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+              {title}
+            </p>
+            <h3 className="mt-2 text-3xl font-semibold text-gray-900">
+              {loading ? (
+                <div className="h-8 w-16 bg-gray-200 rounded animate-pulse"></div>
+              ) : (
+                value
+              )}
+            </h3>
+          </div>
+          <div className={`h-12 w-12 rounded-full ${iconColor} flex items-center justify-center text-white`}>
+            <i className={`${iconClass} text-lg`}></i>
+          </div>
+        </div>
+        
+        {percentage && (
+          <div className="mt-4 flex items-center">
+            <span className={`text-sm font-medium ${
+              parseFloat(percentage) >= 0 ? 'text-green-600' : 'text-red-600'
+            }`}>
+              {percentage}%
+            </span>
+            <span className="text-gray-500 text-sm ml-1">vs last month</span>
+          </div>
+        )}
+      </div>
+      
+      <div className="bg-gray-50 px-6 py-4 flex justify-between">
+        {viewLink && (
           <NavLink
             to={viewLink}
-            className={`py-2 px-3 rounded-lg`}
-            style={{ background: iconColor }}
+            className="text-sm font-medium text-gray-600 hover:text-gray-900"
           >
-            <i
-              className={`${iconClass} text-white`}
-              style={{ background: iconColor }}
-            ></i>
+            View all
           </NavLink>
-        </div>
-        <div
-          className="mx-5 my-3"
-          style={{ fontSize: "30px", fontWeight: 700 }}
-        >
-          {value}
-        </div>
-        <div
-          className="flex justify-evenly items-center gap-2 text-white"
-          style={{ fontFamily: "Ubuntu", fontSize: "14px", fontWeight: 600 }}
-        >
-          <NavLink
-            to={addLink}
-            className={`px-5 py-2 rounded-lg text-center`}
-            style={{ background: iconColor }}
-          >
-            Add {title}
-          </NavLink>
-          <NavLink
-            to={upLink}
-            className={`px-5 py-2 rounded-lg text-center`}
-            style={{ background: iconColor }}
-          >
-            Update {title}
-          </NavLink>
+        )}
+        
+        <div className="flex space-x-2">
+          {addLink && (
+            <NavLink
+              to={addLink}
+              className="text-sm font-medium text-white px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-700"
+            >
+              Add
+            </NavLink>
+          )}
+          {upLink && (
+            <NavLink
+              to={upLink}
+              className="text-sm font-medium text-white px-3 py-1 rounded-md bg-gray-600 hover:bg-gray-700"
+            >
+              Update
+            </NavLink>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

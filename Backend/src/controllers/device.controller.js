@@ -212,6 +212,7 @@ const getDeviceByName = asyncHandler(async (req, res) => {
     const device = await Device.findOne({
         "generalInfo.brandModel": brandModel,
     });
+    
     if (!device) {
         throw new ApiError(404, "Device not found");
     }
