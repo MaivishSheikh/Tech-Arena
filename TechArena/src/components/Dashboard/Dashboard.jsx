@@ -261,11 +261,12 @@ export default function Dashboard(props) {
             loading={false}
           />
           <CardSection
-            title="Payments"
+            title="Device Request"
             value="18"
             percentage="83.4"
             iconClass="fas fa-credit-card"
             iconColor="bg-purple-500"
+            viewLink="/deviceRequest"
             loading={false}
           />
           <CardSection

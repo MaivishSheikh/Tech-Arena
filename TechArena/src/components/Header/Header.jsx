@@ -53,10 +53,10 @@ export default function Header() {
         style={{ background: "#072B3B" }}
       >
         <div
-          style={{ fontFamily: "Iceberg", fontSize: "25px", fontWeight: 700 }}
+          style={{ fontFamily: "Iceberg", fontSize: "30px", fontWeight: 700 }}
         >
           <NavLink to="/" className="flex justify-between items-center">
-            <img src={logo} alt="" className="w-11 h-10" />
+            <img src={logo} alt="" className="w-10 h-10" />
             TechArena
           </NavLink>
         </div>

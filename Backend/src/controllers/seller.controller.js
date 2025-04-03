@@ -26,7 +26,6 @@ const sellerList = asyncHandler(async (req, res) => {
     }
     
     const lastSeller = await Seller.findOne().sort({ _id: -1 });
-    console.log(lastSeller)
     let newSellerID = "S100";
 
     if (lastSeller && lastSeller.sellerID) {

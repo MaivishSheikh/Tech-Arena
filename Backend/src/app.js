@@ -21,6 +21,7 @@ import sellerRouter from "./routes/seller.routes.js";
 import deviceVariantRouter from "./routes/deviceVariant.routes.js";
 import cartRouter from "./routes/cart.routes.js";
 import customerRouter from "./routes/customer.routes.js";
+import productRequestRouter from "./routes/productRequest.routes.js";
 
 app.use("/api/v1/devices", deviceRouter);
 app.use("/api/v1/brands", brandRouter);
@@ -29,5 +30,6 @@ app.use("/api/v1/sellers", sellerRouter);
 app.use("/api/v1/deviceVariants", deviceVariantRouter);
 app.use("/api/v1/carts", cartRouter);
 app.use("/api/v1/customers", customerRouter)
+app.use("/api/v1/productRequests", productRequestRouter)
 
 export { app };

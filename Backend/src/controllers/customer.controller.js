@@ -19,9 +19,9 @@ const createCustomer = asyncHandler(async (req, res) => {
     const lastCustomer = await Customer.findOne().sort({ _id: -1 });
     let newCustomerID = "C100";
 
-    if (lastCustomer && lastCustomer.deviceID) {
+    if (lastCustomer && lastCustomer.customerID) {
         const lastIDNumber = parseInt(lastCustomer.customerID.slice(1), 10);
-        newCustomerID = `D${lastIDNumber + 1}`;
+        newCustomerID = `C${lastIDNumber + 1}`;
     }
 
     // Create customer

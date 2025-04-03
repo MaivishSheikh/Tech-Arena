@@ -37,6 +37,9 @@ import CartPage from "./components/CartPage/CartPage.jsx";
 import TermsAndConditions from "./components/UserPage/TermsAndConditions.jsx";
 import Contact from "./components/Contact/Contact.jsx";
 import PurchasePreview from "./components/PurchasePreview/PurchasePreview.jsx";
+import RequestProduct from "./components/SellerPage/RequestProduct.jsx";
+import ProductRequestManagement from "./components/SellerPage/ProductRequestManagement.jsx";
+import DeviceRequest from "./components/Dashboard/DeviceRequest.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -70,6 +73,9 @@ const router = createBrowserRouter(
       <Route path="/T&C" element={<TermsAndConditions />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/purchasePreview" element={<PurchasePreview />} />
+      <Route path="/requestProduct" element={<RequestProduct />} />
+      <Route path="/productRequests" element={<ProductRequestManagement />} />
+      <Route path="/deviceRequest" element={<DeviceRequest />} />
     </Route>
   )
 );

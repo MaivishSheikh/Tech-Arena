@@ -6,7 +6,7 @@ const SLogin = ({ open, handleClose }) => {
   const [formData, setFormData] = useState({
     busiName: "",
     email: "",
-    // password: "",
+    password: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -82,7 +82,7 @@ const SLogin = ({ open, handleClose }) => {
             />
           </div>
 
-          {/* <div className="relative py-2">
+          <div className="relative py-2">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -103,7 +103,7 @@ const SLogin = ({ open, handleClose }) => {
                 <i className="fa-solid fa-eye"></i>
               )}
             </button>
-          </div> */}
+          </div>
           {errorMessage && (
             <p className="text-red-500 text-sm text-center">{errorMessage}</p>
           )}
