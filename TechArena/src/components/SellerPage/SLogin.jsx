@@ -4,7 +4,7 @@ import axios from "axios";
 
 const SLogin = ({ open, handleClose }) => {
   const [formData, setFormData] = useState({
-    busiName: "",
+    companyName: "",
     email: "",
     password: "",
   });
@@ -26,23 +26,29 @@ const SLogin = ({ open, handleClose }) => {
         "http://localhost:8000/api/v1/sellers/login",
         formData
       );
-
-      if (response.data.data.seller) {
-        localStorage.setItem(
-          "seller",
-          JSON.stringify(response.data.data.seller)
-        );
+  
+      if (response.data.data && response.data.data.seller) {
+        // Store both tokens properly
+        localStorage.setItem("accessToken", response.data.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.data.refreshToken);
+        localStorage.setItem("seller", JSON.stringify(response.data.data.seller));
+        
+        // Set default axios headers
+        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.accessToken}`;
+        
         window.dispatchEvent(new Event("storage"));
-        navigate("/sellerDashboard");
+        navigate("/");
       } else {
-        setErrorMessage("No Seller Found. Re-check your credentials");
+        setErrorMessage("Login failed. Please try again.");
       }
     } catch (error) {
       setErrorMessage(
-        error.response?.data?.message || "An error occurred during login."
+        error.response?.data?.message || 
+        "Invalid credentials. Please try again."
       );
     }
   };
+  
 
   if (!open) return null;
 
@@ -62,11 +68,11 @@ const SLogin = ({ open, handleClose }) => {
           <div className="py-2">
             <input
               type="text"
-              name="busiName"
-              value={formData.busiName}
+              name="companyName"
+              value={formData.companyName}
               onChange={handleChange}
               className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-              placeholder="Business Name"
+              placeholder="Company Name"
               required
             />
           </div>

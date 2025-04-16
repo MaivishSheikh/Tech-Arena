@@ -161,45 +161,34 @@
 import React from "react";
 import CardSection from "../CardSection/CardSection";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
-export default function Dashboard(props) {
-  const { user } = useParams();
-  const [userCount, setUserCount] = useState(null);
-  const [dVCount, setDVCount] = useState(null);
+export default function AltDashboard(props) {
   const [dRCount, setDRCount] = useState(null);
   const [deviceCount, setDeviceCount] = useState(null);
-  const [sellerCount, setSellerCount] = useState(null);
+  const [dVCount, setDVCount] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
+
         // Fetch all data in parallel
-        const [usersRes, devicesRes, sellersRes, dRRes, dVRes] = await Promise.all([
-          fetch("http://localhost:8000/api/v1/users/"),
-          fetch("http://localhost:8000/api/v1/devices/"),
-          fetch("http://localhost:8000/api/v1/sellers/"),
+        const [dRRes, devicesRes, dVRes] = await Promise.all([
           fetch("http://localhost:8000/api/v1/productRequests/"),
-          fetch("http://localhost:8000/api/v1/deviceVariants/viewVariants")
+          fetch("http://localhost:8000/api/v1/devices/"),
+          fetch("http://localhost:8000/api/v1/deviceVariants/viewVariants"),
         ]);
 
-        const [usersData, devicesData, sellersData, dRData, dVData] = await Promise.all([
-          usersRes.json(),
-          devicesRes.json(),
-          sellersRes.json(),
+        const [dRData, devicesData, dVData] = await Promise.all([
           dRRes.json(),
-          dVRes.json()
+          devicesRes.json(),
+          dVRes.json(),
         ]);
 
-        setUserCount(usersData?.data?.length || 0);
-        setDeviceCount(devicesData?.data?.length || 0);
-        setSellerCount(sellersData?.data?.length || 0);
         setDRCount(dRData?.data?.length || 0);
+        setDeviceCount(devicesData?.data?.length || 0);
         setDVCount(dVData?.data?.length || 0);
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -215,7 +204,9 @@ export default function Dashboard(props) {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
+          <h1 className="text-3xl font-bold text-gray-800">
+            Dashboard Overview
+          </h1>
           <div className="flex items-center space-x-4">
             <div className="relative">
               <i className="fas fa-bell text-gray-500 text-xl"></i>
@@ -230,15 +221,6 @@ export default function Dashboard(props) {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <CardSection
-            title="Total Users"
-            value={loading ? "..." : userCount}
-            percentage="83.4"
-            iconClass="fas fa-users"
-            iconColor="bg-indigo-500"
-            viewLink="/viewUsers"
-            loading={loading}
-          />
-          <CardSection
             title="Total Devices"
             value={loading ? "..." : deviceCount}
             percentage="83.4"
@@ -249,19 +231,6 @@ export default function Dashboard(props) {
             upLink="/deviceShowcase/All"
             loading={loading}
           />
-          <CardSection
-            title="Total Sellers"
-            value={loading ? "..." : sellerCount}
-            percentage="83.4"
-            iconClass="fas fa-store"
-            iconColor="bg-green-500"
-            viewLink="/viewSellers"
-            loading={loading}
-          />
-        </div>
-
-        {/* Secondary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* <CardSection
             title="Stock Status"
             value="18"
@@ -270,6 +239,16 @@ export default function Dashboard(props) {
             iconColor="bg-teal-500"
             loading={false}
           /> */}
+          <CardSection
+            title="Stocks"
+            value={loading ? "..." : dVCount}
+            percentage="83.4"
+            iconClass="fas fa-mobile-alt"
+            iconColor="bg-blue-500"
+            addLink="/deviceVariants"
+            viewLink={`/adminStock`}
+            loading={false}
+          />
           <CardSection
             title="Device Request"
             value={loading ? "..." : dRCount}
@@ -286,17 +265,7 @@ export default function Dashboard(props) {
             iconClass="fas fa-mobile-alt"
             iconColor="bg-blue-500"
             addLink="/deviceVariants"
-            viewLink={`/viewDV`}
-            loading={false}
-          />
-          <CardSection
-            title="Stocks"
-            value={loading ? "..." : dVCount}
-            percentage="83.4"
-            iconClass="fas fa-mobile-alt"
-            iconColor="bg-blue-500"
-            addLink="/deviceVariants"
-            viewLink={`/adminStock`}
+            viewLink="/viewDV"
             loading={false}
           />
         </div>

@@ -4,22 +4,6 @@ import { Device } from "../models/device.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-// const getCart = asyncHandler(async (req, res) => {
-//     const userId = req.user?._id;
-//     const cart = await Cart.findOne({ user: userId }).populate({
-//         path: "items.device",
-//         select: "deviceID category deviceImage generalInfo.price generalInfo.brandModel",
-//     });
-//     if (!cart) {
-//         return res
-//             .status(200)
-//             .json(new ApiResponse(200, { items: [] }, "Cart is empty"));
-//     }
-//     return res
-//         .status(200)
-//         .json(new ApiResponse(200, cart, "Cart fetched successfully"));
-// });
-
 const getCart = asyncHandler(async (req, res) => {
     const userId = req.user?._id;
     

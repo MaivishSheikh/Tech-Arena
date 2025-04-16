@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import listProduct from "../../assets/listProduct.png";
 import createAccount from "../../assets/createAccount.png";
 import securePayment from "../../assets/securePayment.png";
@@ -10,6 +9,10 @@ import SLogin from "./SLogin";
 
 const ManufacturerPage = () => {
   const [activeContent, setActiveContent] = useState("special1");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const specials = [
     {

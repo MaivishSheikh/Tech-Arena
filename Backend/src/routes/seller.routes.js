@@ -7,7 +7,7 @@ router.route("/listSellers").post(sellerList)
 
 router.get("/", getSeller)
 
-router.get("/:busiName", getSellerByName)
+router.get("/:companyName", getSellerByName)
 
 router.route("/login").post(loginSeller)
 

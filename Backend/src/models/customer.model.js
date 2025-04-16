@@ -9,7 +9,7 @@ const customerSchema = new mongoose.Schema(
         name: {
             type: String,
             required: [true, "Name is required"],
-            trim: true,
+            trim: true
         },
         mobile: {
             type: String,

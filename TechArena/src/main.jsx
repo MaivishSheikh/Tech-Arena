@@ -40,6 +40,10 @@ import PurchasePreview from "./components/PurchasePreview/PurchasePreview.jsx";
 import RequestProduct from "./components/SellerPage/RequestProduct.jsx";
 import ProductRequestManagement from "./components/SellerPage/ProductRequestManagement.jsx";
 import DeviceRequest from "./components/Dashboard/DeviceRequest.jsx";
+import AltDashboard from "./components/Dashboard/AltDashborad.jsx";
+import ViewDVBrand from "./components/SellerPage/ViewDVBrand.jsx";
+import StockManagementPage from "./components/SellerPage/StockManagementPage.jsx";
+import AdminStockViewPage from "./components/Dashboard/AdminStockViewPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,7 +57,8 @@ const router = createBrowserRouter(
       <Route path="/seller" element={<SLogin />} />
       <Route path="/sellerPage" element={<SellerPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/sellerDashboard" element={<SDashboard />} />
+      <Route path="/altDashboard" element={<AltDashboard />} />
+      <Route path="/sellerDashboard/:companyName" element={<SDashboard />} />
       <Route path="/users/:username" element={<UserPage />} />
       <Route path="/compareDevice" element={<CompareDevice />} />
       <Route path="/reviewDevice/:deviceName" element={<ReviewDevice />} />
@@ -63,7 +68,9 @@ const router = createBrowserRouter(
       <Route path="/viewSellers" element={<ViewSellers />} />
       <Route path="/deviceVariants" element={<DeviceVariants />} />
       <Route path="/viewDV" element={<ViewDV />} />
+      <Route path="/viewDVBrand/:sellerName" element={<ViewDVBrand />} />
       <Route path="/dVariants/:deviceName" element={<DVariants />} />
+      <Route path="adminStock" element={<AdminStockViewPage />} />
       <Route path="/qrCode" element={<QRCodeExample />} />
       <Route path="/customerDetails" element={<CustomerDetailsForm />} />
       <Route path="/bill" element={<BillGeneration />} />
@@ -76,6 +83,7 @@ const router = createBrowserRouter(
       <Route path="/requestProduct" element={<RequestProduct />} />
       <Route path="/productRequests" element={<ProductRequestManagement />} />
       <Route path="/deviceRequest" element={<DeviceRequest />} />
+      <Route path="/stock" element={<StockManagementPage />} />
     </Route>
   )
 );

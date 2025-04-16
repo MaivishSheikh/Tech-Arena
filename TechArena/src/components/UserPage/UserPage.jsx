@@ -1,113 +1,8 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams, useNavigate, NavLink } from "react-router-dom";
-
-// const UserPage = () => {
-//   const { username } = useParams();
-//   const navigate = useNavigate();
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [user, setUser] = useState(
-//     () => JSON.parse(localStorage.getItem("user")) || null
-//   );
-
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, []);
-
-//   useEffect(() => {
-//     const handleStorageChange = () => {
-//       setUser(JSON.parse(localStorage.getItem("user")));
-//     };
-//     window.addEventListener("storage", handleStorageChange);
-//     return () => window.removeEventListener("storage", handleStorageChange);
-//   }, []);
-
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       try {
-//         const response = await fetch(`http://localhost:8000/api/v1/users/${username}`);
-//         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-//         const result = await response.json();
-//         if (result.success) setUser(result.data);
-//         else setError(result.message);
-//       } catch (err) {
-//         setError("Failed to fetch user details.");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     if (username) fetchUser();
-//     else {
-//       setError("User is missing.");
-//       setLoading(false);
-//     }
-//   }, [username]);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("user");
-//     setUser(null);
-//     window.dispatchEvent(new Event("storage"));
-//     navigate("/");
-//     setTimeout(() => window.location.reload(), 50);
-//   };
-
-//   if (loading)
-//     return (
-//       <div className="h-screen flex justify-center items-center">
-//         <i className="fas fa-spinner fa-spin text-4xl text-gray-700"></i>
-//       </div>
-//     );
-
-//   if (error) return <p className="text-red-600 text-center text-lg font-semibold">{error}</p>;
-//   if (!user) return null;
-
-//   return (
-//     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-5">
-//       <div className="w-full max-w-2xl bg-white shadow-xl rounded-lg p-6">
-//         <h1 className="text-3xl font-bold text-center text-gray-800 border-b pb-4">User Profile</h1>
-//         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-//           <div className="flex items-center gap-3">
-//             <i className="fas fa-user text-gray-600 text-lg"></i>
-//             <span className="text-lg text-gray-800">{user.username}</span>
-//           </div>
-//           <div className="flex items-center gap-3">
-//             <i className="fas fa-id-badge text-gray-600 text-lg"></i>
-//             <span className="text-lg text-gray-800">{user.fullname}</span>
-//           </div>
-//           <div className="flex items-center gap-3">
-//             <i className="fas fa-envelope text-gray-600 text-lg"></i>
-//             <span className="text-lg text-gray-800">{user.email}</span>
-//           </div>
-//           <div className="flex items-center gap-3">
-//             <i className="fas fa-calendar text-gray-600 text-lg"></i>
-//             <span className="text-lg text-gray-800">Joined: {new Date(user.createdAt).toLocaleDateString()}</span>
-//           </div>
-//           <div className="flex items-center gap-3">
-//             <i className="fas fa-map-marker-alt text-gray-600 text-lg"></i>
-//             <span className="text-lg text-gray-800">{user.location || "Not Provided"}</span>
-//           </div>
-//         </div>
-//         <div className="flex justify-between items-center mt-8">
-//           {user.username === "m__sheikh07" && (
-//             <NavLink to="/dashboard" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-all">
-//               <i className="fas fa-tachometer-alt mr-2"></i> Dashboard
-//             </NavLink>
-//           )}
-//           <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-all">
-//             <i className="fas fa-sign-out-alt mr-2"></i> Logout
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UserPage;
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import Cart from "../Cart/Cart.jsx";
 import Dashboard from "../Dashboard/Dashboard.jsx";
+import AltDashboard from "../Dashboard/AltDashborad.jsx";
 
 const UserPage = () => {
   const { username } = useParams();
@@ -121,7 +16,10 @@ const UserPage = () => {
 
   const adminUsers = ["m__sheikh07", "maivish9044"];
 
+  const alternateAdmin = ["rishabhg29", "rishabhGupta29"];
+
   const isAdmin = user && adminUsers.includes(user.username);
+  const isAltAdmin = user && alternateAdmin.includes(user.username);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -189,12 +87,14 @@ const UserPage = () => {
 
   if (isAdmin) {
     return <Dashboard />;
+  } else if (isAltAdmin) {
+    return <AltDashboard />;
   }
 
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Main Content */}
-      <main className="mx-auto px-4 py-6" style={{width: "1400px"}}>
+      <main className="mx-auto px-4 py-6" style={{ width: "1400px" }}>
         <div className="flex flex-col md:flex-row gap-6">
           {/* Sidebar */}
           <div className="w-full md:w-1/4">
@@ -246,7 +146,7 @@ const UserPage = () => {
                 >
                   <i className="fas fa-heart mr-2"></i> Cart
                 </button>
-                <button
+                {/* <button
                   onClick={() => setActiveTab("addresses")}
                   className={`w-full text-left px-3 py-2 rounded-md mb-1 ${
                     activeTab === "addresses"
@@ -255,7 +155,7 @@ const UserPage = () => {
                   }`}
                 >
                   <i className="fas fa-map-marker-alt mr-2"></i> Saved Addresses
-                </button>
+                </button> */}
                 {user.username === "m__sheikh07" && (
                   <NavLink
                     to="/dashboard"
@@ -307,22 +207,22 @@ const UserPage = () => {
                     </h3>
                     <p className="text-gray-800">{user.email}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     <h3 className="text-sm font-medium text-gray-500 mb-1">
                       Mobile Number
                     </h3>
                     <p className="text-gray-800">
                       {user.phone || "Not provided"}
                     </p>
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <h3 className="text-sm font-medium text-gray-500 mb-1">
                       Location
                     </h3>
                     <p className="text-gray-800">
                       {user.location || "Not provided"}
                     </p>
-                  </div>
+                  </div> */}
                   <div>
                     <h3 className="text-sm font-medium text-gray-500 mb-1">
                       Member Since

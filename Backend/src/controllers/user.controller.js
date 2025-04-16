@@ -5,16 +5,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-console.log("[Auth Debug] Secrets loaded:", {
-    ACCESS_TOKEN_SECRET: !!process.env.ACCESS_TOKEN_SECRET,
-    REFRESH_TOKEN_SECRET: !!process.env.REFRESH_TOKEN_SECRET,
-});
-
 const generateToken = (userId) => {
     return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "1h",
     });
 };
+
 // Register a new user
 const userList = asyncHandler(async (req, res) => {
     const { username, fullname, email, password } = req.body;

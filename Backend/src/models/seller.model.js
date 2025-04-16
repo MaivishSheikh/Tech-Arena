@@ -30,7 +30,7 @@ const sellerSchema = new Schema(
             trim: true,
             index: true,
         },
-        busiName: {
+        companyName: {
             type: String,
             required: true,
         },
@@ -57,6 +57,22 @@ sellerSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
     next();
 });
+
+sellerSchema.methods.generateAuthToken = function() {
+    return jwt.sign(
+        { _id: this._id }, 
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "15m" }
+    );
+};
+
+sellerSchema.methods.generateRefreshToken = function() {
+    return jwt.sign(
+        { _id: this._id },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "7d" }
+    );
+};
 
 sellerSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password);

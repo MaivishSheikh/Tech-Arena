@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../../assets/logo.png";
@@ -14,22 +14,26 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // const validate = () => {
-  //   let newErrors = {};
-  //   if (!/(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(formData.username)) {
-  //     newErrors.username =
-  //       "Username must contain a number and a special character.";
-  //   }
-  //   if (!/^.+@gmail\.com$/.test(formData.email)) {
-  //     newErrors.email = "Email must be a valid @gmail.com address.";
-  //   }
-  //   if (!/(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,15}$/.test(formData.password)) {
-  //     newErrors.password =
-  //       "Password must be 8-15 characters with a number and a special character.";
-  //   }
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const validate = () => {
+    let newErrors = {};
+    if (!/(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(formData.username)) {
+      newErrors.username =
+        "Username must contain a number and a special character.";
+    }
+    if (!/^.+@gmail\.com$/.test(formData.email)) {
+      newErrors.email = "Email must be a valid @gmail.com address.";
+    }
+    if (!/(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,15}$/.test(formData.password)) {
+      newErrors.password =
+        "Password must be 8-15 characters with a number and a special character.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +41,7 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!validate()) return;
+    if (!validate()) return;
 
     try {
       const response = await axios.post(
@@ -175,7 +179,10 @@ const SignIn = () => {
       <div className="bg-white border border-gray-300 rounded-sm w-full max-w-md p-4 text-center">
         <p style={{ fontFamily: "Poppins", fontSize: "15px" }}>
           Have an account?
-          <NavLink to="/login" className="text-blue-500 ml-2 underline font-semibold">
+          <NavLink
+            to="/login"
+            className="text-blue-500 ml-2 underline font-semibold"
+          >
             Log in
           </NavLink>
         </p>

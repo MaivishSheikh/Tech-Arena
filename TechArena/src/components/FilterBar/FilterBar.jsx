@@ -68,7 +68,7 @@ export default function FilterBar({ setFilters }) {
       : []),
     { title: "Brands", key: "brands", options: filteredBrands },
     { title: "Sub Category", key: "subCategory", options: ["Gaming", "Content Creation", "5G", "Photography", "Mid-Range", "Flagship", "Student & Office Work"] },
-    { title: "Operating System", key: "operatingSystem", options: ["Android", "iOS", "Windows"] },
+    { title: "Operating System", key: "operatingSystem", options: ["Android", "iOS"] },
   ];
 
   return (

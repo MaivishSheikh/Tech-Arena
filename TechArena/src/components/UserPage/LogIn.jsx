@@ -101,31 +101,6 @@ const Login = () => {
                 )}
               </button>
             </div>
-            <div className="my-8 mx-16 border-b text-center">
-              <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
-                Or
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <button
-                className="font-bold shadow-sm rounded-lg bg-[#f0f0f0] p-2 flex justify-center items-center gap-2"
-                type="button"
-              >
-                <div className="bg-white py-1 px-1.5 rounded-full">
-                  <i className="fa-brands fa-google fa-lg"></i>
-                </div>
-                <span className="ml-4">Login with Google</span>
-              </button>
-              <button
-                className="font-bold shadow-sm rounded-lg bg-[#f0f0f0] p-2 flex justify-center items-center gap-2"
-                type="button"
-              >
-                <div className="bg-white py-1 px-1.5 rounded-full">
-                  <i className="fa-brands fa-facebook fa-lg"></i>
-                </div>
-                <span className="ml-4">Login with Facebook</span>
-              </button>
-            </div>
             <button
               type="submit"
               className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"

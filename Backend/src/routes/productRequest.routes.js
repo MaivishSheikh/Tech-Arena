@@ -5,19 +5,19 @@ import {
     approveRequest,
     rejectRequest,
     requestProduct,
+    getRequestsBySeller,
 } from "../controllers/productRequest.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
 // Submit a new product request (with single image upload)
-router.route("/addRequests").post(
-    upload.single("productImage"), // Using single upload like deviceImage
-    requestProduct
-);
+router.route("/addRequests").post(requestProduct);
 
 // Get all pending requests (Admin)
 router.get("/", getRequests);
+
+router.get("/:manufacturerName", getRequestsBySeller);
 
 // Get all approved products (Public)
 router.get("/approved", getApprovedProducts);

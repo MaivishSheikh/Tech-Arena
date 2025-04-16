@@ -1,13 +1,8 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddDevices(props) {
   const [image, setImage] = useState(null);
@@ -15,8 +10,7 @@ export default function AddDevices(props) {
   const fileInputRef = useRef(null);
   const altFileInputRef = useRef(null);
   const navigate = useNavigate();
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const [inputValues, setInputValues] = useState({
     brandModel: "",
@@ -54,6 +48,7 @@ export default function AddDevices(props) {
     mic: "",
     additionalFeatures: "",
     category: "",
+    brand: "",
     subCategory: "",
   });
 
@@ -68,6 +63,75 @@ export default function AddDevices(props) {
       const imageUrl = URL.createObjectURL(file);
       setImageFunction(imageUrl);
     }
+  };
+
+  const validateFields = () => {
+    // Required fields validation
+    const requiredFields = [
+      "brandModel",
+      "launchDate",
+      "price",
+      "dimensions",
+      "weight",
+      "colorsAvailable",
+      "size",
+      "type",
+      "resolution",
+      "cpu",
+      "gpu",
+      "os",
+      "memory",
+      "storage",
+      "rearCameraNo",
+      "rearCameraFeatures",
+      "frontCameraMegaPixels",
+      "batteryTypeCapacity",
+      "networkVersion",
+      "category",
+      "brand"
+    ];
+
+    const emptyFields = requiredFields.filter((field) => !inputValues[field]);
+
+    if (emptyFields.length > 0) {
+      toast.error(`Please fill all required fields`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return false;
+    }
+
+    // Image validation
+    if (!fileInputRef.current?.files[0]) {
+      toast.error(`Please upload a device image`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return false;
+    }
+
+    // Price validation
+    if (isNaN(inputValues.price) || parseFloat(inputValues.price) <= 0) {
+      toast.error(`Price must be a positive number`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return false;
+    }
+
+    return true;
   };
 
   const handleReset = () => {
@@ -113,6 +177,7 @@ export default function AddDevices(props) {
       mic: "",
       additionalFeatures: "",
       category: "",
+      brand: "",
       subCategory: "",
     });
   };
@@ -120,10 +185,15 @@ export default function AddDevices(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!validateFields()) {
+      return;
+    }
+
     const formData = new FormData();
 
     const data = {
       category: inputValues.category,
+      brand: inputValues.brand,
       subCategory: inputValues.subCategory,
       generalInfo: {
         brandModel: inputValues.brandModel,
@@ -215,22 +285,52 @@ export default function AddDevices(props) {
           },
         }
       );
-
       if (response.data) {
-        alert("Device added successfully!");
+        toast.success("Device added successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         setOpen(true);
         handleReset();
       } else {
-        alert("Failed to add device. Please try again.");
+        toast.error("Failed to add device. Please try again.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred. Please try again.");
+      toast.error("Failed to add device. Please try again.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div
         className="mx-auto p-8 my-6 bg-white shadow-lg rounded-xl"
         style={{ fontFamily: "Ubuntu", width: "1300px" }}
@@ -367,6 +467,21 @@ export default function AddDevices(props) {
                     </div>
                   </div>
                 </div>
+                <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                    Brand
+                  </h2>
+                  <input
+                    type="text"
+                    name="brand"
+                    placeholder="Brand"
+                    value={inputValues.brand}
+                    onChange={handleInputChange}
+                    className="p-2 border border-gray-300 rounded-md outline-none w-full"
+                    style={{width: "180px"}}
+                  />
+                </div>
                 <div>
                   <h2 className="text-xl font-semibold text-gray-700 mb-4">
                     Sub Category
@@ -378,8 +493,11 @@ export default function AddDevices(props) {
                     value={inputValues.subCategory}
                     onChange={handleInputChange}
                     className="p-2 border border-gray-300 rounded-md outline-none w-full"
+                    style={{width: "320px"}}
                   />
                 </div>
+                </div>
+                
               </div>
 
               {/* General Information Section */}
@@ -893,7 +1011,6 @@ export default function AddDevices(props) {
           </div>
           <div className="flex justify-center gap-6 pt-6 items-center">
             <button
-            onClick={() => {setOpen(true)}}
               variant="gradient"
               type="submit"
               className="bg-cyan-500 text-white rounded-md py-2 px-6 hover:bg-cyan-600 transition-colors"

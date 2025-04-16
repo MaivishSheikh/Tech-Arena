@@ -69,6 +69,24 @@ const getRequests = asyncHandler(async (req, res) => {
         );
 });
 
+const getRequestsBySeller = asyncHandler(async (req, res) => {
+    const { manufacturerName } = req.params;
+
+    if (!manufacturerName) {
+        throw new ApiError(400, "Manufacturer Name is required");
+    }
+
+    const manufacturer = await ProductRequest.findOne({ manufacturerName })
+
+    if (!manufacturer) {
+        throw new ApiError(404, "Manufacturer not found");
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, manufacturer, "Manufacturer fetched successfully")
+    );
+});
+
 // Approve a product request (Admin)
 const approveRequest = asyncHandler(async (req, res) => {
     const { requestId } = req.params;
@@ -145,6 +163,7 @@ const getApprovedProducts = asyncHandler(async (req, res) => {
 export {
     requestProduct,
     getRequests,
+    getRequestsBySeller,
     approveRequest,
     rejectRequest,
     getApprovedProducts,

@@ -7,6 +7,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const deviceList = asyncHandler(async (req, res) => {
     const {
         category,
+        brand,
         subCategory,
         generalInfo: { brandModel, launchDate, price },
         buildDesign: { dimensions, weight, colorAvailable, otherFeatures },
@@ -31,6 +32,7 @@ const deviceList = asyncHandler(async (req, res) => {
     if (
         [
             category,
+            brand,
             subCategory,
             brandModel,
             launchDate,
@@ -114,6 +116,7 @@ const deviceList = asyncHandler(async (req, res) => {
     const device = await Device.create({
         deviceID: newDeviceID, 
         category,
+        brand,
         subCategory,
         deviceImage: deviceImage.url,
         alternateImage: alternateImage?.url || "",

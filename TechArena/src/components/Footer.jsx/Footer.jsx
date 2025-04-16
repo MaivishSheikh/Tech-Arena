@@ -158,10 +158,10 @@ const Footer = () => {
               <ul className="space-y-2" style={{ fontSize: "14px" }}>
                 <li>
                   <NavLink
-                    to="#"
+                    to="/sellerPage"
                     className="text-gray-400 hover:text-white transition-colors text-sm"
                   >
-                    <i className="fas fa-store mr-1"></i> Become a Seller
+                    <i className="fas fa-store mr-1"></i> Become a Manufacturer
                   </NavLink>
                 </li>
                 <li>

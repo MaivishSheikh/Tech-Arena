@@ -33,17 +33,17 @@ export default function ViewSellers(props) {
     setOpenDropdownId(openDropdownId === id ? null : id);
   };
 
-  const handleDeleteSeller = async (busiName) => {
+  const handleDeleteSeller = async (companyName) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/v1/sellers/deleteSeller/${busiName}`
+        `http://localhost:8000/api/v1/sellers/deleteSeller/${companyName}`
       );
 
       if (response.data) {
         alert("Seller deleted successfully!");
         setSellers((prevSellers) =>
           prevSellers.filter(
-            (seller) => seller.busiName !== busiName
+            (seller) => seller.companyName !== companyName
           )
         );
       } else {
@@ -90,10 +90,10 @@ export default function ViewSellers(props) {
               </tr>
             </thead>
             <tbody>
-              {sellers.map(({ name, email, phone, busiName, busiAddress, gstNo }, index) => {
+              {sellers.map(({ name, email, phone, companyName, busiAddress, gstNo }, index) => {
                 const isLast = index === sellers.length - 1;
                 const classes = isLast ? "px-4 py-2" : "px-4 py-1 border-b";
-                const dropdownId = busiName; 
+                const dropdownId = companyName; 
                 return (
                   <tr
                     key={dropdownId}
@@ -109,7 +109,7 @@ export default function ViewSellers(props) {
                     <td className={classes}>{name}</td>
                     <td className={classes}>{email}</td>
                     <td className={classes}>{phone}</td>
-                    <td className={classes}>{busiName}</td>
+                    <td className={classes}>{companyName}</td>
                     <td className={classes}>{busiAddress}</td>
                     <td className={classes}>{gstNo}</td>
                     <td className={classes}>
@@ -134,7 +134,7 @@ export default function ViewSellers(props) {
                             <ul className="">
                               <li>
                                 <NavLink
-                                  to={`/sellers/${busiName}`}
+                                  to={`/sellers/${companyName}`}
                                   className="px-4 py-2 flex first-letter:items-center text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                                 >
                                   <div className="pr-4">
@@ -154,7 +154,7 @@ export default function ViewSellers(props) {
                               <li>
                                 <div
                                   onClick={() =>
-                                    handleDeleteSeller(busiName)
+                                    handleDeleteSeller(companyName)
                                   }
                                   className="px-4 py-2 flex items-center text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                                 >

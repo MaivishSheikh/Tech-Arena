@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const DeviceVariants = () => {
+  const [brand, setBrand] = useState("");
   const [brandModel, setBrandModel] = useState("");
   const [deviceType, setDeviceType] = useState("phone");
   const [variants, setVariants] = useState([]);
@@ -47,6 +48,11 @@ const DeviceVariants = () => {
   };
 
   const handleSubmit = async () => {
+    if (!brand) {
+      alert("Please enter a brand name.");
+      return;
+    }
+
     if (!brandModel) {
       alert("Please enter a device model.");
       return;
@@ -78,6 +84,7 @@ const DeviceVariants = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            brand: brand,
             deviceName: brandModel,
             memory: variant.ram,
             storage: variant.storage,
@@ -99,6 +106,7 @@ const DeviceVariants = () => {
       alert("All variants added successfully!");
       navigate("/dashboard");
       setVariants([]);
+      setBrand("");
       setBrandModel("");
     } catch (error) {
       console.error("Error adding variants:", error);
@@ -145,13 +153,28 @@ const DeviceVariants = () => {
         </label>
       </div>
 
-      <input
-        type="text"
-        placeholder="Enter Device Name"
-        value={brandModel}
-        onChange={(e) => setBrandModel(e.target.value)}
-        className="border p-2 rounded-md w-full"
-      />
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Brand</label>
+          <input
+            type="text"
+            placeholder="Enter Brand (e.g., Apple, Samsung)"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="border p-2 rounded-md w-full mt-1"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Model</label>
+          <input
+            type="text"
+            placeholder="Enter Device Model (e.g., iPhone 13, Galaxy S22)"
+            value={brandModel}
+            onChange={(e) => setBrandModel(e.target.value)}
+            className="border p-2 rounded-md w-full mt-1"
+          />
+        </div>
+      </div>
 
       <button
         onClick={addVariant}

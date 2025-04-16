@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Devices = () => {
   const { deviceName } = useParams();
@@ -13,37 +15,47 @@ const Devices = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
-    const addToCart = async () => {
+  const addToCart = async () => {
     try {
       const token = localStorage.getItem("accessToken");
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user)
-      
+      console.log(user);
+  
       if (!token || !user) {
-        navigate("/login", { 
-          state: { from: `/devices/${device?.generalInfo?.brandModel}` } 
+        navigate("/login", {
+          state: { from: `/devices/${device?.generalInfo?.brandModel}` },
         });
         return;
       }
-
-      const response = await fetch("http://localhost:8000/api/v1/carts/addItems", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          deviceId: device._id,
-          quantity: 1
-        }),
-      });
-
+  
+      const response = await fetch(
+        "http://localhost:8000/api/v1/carts/addItems",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            deviceId: device._id,
+            quantity: 1,
+          }),
+        }
+      );
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error("Failed to add to cart" || errorData.message);
       }
-
-      alert("Added to cart successfully!");
+  
+      toast.success("Added to cart successfully!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (error) {
       console.error("Add to cart error:", error);
       if (error.message.includes("Unauthorized")) {
@@ -51,7 +63,14 @@ const Devices = () => {
         localStorage.removeItem("user");
         navigate("/login");
       } else {
-        alert("Failed to add to cart" || error.message);
+        toast.warn("Already Added to Cart." || error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     }
   };
@@ -191,8 +210,8 @@ const Devices = () => {
       value: device.buildDesign.dimensions,
     },
     {
-      icon: "bi bi-badge-hd-fill bi-lg",
-      value: device.display.resolution,
+      icon: "fa-solid fa-memory",
+      value: device.performance.memory,
     },
     {
       icon: "bi bi-floppy-fill bi-lg",
@@ -409,7 +428,8 @@ const Devices = () => {
                 Review
               </NavLink>
               <NavLink
-                to={`/dVariants/${device.generalInfo.brandModel}`}
+                to="/customerDetails"
+                state={{ device }} // Pass the entire device object
                 className="bg-red-500 text-white px-4 py-2 rounded-md"
               >
                 Buy Now

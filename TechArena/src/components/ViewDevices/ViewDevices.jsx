@@ -121,7 +121,7 @@ export default function ViewDevices(props) {
                         className="px-4 py-1.5 border rounded-md text-blue-600 hover:bg-blue-100"
                         style={{ fontWeight: 600 }}
                       >
-                        Edit
+                        View
                       </NavLink>
                     </td>
                     <td className={classes}>

@@ -87,8 +87,8 @@ export default function CompareDevice() {
         value: device.buildDesign.dimensions,
       },
       {
-        icon: "bi bi-badge-hd-fill bi-lg",
-        value: device.display.resolution,
+        icon: "fa-solid fa-memory",
+        value: device.performance.memory,
       },
       {
         icon: "bi bi-floppy-fill bi-lg",

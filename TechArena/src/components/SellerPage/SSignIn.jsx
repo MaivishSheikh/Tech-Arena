@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import sellingOnline from "../../assets/sellingOnline.png";
+import { toast } from "react-toastify";
 
 const SSignin = () => {
   const [step, setStep] = useState(1);
@@ -11,12 +12,17 @@ const SSignin = () => {
     email: "",
     password: "",
     phone: "",
-    busiName: "",
+    companyName: "",
     busiAddress: "",
     gstNo: "",
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add loading state
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const validateStep1 = () => {
     let newErrors = {};
@@ -24,6 +30,7 @@ const SSignin = () => {
     if (!formData.email.trim()) newErrors.email = "Email is required.";
     else if (!/^.+@.+\..+$/.test(formData.email))
       newErrors.email = "Email must be valid.";
+    if (!formData.password.trim()) newErrors.password = "Password is required.";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required.";
     else if (!/^\d{10}$/.test(formData.phone))
       newErrors.phone = "Phone number must be 10 digits.";
@@ -33,10 +40,10 @@ const SSignin = () => {
 
   const validateStep2 = () => {
     let newErrors = {};
-    if (!formData.busiName.trim())
-      newErrors.busiName = "Business name is required.";
+    if (!formData.companyName.trim())
+      newErrors.companyName = "Business name is required.";
     if (!formData.busiAddress.trim())
-      newErrors.busiAddress = "Business address is required.";
+      newErrors.busiAddress = "Head Office address is required.";
     if (!formData.gstNo.trim()) newErrors.gstNo = "GST number is required.";
     else if (
       !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d[Z]{1}[A-Z\d]{1}$/.test(formData.gstNo)
@@ -61,17 +68,27 @@ const SSignin = () => {
   const handlePrevious = () => setStep(step - 1);
 
   const handleSubmit = async () => {
+    if (!validateStep2()) return;
+
+    setIsSubmitting(true);
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/sellers/listSellers",
         formData
       );
+
       if (response.data.data) {
         localStorage.setItem("seller", JSON.stringify(response.data.data));
-        navigate("/sellerDashboard");
+        toast.success("Registration successful!");
+        navigate(`/sellerDashboard/${formData.companyName}`);
+      } else {
+        toast.error(response.data.message || "Registration failed");
       }
     } catch (error) {
-      setErrors({ form: "Failed to register seller." });
+      console.error("Registration error:", error);
+      toast.error(error.response?.data?.message || "Failed to register seller");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -244,32 +261,32 @@ const SSignin = () => {
               <div className="space-y-6">
                 <div>
                   <label className="block text-gray-700 text-sm font-medium mb-2">
-                    Business Name *
+                    Manufacturer Name *
                   </label>
                   <input
                     type="text"
-                    name="busiName"
-                    value={formData.busiName}
+                    name="companyName"
+                    value={formData.companyName}
                     onChange={handleChange}
-                    placeholder="Enter Business Name"
+                    placeholder="Enter Manufacturer Name"
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
                   />
-                  {errors.busiName && (
+                  {errors.companyName && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.busiName}
+                      {errors.companyName}
                     </p>
                   )}
                 </div>
                 <div>
                   <label className="block text-gray-700 text-sm font-medium mb-2">
-                    Business Address *
+                    Head Office Address *
                   </label>
                   <input
                     type="text"
                     name="busiAddress"
                     value={formData.busiAddress}
                     onChange={handleChange}
-                    placeholder="Enter Business Address"
+                    placeholder="Enter Head Office Address"
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
                   />
                   {errors.busiAddress && (
@@ -309,9 +326,16 @@ const SSignin = () => {
               </button>
               <button
                 onClick={step === 2 ? handleSubmit : handleNext}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+                disabled={isSubmitting}
+                className={`bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 ${
+                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                {step === 2 ? "Register" : "Next"}
+                {isSubmitting
+                  ? "Processing..."
+                  : step === 2
+                  ? "Register"
+                  : "Next"}
               </button>
             </div>
           </div>
