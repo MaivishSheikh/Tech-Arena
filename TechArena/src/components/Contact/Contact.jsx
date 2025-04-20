@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -47,16 +48,33 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/messages/addMsg",
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      // In a real app, you would send the data to your backend here
-      // const response = await axios.post('/api/contact', formData);
-
-      setSubmitSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
+      if (response.data.success) {
+        setSubmitSuccess(true);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        throw new Error(response.data.message || "Failed to send message");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
+      // Show error to user
+      setErrors({
+        ...errors,
+        submit: error.response?.data?.message || "Failed to send message. Please try again later.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -103,7 +121,10 @@ const Contact = () => {
                     Thank you for contacting us. We'll get back to you soon.
                   </p>
                   <button
-                    onClick={() => setSubmitSuccess(false)}
+                    onClick={() => {
+                      setSubmitSuccess(false);
+                      setErrors({});
+                    }}
                     className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
                   >
                     Send Another Message
@@ -111,6 +132,12 @@ const Contact = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {errors.submit && (
+                    <div className="p-3 bg-red-50 text-red-600 text-sm rounded">
+                      {errors.submit}
+                    </div>
+                  )}
+                  
                   <div>
                     <label
                       htmlFor="name"
@@ -295,76 +322,24 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* <div className="flex">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600">
-                      <svg
-                        className="h-6 w-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    </div>
+                <div className="mt-8">
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">
+                    Follow Us
+                  </h3>
+                  <div className="flex justify-evenly items-center">
+                    <a href="#" className="text-gray-500 hover:text-gray-700">
+                      <i className="fa-brands fa-facebook fa-2xl" style={{ color: "#1877F2" }}></i>
+                    </a>
+                    <a href="#" className="text-gray-500 hover:text-gray-700">
+                      <i className="fa-brands fa-x-twitter fa-xl" style={{ color: "#000" }}></i>
+                    </a>
+                    <a href="#" className="text-gray-500 hover:text-gray-700">
+                      <i className="fa-brands fa-square-instagram fa-2xl" style={{ color: "#d62976" }}></i>
+                    </a>
+                    <a href="#" className="text-gray-500 hover:text-gray-700">
+                      <i className="fa-brands fa-linkedin fa-2xl" style={{ color: "#0077B5" }}></i>
+                    </a>
                   </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-900">
-                      Visit Us
-                    </h3>
-                    <p className="mt-1 text-gray-600">123 Tech Avenue</p>
-                    <p className="mt-1 text-gray-600">
-                      San Francisco, CA 94107
-                    </p>
-                    <NavLink
-                      to="/locations"
-                      className="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800"
-                    >
-                      View all locations
-                      <svg
-                        className="ml-1 h-4 w-4"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </NavLink>
-                  </div>
-                </div> */}
-              </div>
-
-              <div className="mt-8">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Follow Us
-                </h3>
-                <div className="flex justify-evenly items-center">
-                  <a href="#" className="text-gray-500 hover:text-gray-700">
-                    <i class="fa-brands fa-facebook fa-2xl" style={{color: "#1877F2"}}></i>
-                  </a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">
-                    <i class="fa-brands fa-x-twitter fa-xl" style={{color: "#000"}}></i>
-                  </a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">
-                  <i class="fa-brands fa-square-instagram fa-2xl" style={{color: "#d62976"}}></i>
-                  </a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">
-                  <i class="fa-brands fa-linkedin fa-2xl" style={{color: "#0077B5"}}></i>
-                  </a>
                 </div>
               </div>
             </div>

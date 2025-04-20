@@ -14,7 +14,6 @@ import Signin from "./components/UserPage/SignIn.jsx";
 import DeviceShowCase from "./components/DeviceShowCase/DeviceShowCase.jsx";
 import UserPage from "./components/UserPage/UserPage.jsx";
 import CompareDevice from "./components/CompareDevice/CompareDevice.jsx";
-import ReviewDevice from "./components/ReviewDevice/ReviewDevice.jsx";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import AddDevices from "./components/AddDevices/AddDevices.jsx";
 import ViewDevices from "./components/ViewDevices/ViewDevices.jsx";
@@ -33,7 +32,6 @@ import CustomerDetailsForm from "./components/CustomerDetailsForm/CustomerDetail
 import BillGeneration from "./components/BillGeneration/BillGeneration.jsx";
 import PaymentPage from "./components/PaymentPage/PaymentPage.jsx";
 import Cart from "./components/Cart/Cart.jsx";
-import CartPage from "./components/CartPage/CartPage.jsx";
 import TermsAndConditions from "./components/UserPage/TermsAndConditions.jsx";
 import Contact from "./components/Contact/Contact.jsx";
 import PurchasePreview from "./components/PurchasePreview/PurchasePreview.jsx";
@@ -44,6 +42,7 @@ import AltDashboard from "./components/Dashboard/AltDashborad.jsx";
 import ViewDVBrand from "./components/SellerPage/ViewDVBrand.jsx";
 import StockManagementPage from "./components/SellerPage/StockManagementPage.jsx";
 import AdminStockViewPage from "./components/Dashboard/AdminStockViewPage.jsx";
+import ViewMsg from "./components/Dashboard/viewMsg.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,11 +60,11 @@ const router = createBrowserRouter(
       <Route path="/sellerDashboard/:companyName" element={<SDashboard />} />
       <Route path="/users/:username" element={<UserPage />} />
       <Route path="/compareDevice" element={<CompareDevice />} />
-      <Route path="/reviewDevice/:deviceName" element={<ReviewDevice />} />
       <Route path="/addDevices" element={<AddDevices />} />
       <Route path="/viewDevices" element={<ViewDevices />} />
       <Route path="/viewUsers" element={<ViewUsers />} />
       <Route path="/viewSellers" element={<ViewSellers />} />
+      <Route path="/viewMsg" element={<ViewMsg />} />
       <Route path="/deviceVariants" element={<DeviceVariants />} />
       <Route path="/viewDV" element={<ViewDV />} />
       <Route path="/viewDVBrand/:sellerName" element={<ViewDVBrand />} />
@@ -76,7 +75,6 @@ const router = createBrowserRouter(
       <Route path="/bill" element={<BillGeneration />} />
       <Route path="/payment" element={<PaymentPage />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/cartPage" element={<CartPage />} />
       <Route path="/T&C" element={<TermsAndConditions />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/purchasePreview" element={<PurchasePreview />} />

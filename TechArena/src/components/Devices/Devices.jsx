@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Devices = () => {
   const { deviceName } = useParams();
@@ -20,14 +20,14 @@ const Devices = () => {
       const token = localStorage.getItem("accessToken");
       const user = JSON.parse(localStorage.getItem("user"));
       console.log(user);
-  
+
       if (!token || !user) {
         navigate("/login", {
           state: { from: `/devices/${device?.generalInfo?.brandModel}` },
         });
         return;
       }
-  
+
       const response = await fetch(
         "http://localhost:8000/api/v1/carts/addItems",
         {
@@ -42,12 +42,12 @@ const Devices = () => {
           }),
         }
       );
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error("Failed to add to cart" || errorData.message);
       }
-  
+
       toast.success("Added to cart successfully!", {
         position: "top-center",
         autoClose: 3000,
@@ -407,25 +407,13 @@ const Devices = () => {
                 </p>
               ))}
             </div>
-            <div className="flex justify-center gap-4 mt-4">
-              <NavLink
-                to={``}
-                className="bg-cyan-500 text-white px-4 py-2 rounded-md"
-              >
-                <i className="fa-solid fa-heart"></i>
-              </NavLink>
+            <div className="flex justify-around gap-19 mt-4">
               <NavLink
                 to="/compareDevice"
                 state={{ device1: device.generalInfo.brandModel }}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md flex items-center justify-center"
+                className="bg-emerald-500 text-white px-4 py-2 rounded-md flex items-center justify-center"
               >
                 Compare
-              </NavLink>
-              <NavLink
-                // to={`/reviewDevice/${device.generalInfo.brandModel}`}
-                className="bg-emerald-500 text-white px-4 py-2 rounded-md"
-              >
-                Review
               </NavLink>
               <NavLink
                 to="/customerDetails"

@@ -38,7 +38,7 @@ const AdminStockViewPage = () => {
       }
 
       const data = await response.json();
-      console.log("Received stock data:", data); // Add this line
+      console.log("Received stock data:", data); 
       setStock(data.data || { items: [] });
     } catch (error) {
       toast.error(error.message);

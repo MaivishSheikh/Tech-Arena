@@ -170,6 +170,8 @@ export default function Dashboard(props) {
   const [dRCount, setDRCount] = useState(null);
   const [deviceCount, setDeviceCount] = useState(null);
   const [sellerCount, setSellerCount] = useState(null);
+  const [stockCount, setStockCount] = useState(null);
+  const [msgCount, setMsgCount] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -178,20 +180,24 @@ export default function Dashboard(props) {
         setLoading(true);
         
         // Fetch all data in parallel
-        const [usersRes, devicesRes, sellersRes, dRRes, dVRes] = await Promise.all([
+        const [usersRes, devicesRes, sellersRes, dRRes, dVRes, stockRes, msgRes] = await Promise.all([
           fetch("http://localhost:8000/api/v1/users/"),
           fetch("http://localhost:8000/api/v1/devices/"),
           fetch("http://localhost:8000/api/v1/sellers/"),
           fetch("http://localhost:8000/api/v1/productRequests/"),
-          fetch("http://localhost:8000/api/v1/deviceVariants/viewVariants")
+          fetch("http://localhost:8000/api/v1/deviceVariants/viewVariants"),
+          fetch("http://localhost:8000/api/v1/stocks/"),
+          fetch("http://localhost:8000/api/v1/messages/")
         ]);
 
-        const [usersData, devicesData, sellersData, dRData, dVData] = await Promise.all([
+        const [usersData, devicesData, sellersData, dRData, dVData, stockData, msgData] = await Promise.all([
           usersRes.json(),
           devicesRes.json(),
           sellersRes.json(),
           dRRes.json(),
-          dVRes.json()
+          dVRes.json(),
+          stockRes.json(),
+          msgRes.json()
         ]);
 
         setUserCount(usersData?.data?.length || 0);
@@ -199,6 +205,8 @@ export default function Dashboard(props) {
         setSellerCount(sellersData?.data?.length || 0);
         setDRCount(dRData?.data?.length || 0);
         setDVCount(dVData?.data?.length || 0);
+        setStockCount(stockData?.data?.length || 0);
+        setMsgCount(msgData?.data?.length || 0);
         
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -216,15 +224,6 @@ export default function Dashboard(props) {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">Dashboard Overview</h1>
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <i className="fas fa-bell text-gray-500 text-xl"></i>
-              <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-            </div>
-            <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
-              <i className="fas fa-user"></i>
-            </div>
-          </div>
         </div>
 
         {/* Stats Cards */}
@@ -258,26 +257,14 @@ export default function Dashboard(props) {
             viewLink="/viewSellers"
             loading={loading}
           />
-        </div>
-
-        {/* Secondary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {/* <CardSection
-            title="Stock Status"
-            value="18"
-            percentage="83.4"
-            iconClass="fas fa-boxes"
-            iconColor="bg-teal-500"
-            loading={false}
-          /> */}
           <CardSection
-            title="Device Request"
-            value={loading ? "..." : dRCount}
+            title="Total Messages"
+            value={loading ? "..." : msgCount}
             percentage="83.4"
-            iconClass="fas fa-credit-card"
-            iconColor="bg-purple-500"
-            viewLink="/deviceRequest"
-            loading={false}
+            iconClass="fas fa-store"
+            iconColor="bg-green-500"
+            viewLink="/viewMsg"
+            loading={loading}
           />
           <CardSection
             title="Device Variants"
@@ -291,7 +278,7 @@ export default function Dashboard(props) {
           />
           <CardSection
             title="Stocks"
-            value={loading ? "..." : dVCount}
+            value={loading ? "..." : sellerCount}
             percentage="83.4"
             iconClass="fas fa-mobile-alt"
             iconColor="bg-blue-500"

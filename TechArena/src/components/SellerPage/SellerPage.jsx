@@ -209,14 +209,11 @@ const ManufacturerPage = () => {
           style={{ width: "300px" }}
         >
           <NavLink
-            to=""
-            style={{ fontSize: "18px" }}
-            className="bg-white-600 border-2 border-black px-4 py-1.5 rounded-lg font-semibold hover:bg-blue-700"
-            onClick={() => setOpen(true)}
+            to="/seller"
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700"
           >
             Login
           </NavLink>
-          <SLogin open={open} handleClose={() => setOpen(false)} />
           <NavLink
             to="/sellerLogin"
             className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700"
